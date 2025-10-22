@@ -36,7 +36,7 @@
             background-color: var(--background-color);
             color: var(--text-color);
             line-height: 1.6;
-            padding-bottom: 120px;
+            padding-bottom: 100px;
             transition: var(--transition);
             overflow-x: hidden;
             min-height: 100vh;
@@ -500,51 +500,36 @@
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
-        .fixed-submit {
+        /* Fixed bottom button container - CENTERED */
+        .fixed-button-container {
             position: fixed;
             bottom: 0;
             left: 50%;
             transform: translateX(-50%);
             width: 100%;
             max-width: 500px;
+            background-color: white;
             padding: 16px;
-            background-color: var(--danger-color);
-            color: white;
-            border: none;
-            border-radius: 12px 12px 0 0;
-            font-size: 18px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
             box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.15);
             z-index: 1000;
-            display: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
         }
-        .fixed-submit.visible {
-            display: block;
+        .fixed-button-container .btn {
+            margin-bottom: 0;
         }
-        .fixed-submit:hover {
-            background-color: var(--danger-hover);
-            transform: translateX(-50%) translateY(-2px);
+        .fixed-button-container .btn-support {
+            background-color: var(--secondary-color);
         }
-        .submit-description {
-            position: fixed;
-            bottom: 70px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100%;
-            max-width: 500px;
+        .fixed-button-container .btn-support:hover {
+            background-color: var(--secondary-hover);
+        }
+        .fixed-description {
             text-align: center;
             font-size: 14px;
             color: var(--text-secondary);
-            padding: 8px 0;
-            background-color: rgba(255, 255, 255, 0.9);
-            box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
-            z-index: 999;
-            display: none;
-        }
-        .submit-description.visible {
-            display: block;
+            margin-bottom: 8px;
         }
         /* Mobile-friendly level grid */
         @media (max-width: 480px) {
@@ -579,6 +564,9 @@
                 top: -6px;
                 right: -6px;
             }
+            .fixed-button-container {
+                padding: 12px;
+            }
         }
     </style>
 </head>
@@ -600,7 +588,6 @@
                 • Level 3: $0.15/review (4/day)<br>
                 • Level 4: $0.20/review (5/day)<br>
             </div>
-            <button class="btn btn-full" onclick="showLevelSystem()">✅ I Understand - Continue</button>
         </div>
     </div>
     <!-- Level System Section -->
@@ -654,7 +641,6 @@
                     </p>
                 </div>
             </div>
-            <button class="btn btn-full" onclick="showQuestion()">✅ Continue</button>
         </div>
     </div>
     <!-- Question Section -->
@@ -685,9 +671,6 @@
             <div class="error-box" id="section-error">
                 <span id="error-message"></span>
             </div>
-            <button class="btn" id="continueButton" onclick="continueToCountry()">
-                Continue
-            </button>
         </div>
     </div>
     <!-- Country Suggestion Section -->
@@ -708,7 +691,6 @@
                     </iframe>
                 </div>
                 <p class="country-follow-instruction">Follow the video to change your account to <span id="countryNameInText">Australia</span></p>
-                <button class="btn" id="countryButton" onclick="submitApplication()">Submit Application</button>
             </div>
         </div>
     </div>
@@ -721,11 +703,6 @@
                 This process typically takes up to 1 hour. You will be notified once approved.
             </div>
             <div style="margin-top: 40px;"></div>
-            <a href="https://t.me/sufyanthedev" target="_blank" class="btn btn-full btn-support">📤 Send Profile Link to Admin</a>
-            <div style="margin-top: 40px;"></div>
-            <div style="text-align: center; margin-top: 16px; font-size: 16px; color: #155724; background-color: #d4edda; border: 1px solid #c3e6cb; border-radius: 8px; padding: 12px;">
-                <strong>💡 Tip:</strong> Sending your profile link to the admin will help speed up your approval process!
-            </div>
             <div id="status-message" style="text-align: center; margin-top: 24px; font-size: 14px; color: #6c757d;">
                 Status: <span id="approval-status">Pending Review</span>
             </div>
@@ -745,8 +722,14 @@
             <div id="taskCards"></div>
         </div>
     </div>
-    <div class="submit-description" id="submitDescription">Only LIVE reviews will be accepted.</div>
-    <button class="fixed-submit" id="fixedSubmit" onclick="submitToAdmin()">📤 Submit to Admin</button>
+
+    <!-- Fixed bottom button container - CENTERED -->
+    <div class="fixed-button-container" id="fixedButtonContainer">
+        <div class="fixed-description" id="fixedDescription"></div>
+        <button class="btn" id="fixedButton">Continue</button>
+        <button class="btn btn-support" id="fixedSupportButton" style="display: none;">📤 Send Profile Link to Admin</button>
+    </div>
+
     <div id="loadingOverlay" class="loading-overlay" style="display: none;">
         <div class="spinner"></div>
         <p class="loading-text">Loading...</p>
@@ -884,13 +867,72 @@
         event.target.classList.add('selected');
         validateForm();
     }
+    function updateFixedButton() {
+        const container = document.getElementById('fixedButtonContainer');
+        const button = document.getElementById('fixedButton');
+        const description = document.getElementById('fixedDescription');
+        const supportButton = document.getElementById('fixedSupportButton');
+        const currentSection = document.querySelector('.section.active');
+
+        // Hide by default
+        container.classList.remove('visible');
+        button.style.display = 'none';
+        supportButton.style.display = 'none';
+        description.textContent = '';
+
+        if (currentSection) {
+            const sectionId = currentSection.id;
+            switch(sectionId) {
+                case 'welcome-section':
+                    button.textContent = '✅ I Understand - Continue';
+                    button.onclick = showLevelSystem;
+                    button.style.display = 'block';
+                    container.classList.add('visible');
+                    break;
+                case 'level-section':
+                    button.textContent = '✅ Continue';
+                    button.onclick = showQuestion;
+                    button.style.display = 'block';
+                    container.classList.add('visible');
+                    break;
+                case 'question-section':
+                    button.textContent = 'Continue';
+                    button.onclick = continueToCountry;
+                    button.style.display = 'block';
+                    container.classList.add('visible');
+                    break;
+                case 'country-section':
+                    button.textContent = 'Submit Application';
+                    button.onclick = submitApplication;
+                    button.style.display = 'block';
+                    container.classList.add('visible');
+                    break;
+                case 'review-section':
+                    button.textContent = '📤 Send Profile Link to Admin';
+                    button.onclick = () => window.open('https://t.me/sufyanthedev', '_blank');
+                    button.style.display = 'block';
+                    description.textContent = 'Send your profile link to admin to speed up approval';
+                    container.classList.add('visible');
+                    break;
+                case 'tasks-section':
+                    button.textContent = '📤 Submit to Admin';
+                    button.onclick = submitToAdmin;
+                    button.style.display = 'block';
+                    description.textContent = 'Only LIVE reviews will be accepted';
+                    container.classList.add('visible');
+                    break;
+            }
+        }
+    }
     function showLevelSystem() {
         document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
         document.getElementById('level-section').classList.add('active');
+        updateFixedButton();
     }
     function showQuestion() {
         document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
         document.getElementById('question-section').classList.add('active');
+        updateFixedButton();
     }
     function continueToCountry() {
         trustpilotLink = document.getElementById('trustpilot-link').value;
@@ -908,6 +950,7 @@
         document.getElementById('countryNameInText').textContent = selectedCountry;
         document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
         document.getElementById('country-section').classList.add('active');
+        updateFixedButton();
     }
     async function saveUserData() {
         try {
@@ -997,8 +1040,7 @@
                 } else if (data.approved) {
                     document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
                     document.getElementById('tasks-section').classList.add('active');
-                    document.getElementById('fixedSubmit').classList.add('visible');
-                    document.getElementById('submitDescription').classList.add('visible');
+                    updateFixedButton();
                     updateUserInfo();
                     generateTaskCards();
                     statusEl.textContent = 'Approved';
@@ -1006,6 +1048,7 @@
                 } else {
                     document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
                     document.getElementById('review-section').classList.add('active');
+                    updateFixedButton();
                     statusEl.textContent = 'Pending Review';
                     statusEl.style.color = '#6c757d';
                 }
@@ -1065,13 +1108,13 @@
                 document.getElementById('review-section').classList.add('active');
                 document.getElementById('approval-status').textContent = 'Application Rejected';
                 document.getElementById('approval-status').style.color = '#dc3545';
+                updateFixedButton();
                 return true;
             }
             if (data.approved) {
                 document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
                 document.getElementById('tasks-section').classList.add('active');
-                document.getElementById('fixedSubmit').classList.add('visible');
-                document.getElementById('submitDescription').classList.add('visible');
+                updateFixedButton();
                 updateUserInfo();
                 generateTaskCards();
                 return true;
@@ -1080,6 +1123,7 @@
             document.getElementById('review-section').classList.add('active');
             document.getElementById('approval-status').textContent = 'Pending Review';
             document.getElementById('approval-status').style.color = '#6c757d';
+            updateFixedButton();
             setupApprovalListener();
             return true;
         } catch (error) {
@@ -1098,6 +1142,7 @@
         if (!restored) {
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
             document.getElementById('welcome-section').classList.add('active');
+            updateFixedButton();
         }
     });
     document.addEventListener('touchstart', () => {}, { passive: true });
