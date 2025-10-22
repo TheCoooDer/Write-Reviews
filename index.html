@@ -722,14 +722,12 @@
             <div id="taskCards"></div>
         </div>
     </div>
-
     <!-- Fixed bottom button container - CENTERED -->
     <div class="fixed-button-container" id="fixedButtonContainer">
         <div class="fixed-description" id="fixedDescription"></div>
         <button class="btn" id="fixedButton">Continue</button>
         <button class="btn btn-support" id="fixedSupportButton" style="display: none;">📤 Send Profile Link to Admin</button>
     </div>
-
     <div id="loadingOverlay" class="loading-overlay" style="display: none;">
         <div class="spinner"></div>
         <p class="loading-text">Loading...</p>
@@ -748,7 +746,6 @@
     const db = firebase.firestore();
     let tg;
     let telegramUser = null;
-
     function showLoading(message = "Loading...") {
         const overlay = document.getElementById('loadingOverlay');
         const text = overlay.querySelector('.loading-text');
@@ -815,7 +812,6 @@
     let userLevel = null;
     let selectedCountry = "";
     let trustpilotLink = "";
-
     function selectRandomCountry() {
         return countries[Math.floor(Math.random() * countries.length)];
     }
@@ -833,10 +829,13 @@
             4: { min: 30, max: Infinity, pay: 0.20, perDay: 5 }
         }[level];
     }
+    // FIXED: Simplified and corrected regex for Trustpilot link validation
     function validateTrustpilotLink() {
         const linkInput = document.getElementById('trustpilot-link');
         const linkHint = document.getElementById('link-hint');
-        const trustpilotRegex = /^https:\/\/(?:www|uk|us|ca|ie|nl|de|au|nz|fr|es|it|se|no|dk|fi|jp|br|mx|in|ae|sg|my|ph|za|kr|ru|cn|be|ch|at|pt|gr|hu|cz|pl|ro|bg|hr|si|sk|lv|lt|ee|mt|cy|is|mk|al|rs|ba|me)\.trustpilot\.com\/users\/.+$/;
+        // This regex matches any two-letter country code or 'www' followed by '.trustpilot.com/users/'
+        const trustpilotRegex = /^https:\/\/(?:[a-z]{2}|www)\.trustpilot\.com\/users\/.+$/;
+
         if (!linkInput.value) {
             linkInput.classList.remove('valid', 'invalid');
             linkHint.classList.remove('error');
@@ -854,10 +853,12 @@
         }
         validateForm();
     }
+
     function validateForm() {
         const linkInput = document.getElementById('trustpilot-link');
         const continueButton = document.getElementById('continueButton');
-        const trustpilotRegex = /^https:\/\/(?:www|uk|us|ca|ie|nl|de|au|nz|fr|es|it|se|no|dk|fi|jp|br|mx|in|ae|sg|my|ph|za|kr|ru|cn|be|ch|at|pt|gr|hu|cz|pl|ro|bg|hr|si|sk|lv|lt|ee|mt|cy|is|mk|al|rs|ba|me)\.trustpilot\.com\/users\/.+$/;
+        // Use the same simplified regex here for consistency
+        const trustpilotRegex = /^https:\/\/(?:[a-z]{2}|www)\.trustpilot\.com\/users\/.+$/;
         continueButton.disabled = !(linkInput.value && trustpilotRegex.test(linkInput.value) && reviewCount !== null);
     }
     function selectReviewCount(count) {
@@ -873,13 +874,11 @@
         const description = document.getElementById('fixedDescription');
         const supportButton = document.getElementById('fixedSupportButton');
         const currentSection = document.querySelector('.section.active');
-
         // Hide by default
         container.classList.remove('visible');
         button.style.display = 'none';
         supportButton.style.display = 'none';
         description.textContent = '';
-
         if (currentSection) {
             const sectionId = currentSection.id;
             switch(sectionId) {
@@ -936,7 +935,8 @@
     }
     function continueToCountry() {
         trustpilotLink = document.getElementById('trustpilot-link').value;
-        const trustpilotRegex = /^https:\/\/(?:www|uk|us|ca|ie|nl|de|au|nz|fr|es|it|se|no|dk|fi|jp|br|mx|in|ae|sg|my|ph|za|kr|ru|cn|be|ch|at|pt|gr|hu|cz|pl|ro|bg|hr|si|sk|lv|lt|ee|mt|cy|is|mk|al|rs|ba|me)\.trustpilot\.com\/users\/.+$/;
+        // Use the same simplified regex here for consistency
+        const trustpilotRegex = /^https:\/\/(?:[a-z]{2}|www)\.trustpilot\.com\/users\/.+$/;
         if (!trustpilotLink || !trustpilotRegex.test(trustpilotLink)) {
             showError('Please enter a valid Trustpilot profile link');
             return;
