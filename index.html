@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Trustpilot Review Bot</title>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+    <!-- Telegram Web App SDK -->
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        :root {
+            --primary-color: #0088cc;
+            --primary-hover: #0066aa;
+            --secondary-color: #28a745;
+            --secondary-hover: #218838;
+            --danger-color: #dc3545;
+            --danger-hover: #c82333;
+            --background-color: #f5f5f5;
+            --card-background: #ffffff;
+            --text-color: #333333;
+            --text-secondary: #666666;
+            --border-color: #e0e0e0;
+            --error-color: #dc3545;
+            --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding-bottom: 120px;
+            transition: var(--transition);
+            overflow-x: hidden;
+            min-height: 100vh;
+            width: 100%;
+        }
+        .container {
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 0 16px;
+        }
+        .section {
+            display: none;
+            padding: 20px 0;
+            animation: fadeIn 0.3s ease;
+        }
+        .section.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        /* === LOADING ANIMATION === */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.9);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            backdrop-filter: blur(4px);
+        }
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(0, 136, 204, 0.2);
+            border-top: 4px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite, pulseGlow 1.5s ease-in-out infinite alternate;
+            margin-bottom: 16px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        @keyframes pulseGlow {
+            from {
+                box-shadow: 0 0 0 0 rgba(0, 136, 204, 0.3);
+            }
+            to {
+                box-shadow: 0 0 0 12px rgba(0, 136, 204, 0);
+            }
+        }
+        .loading-text {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-color);
+            margin-top: 8px;
+        }
+        .header {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .message-box {
+            background-color: #fff3cd;
+            border: 1px solid #ffeeba;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 20px;
+            font-size: 16px;
+            line-height: 1.5;
+            box-shadow: var(--shadow);
+        }
+        .message-box strong {
+            color: #856404;
+            font-weight: 700;
+        }
+        .error-box {
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 16px;
+            font-size: 14px;
+            color: #721c24;
+            display: none;
+        }
+        .error-box.visible {
+            display: block;
+        }
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 14px 20px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+            box-shadow: var(--shadow);
+            margin-bottom: 16px;
+        }
+        .btn:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        .btn-full {
+            display: block;
+            width: 100%;
+            margin: 0 auto;
+        }
+        .btn-support {
+            background-color: var(--secondary-color);
+            margin-top: 16px;
+        }
+        .btn-support:hover {
+            background-color: var(--secondary-hover);
+        }
+        .input-group {
+            margin-bottom: 20px;
+        }
+        .input-label {
+            display: block;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-color);
+        }
+        .input-field {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 16px;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+        }
+        .input-field:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(0, 136, 204, 0.1);
+        }
+        .input-field.valid {
+            border-color: var(--secondary-color);
+        }
+        .input-field.invalid {
+            border-color: var(--error-color);
+        }
+        .input-hint {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-top: 8px;
+        }
+        .input-hint.error {
+            color: var(--error-color);
+        }
+        .answer-options {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .answer-button {
+            padding: 16px;
+            background-color: var(--card-background);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+        .answer-button:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .answer-button.selected {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+        .level-info {
+            background-color: #e7f5ff;
+            border: 1px solid #b3d9ff;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow);
+        }
+        .level-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #0066cc;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+        .level-subtitle {
+            font-size: 14px;
+            color: #0066cc;
+            margin-bottom: 20px;
+            text-align: center;
+            font-style: italic;
+        }
+        .level-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+        .level-card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 16px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            text-align: center;
+            transition: var(--transition);
+        }
+        .level-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+        .level-badge {
+            display: inline-block;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        .level-1 { background-color: #e3f2fd; color: #0d47a1; }
+        .level-2 { background-color: #e8f5e9; color: #2e7d32; }
+        .level-3 { background-color: #fff8e1; color: #ff8f00; }
+        .level-4 { background-color: #ffebee; color: #c62828; }
+        .level-stats {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            font-size: 13px;
+        }
+        .level-description {
+            font-size: 12px;
+            color: #555;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 4px 0;
+        }
+        .stat-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+        .stat-value {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-color);
+        }
+        .country-container {
+            background-color: #e3f2fd;
+            border: 1px solid #bbdefb;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow);
+        }
+        .country-header {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1565c0;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+        .country-instruction {
+            font-size: 18px;
+            color: #1976d2;
+            margin-bottom: 24px;
+            font-weight: 500;
+            text-align: center;
+        }
+        .country-badge-wrapper {
+            width: 100%;
+            margin-bottom: 24px;
+        }
+        .country-badge {
+            background-color: white;
+            border: 2px solid #90caf9;
+            border-radius: 30px;
+            padding: 16px;
+            font-size: 24px;
+            font-weight: 700;
+            color: #1565c0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            display: block;
+            text-align: center;
+            width: 100%;
+            transition: transform 0.3s ease;
+        }
+        .country-badge:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+        }
+        .video-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1565c0;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 12px;
+            margin: 20px 0;
+            box-shadow: var(--shadow);
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 12px;
+        }
+        .country-follow-instruction {
+            font-size: 16px;
+            color: #1976d2;
+            margin-bottom: 24px;
+            font-weight: 500;
+            text-align: center;
+        }
+        /* === USER INFO WITH LEVEL TEXT === */
+        .user-info {
+            display: flex;
+            align-items: center;
+            background-color: white;
+            border-radius: 12px;
+            padding: 16px 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+        .user-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--primary-color);
+            margin-right: 16px;
+            flex-shrink: 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .user-details {
+            flex: 1;
+            min-width: 0;
+        }
+        .user-name {
+            font-size: 18px;
+            font-weight: 700;
+            color: #333;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .user-level-text {
+            font-size: 14px;
+            color: var(--text-secondary);
+            font-weight: 600;
+            margin-top: 4px;
+        }
+        .level-badge-corner {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: #0d47a1;
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 700;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            border: 2px solid white;
+        }
+        .task-card {
+            background-color: var(--card-background);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: 1px solid var(--border-color);
+            margin-bottom: 16px;
+        }
+        .task-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+        .task-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--primary-color);
+        }
+        .task-description {
+            font-size: 16px;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+        .task-description ul {
+            padding-left: 20px;
+        }
+        .task-description li {
+            margin-bottom: 8px;
+        }
+        .write-review-btn {
+            display: inline-block;
+            padding: 12px 20px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            width: 100%;
+            text-align: center;
+        }
+        .write-review-btn:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .fixed-submit {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 500px;
+            padding: 16px;
+            background-color: var(--danger-color);
+            color: white;
+            border: none;
+            border-radius: 12px 12px 0 0;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 1000;
+            display: none;
+        }
+        .fixed-submit.visible {
+            display: block;
+        }
+        .fixed-submit:hover {
+            background-color: var(--danger-hover);
+            transform: translateX(-50%) translateY(-2px);
+        }
+        .submit-description {
+            position: fixed;
+            bottom: 70px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+            font-size: 14px;
+            color: var(--text-secondary);
+            padding: 8px 0;
+            background-color: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+            z-index: 999;
+            display: none;
+        }
+        .submit-description.visible {
+            display: block;
+        }
+        /* Mobile-friendly level grid */
+        @media (max-width: 480px) {
+            .level-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+            .level-card {
+                padding: 14px;
+            }
+            .level-badge {
+                padding: 5px 12px;
+                font-size: 13px;
+            }
+            .stat-label, .stat-value {
+                font-size: 12px;
+            }
+            .user-avatar {
+                width: 50px;
+                height: 50px;
+            }
+            .user-name {
+                font-size: 16px;
+            }
+            .user-level-text {
+                font-size: 13px;
+            }
+            .level-badge-corner {
+                width: 26px;
+                height: 26px;
+                font-size: 11px;
+                top: -6px;
+                right: -6px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Welcome Section -->
+    <div id="welcome-section" class="section active">
+        <div class="container">
+            <h2 class="header">⚠️ Important Notice</h2>
+            <div class="message-box">
+                <strong>📋 MANDATORY STEPS BEFORE STARTING</strong><br><br>
+                ✅ Must have verified Trustpilot account<br>
+                🌍 Change account to our suggested country (video instruction)<br>
+                ⭐ Write only 5-star positive reviews<br>
+                ⏳ Wait until review shows "LIVE" status<br>
+                🚫 Submit ONLY live reviews (no flagged/pending)<br>
+                📤 Submit screenshot + review link to admin<br><br>
+                <strong>💰 EARNING STRUCTURE:</strong><br>
+                • Level 1-2: $0.10/review (1/day)<br>
+                • Level 3: $0.15/review (4/day)<br>
+                • Level 4: $0.20/review (5/day)<br>
+            </div>
+            <button class="btn btn-full" onclick="showLevelSystem()">✅ I Understand - Continue</button>
+        </div>
+    </div>
+    <!-- Level System Section -->
+    <div id="level-section" class="section">
+        <div class="container">
+            <h2 class="header">Level System</h2>
+            <div class="level-info">
+                <h3 class="level-title">Follow these rules otherwise your reviews will be removed by Trustpilot</h3>
+                <p class="level-subtitle">Your level determines how many tasks you can complete each day and how much you earn per task</p>
+                <div class="level-grid">
+                    <div class="level-card">
+                        <div class="level-badge level-1">Level 1</div>
+                        <p class="level-description">If you have done 0-9 reviews, you will get:</p>
+                        <div class="level-stats">
+                            <div class="stat-item"><span class="stat-label">Per Task</span> <span class="stat-value">$0.10</span></div>
+                            <div class="stat-item"><span class="stat-label">Daily Limit</span> <span class="stat-value">1 task/day</span></div>
+                            <div class="stat-item"><span class="stat-label">Next Level</span> <span class="stat-value">10 reviews</span></div>
+                        </div>
+                    </div>
+                    <div class="level-card">
+                        <div class="level-badge level-2">Level 2</div>
+                        <p class="level-description">If you have done 10-19 reviews, you will get:</p>
+                        <div class="level-stats">
+                            <div class="stat-item"><span class="stat-label">Per Task</span> <span class="stat-value">$0.10</span></div>
+                            <div class="stat-item"><span class="stat-label">Daily Limit</span> <span class="stat-value">1 task/day</span></div>
+                            <div class="stat-item"><span class="stat-label">Next Level</span> <span class="stat-value">20 reviews</span></div>
+                        </div>
+                    </div>
+                    <div class="level-card">
+                        <div class="level-badge level-3">Level 3</div>
+                        <p class="level-description">If you have done 20-29 reviews, you will get:</p>
+                        <div class="level-stats">
+                            <div class="stat-item"><span class="stat-label">Per Task</span> <span class="stat-value">$0.15</span></div>
+                            <div class="stat-item"><span class="stat-label">Daily Limit</span> <span class="stat-value">4 tasks/day</span></div>
+                            <div class="stat-item"><span class="stat-label">Next Level</span> <span class="stat-value">30 reviews</span></div>
+                        </div>
+                    </div>
+                    <div class="level-card">
+                        <div class="level-badge level-4">Level 4</div>
+                        <p class="level-description">If you have done 30+ reviews, you will get:</p>
+                        <div class="level-stats">
+                            <div class="stat-item"><span class="stat-label">Per Task</span> <span class="stat-value">$0.20</span></div>
+                            <div class="stat-item"><span class="stat-label">Daily Limit</span> <span class="stat-value">5 tasks/day</span></div>
+                            <div class="stat-item"><span class="stat-label">Max Level</span> <span class="stat-value">Highest tier</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div style="background-color: rgba(255, 255, 255, 0.8); border-radius: 10px; padding: 16px; margin-top: 16px; border: 1px solid rgba(255, 255, 255, 0.5);">
+                    <p style="font-size: 14px; color: #333; text-align: center;">
+                        <strong>How to progress:</strong> Complete more reviews to unlock higher levels with better rates and daily limits.
+                    </p>
+                </div>
+            </div>
+            <button class="btn btn-full" onclick="showQuestion()">✅ Continue</button>
+        </div>
+    </div>
+    <!-- Question Section -->
+    <div id="question-section" class="section">
+        <div class="container">
+            <h2 class="header">Account Information</h2>
+            <p style="text-align: center; margin-bottom: 24px; font-size: 18px;">Please provide your details to continue</p>
+            <div class="input-group">
+                <label class="input-label" for="trustpilot-link">Trustpilot Profile Link</label>
+                <input 
+                    type="text" 
+                    id="trustpilot-link" 
+                    class="input-field" 
+                    placeholder="https://www.trustpilot.com/users/yourusername"
+                    oninput="validateTrustpilotLink()"
+                >
+                <p class="input-hint" id="link-hint">Enter your Trustpilot profile link</p>
+            </div>
+            <div class="input-group">
+                <label class="input-label">How many successful reviews do you have?</label>
+                <div class="answer-options">
+                    <button class="answer-button" onclick="selectReviewCount(0)">0-9 reviews</button>
+                    <button class="answer-button" onclick="selectReviewCount(10)">10-19 reviews</button>
+                    <button class="answer-button" onclick="selectReviewCount(20)">20-29 reviews</button>
+                    <button class="answer-button" onclick="selectReviewCount(30)">30+ reviews</button>
+                </div>
+            </div>
+            <div class="error-box" id="section-error">
+                <span id="error-message"></span>
+            </div>
+            <button class="btn" id="continueButton" onclick="continueToCountry()">
+                Continue
+            </button>
+        </div>
+    </div>
+    <!-- Country Suggestion Section -->
+    <div id="country-section" class="section">
+        <div class="container">
+            <div class="country-container">
+                <h3 class="country-header">🌍 Change Your Country</h3>
+                <p class="country-instruction">For better results, change your account to:</p>
+                <div class="country-badge-wrapper">
+                    <div class="country-badge" id="selectedCountry">Australia</div>
+                </div>
+                <div class="video-title">📹 How to Change Your Country on Trustpilot</div>
+                <div class="video-container">
+                    <iframe 
+                        src="https://www.loom.com/embed/d4a570d16770431e94eac06cc6d36c4f" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                    </iframe>
+                </div>
+                <p class="country-follow-instruction">Follow the video to change your account to <span id="countryNameInText">Australia</span></p>
+                <button class="btn" id="countryButton" onclick="submitApplication()">Submit Application</button>
+            </div>
+        </div>
+    </div>
+    <!-- Review Section -->
+    <div id="review-section" class="section">
+        <div class="container">
+            <h2 class="header">Account Under Review</h2>
+            <div class="message-box">
+                <strong>Your application is being processed</strong><br>
+                This process typically takes up to 1 hour. You will be notified once approved.
+            </div>
+            <div style="margin-top: 40px;"></div>
+            <a href="https://t.me/sufyanthedev" target="_blank" class="btn btn-full btn-support">📤 Send Profile Link to Admin</a>
+            <div style="margin-top: 40px;"></div>
+            <div style="text-align: center; margin-top: 16px; font-size: 16px; color: #155724; background-color: #d4edda; border: 1px solid #c3e6cb; border-radius: 8px; padding: 12px;">
+                <strong>💡 Tip:</strong> Sending your profile link to the admin will help speed up your approval process!
+            </div>
+            <div id="status-message" style="text-align: center; margin-top: 24px; font-size: 14px; color: #6c757d;">
+                Status: <span id="approval-status">Pending Review</span>
+            </div>
+        </div>
+    </div>
+    <!-- Tasks Section -->
+    <div id="tasks-section" class="section">
+        <div class="container">
+            <div class="user-info" id="userInfo" style="display: none;">
+                <img class="user-avatar" id="userAvatar" src="" alt="Profile Picture">
+                <div class="user-details">
+                    <div class="user-name" id="userName">User Name</div>
+                    <div class="user-level-text" id="userLevelText">Level 1</div>
+                </div>
+                <div class="level-badge-corner" id="levelBadgeCorner">1</div>
+            </div>
+            <div id="taskCards"></div>
+        </div>
+    </div>
+    <div class="submit-description" id="submitDescription">Only LIVE reviews will be accepted.</div>
+    <button class="fixed-submit" id="fixedSubmit" onclick="submitToAdmin()">📤 Submit to Admin</button>
+    <div id="loadingOverlay" class="loading-overlay" style="display: none;">
+        <div class="spinner"></div>
+        <p class="loading-text">Loading...</p>
+    </div>
+    <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyAxtDaiDZdNA8Zl9OgNVbkYEDdKywo3F4Q",
+      authDomain: "pointgram-e1dbd.firebaseapp.com",
+      databaseURL: "https://pointgram-e1dbd-default-rtdb.firebaseio.com",
+      projectId: "pointgram-e1dbd",
+      storageBucket: "pointgram-e1dbd.firebasestorage.app",
+      messagingSenderId: "1029432630709",
+      appId: "1:1029432630709:web:4eba3be318dd3059674dfc"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    let tg;
+    let telegramUser = null;
+
+    function showLoading(message = "Loading...") {
+        const overlay = document.getElementById('loadingOverlay');
+        const text = overlay.querySelector('.loading-text');
+        text.textContent = message;
+        overlay.style.display = 'flex';
+    }
+    function hideLoading() {
+        document.getElementById('loadingOverlay').style.display = 'none';
+    }
+    function showError(message) {
+        const errorBox = document.getElementById('section-error');
+        const errorMessage = document.getElementById('error-message');
+        errorMessage.textContent = message;
+        errorBox.classList.add('visible');
+        setTimeout(() => errorBox.classList.remove('visible'), 5000);
+    }
+    function initTelegram() {
+        if (window.Telegram && window.Telegram.WebApp) {
+            tg = window.Telegram.WebApp;
+            tg.ready();
+            telegramUser = tg.initDataUnsafe.user;
+            localStorage.setItem('telegramUserId', telegramUser.id);
+            localStorage.setItem('telegramUsername', telegramUser.username);
+            localStorage.setItem('telegramFirstName', telegramUser.first_name);
+            updateUserInfo();
+            return true;
+        }
+        return false;
+    }
+    function updateUserInfo() {
+        if (telegramUser) {
+            const userInfo = document.getElementById('userInfo');
+            const userAvatar = document.getElementById('userAvatar');
+            const userName = document.getElementById('userName');
+            const userLevelText = document.getElementById('userLevelText');
+            const levelBadge = document.getElementById('levelBadgeCorner');
+            userInfo.style.display = 'flex';
+            if (telegramUser.photo_url) {
+                userAvatar.src = telegramUser.photo_url;
+            } else {
+                const name = telegramUser.first_name;
+                userAvatar.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=0088cc&color=fff&size=60`;
+            }
+            const fullName = telegramUser.first_name + (telegramUser.last_name ? ' ' + telegramUser.last_name : '');
+            userName.textContent = fullName;
+            userLevelText.textContent = `Level ${userLevel || 1}`;
+            levelBadge.textContent = userLevel || 1;
+            levelBadge.style.backgroundColor = 
+                (userLevel === 1) ? '#0d47a1' :
+                (userLevel === 2) ? '#2e7d32' :
+                (userLevel === 3) ? '#ff8f00' :
+                '#c62828';
+        }
+    }
+    const tasks = [
+        { id: 1, title: "Trustpilot Review 1", description: "✅ Give a 5-star Trustpilot review\n💰 Instant payment via Binance\n💵 $0.20 per review", trustpilotUrl: "https://www.trustpilot.com/review/bump-box.online" },
+        { id: 2, title: "Trustpilot Review 2", description: "✅ Give a 5-star Trustpilot review\n💰 Instant payment via Binance\n💵 $0.20 per review", trustpilotUrl: "https://www.trustpilot.com/review/riffs.online" },
+        { id: 3, title: "Trustpilot Review 3", description: "✅ Give a 5-star Trustpilot review\n💰 Instant payment via Binance\n💵 $0.20 per review", trustpilotUrl: "https://www.trustpilot.com/review/mugsy.shop" },
+        { id: 4, title: "Trustpilot Review 4", description: "✅ Give a 5-star Trustpilot review\n💰 Instant payment via Binance\n💵 $0.20 per review", trustpilotUrl: "https://www.trustpilot.com/review/noodl.online" },
+        { id: 5, title: "Trustpilot Review 5", description: "✅ Give a 5-star Trustpilot review\n💰 Instant payment via Binance\n💵 $0.20 per review", trustpilotUrl: "https://www.trustpilot.com/review/holloway.world" }
+    ];
+    const countries = ["Australia", "Canada", "Ireland", "Netherlands", "Germany"];
+    let reviewCount = null;
+    let userLevel = null;
+    let selectedCountry = "";
+    let trustpilotLink = "";
+
+    function selectRandomCountry() {
+        return countries[Math.floor(Math.random() * countries.length)];
+    }
+    function determineUserLevel(count) {
+        if (count >= 30) return 4;
+        if (count >= 20) return 3;
+        if (count >= 10) return 2;
+        return 1;
+    }
+    function getLevelDetails(level) {
+        return {
+            1: { min: 0, max: 9, pay: 0.10, perDay: 1 },
+            2: { min: 10, max: 19, pay: 0.10, perDay: 1 },
+            3: { min: 20, max: 29, pay: 0.15, perDay: 4 },
+            4: { min: 30, max: Infinity, pay: 0.20, perDay: 5 }
+        }[level];
+    }
+    function validateTrustpilotLink() {
+        const linkInput = document.getElementById('trustpilot-link');
+        const linkHint = document.getElementById('link-hint');
+        const trustpilotRegex = /^https:\/\/(?:www|uk|us|ca|ie|nl|de|au|nz|fr|es|it|se|no|dk|fi|jp|br|mx|in|ae|sg|my|ph|za|kr|ru|cn|be|ch|at|pt|gr|hu|cz|pl|ro|bg|hr|si|sk|lv|lt|ee|mt|cy|is|mk|al|rs|ba|me)\.trustpilot\.com\/users\/.+$/;
+        if (!linkInput.value) {
+            linkInput.classList.remove('valid', 'invalid');
+            linkHint.classList.remove('error');
+            linkHint.textContent = 'Enter your Trustpilot profile link';
+        } else if (trustpilotRegex.test(linkInput.value)) {
+            linkInput.classList.add('valid');
+            linkInput.classList.remove('invalid');
+            linkHint.classList.remove('error');
+            linkHint.textContent = 'Valid profile link';
+        } else {
+            linkInput.classList.add('invalid');
+            linkInput.classList.remove('valid');
+            linkHint.classList.add('error');
+            linkHint.textContent = 'Invalid format. Example: https://www.trustpilot.com/users/username';
+        }
+        validateForm();
+    }
+    function validateForm() {
+        const linkInput = document.getElementById('trustpilot-link');
+        const continueButton = document.getElementById('continueButton');
+        const trustpilotRegex = /^https:\/\/(?:www|uk|us|ca|ie|nl|de|au|nz|fr|es|it|se|no|dk|fi|jp|br|mx|in|ae|sg|my|ph|za|kr|ru|cn|be|ch|at|pt|gr|hu|cz|pl|ro|bg|hr|si|sk|lv|lt|ee|mt|cy|is|mk|al|rs|ba|me)\.trustpilot\.com\/users\/.+$/;
+        continueButton.disabled = !(linkInput.value && trustpilotRegex.test(linkInput.value) && reviewCount !== null);
+    }
+    function selectReviewCount(count) {
+        reviewCount = count;
+        userLevel = determineUserLevel(reviewCount);
+        document.querySelectorAll('.answer-button').forEach(btn => btn.classList.remove('selected'));
+        event.target.classList.add('selected');
+        validateForm();
+    }
+    function showLevelSystem() {
+        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+        document.getElementById('level-section').classList.add('active');
+    }
+    function showQuestion() {
+        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+        document.getElementById('question-section').classList.add('active');
+    }
+    function continueToCountry() {
+        trustpilotLink = document.getElementById('trustpilot-link').value;
+        const trustpilotRegex = /^https:\/\/(?:www|uk|us|ca|ie|nl|de|au|nz|fr|es|it|se|no|dk|fi|jp|br|mx|in|ae|sg|my|ph|za|kr|ru|cn|be|ch|at|pt|gr|hu|cz|pl|ro|bg|hr|si|sk|lv|lt|ee|mt|cy|is|mk|al|rs|ba|me)\.trustpilot\.com\/users\/.+$/;
+        if (!trustpilotLink || !trustpilotRegex.test(trustpilotLink)) {
+            showError('Please enter a valid Trustpilot profile link');
+            return;
+        }
+        if (reviewCount === null) {
+            showError('Please select your review count');
+            return;
+        }
+        selectedCountry = selectRandomCountry();
+        document.getElementById('selectedCountry').textContent = selectedCountry;
+        document.getElementById('countryNameInText').textContent = selectedCountry;
+        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+        document.getElementById('country-section').classList.add('active');
+    }
+    async function saveUserData() {
+        try {
+            showLoading("Submitting your application...");
+            const userId = trustpilotLink.split('/users/')[1];
+            const userRef = db.collection('users').doc(userId);
+            const telegramUserId = localStorage.getItem('telegramUserId');
+            const telegramUsername = localStorage.getItem('telegramUsername');
+            const telegramFirstName = localStorage.getItem('telegramFirstName');
+            let fullName = '';
+            if (telegramUser) {
+                fullName = telegramUser.first_name + (telegramUser.last_name ? ' ' + telegramUser.last_name : '');
+            }
+            const doc = await userRef.get();
+            await userRef.set({
+                trustpilotLink,
+                reviewCount,
+                userLevel,
+                selectedCountry,
+                approved: doc.exists ? doc.data().approved : false,
+                deleted: doc.exists ? doc.data().deleted : false,
+                telegramUserId,
+                telegramUsername,
+                telegramFirstName,
+                fullName,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            });
+            localStorage.setItem('userId', userId);
+            localStorage.setItem('reviewCount', reviewCount);
+            localStorage.setItem('userLevel', userLevel);
+            localStorage.setItem('trustpilotLink', trustpilotLink);
+            localStorage.setItem('selectedCountry', selectedCountry);
+            hideLoading();
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById('review-section').classList.add('active');
+            document.getElementById('approval-status').textContent = 'Pending Review';
+            document.getElementById('approval-status').style.color = '#6c757d';
+            setupApprovalListener();
+        } catch (error) {
+            console.error('Error saving user data:', error);
+            hideLoading();
+            showError('Error saving your data. Please try again.');
+        }
+    }
+    async function updateReviewCount() {
+        try {
+            const userId = localStorage.getItem('userId');
+            if (!userId) return;
+            const userRef = db.collection('users').doc(userId);
+            await userRef.update({
+                reviewCount,
+                userLevel,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            });
+            localStorage.setItem('reviewCount', reviewCount);
+            localStorage.setItem('userLevel', userLevel);
+        } catch (error) {
+            console.error('Error updating review count:', error);
+            showError('Error updating your review count.');
+        }
+    }
+    function markTaskComplete() {
+        reviewCount++;
+        userLevel = determineUserLevel(reviewCount);
+        updateReviewCount();
+        updateUserInfo();
+        generateTaskCards();
+    }
+    async function submitApplication() {
+        if (!initTelegram()) {
+            showError('Please open this app in Telegram to continue');
+            return;
+        }
+        await saveUserData();
+    }
+    function setupApprovalListener() {
+        const userId = localStorage.getItem('userId');
+        if (!userId) return;
+        const userRef = db.collection('users').doc(userId);
+        userRef.onSnapshot(doc => {
+            if (doc.exists) {
+                const data = doc.data();
+                const statusEl = document.getElementById('approval-status');
+                if (data.deleted) {
+                    statusEl.textContent = 'Application Rejected';
+                    statusEl.style.color = '#dc3545';
+                } else if (data.approved) {
+                    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+                    document.getElementById('tasks-section').classList.add('active');
+                    document.getElementById('fixedSubmit').classList.add('visible');
+                    document.getElementById('submitDescription').classList.add('visible');
+                    updateUserInfo();
+                    generateTaskCards();
+                    statusEl.textContent = 'Approved';
+                    statusEl.style.color = '#28a745';
+                } else {
+                    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+                    document.getElementById('review-section').classList.add('active');
+                    statusEl.textContent = 'Pending Review';
+                    statusEl.style.color = '#6c757d';
+                }
+            }
+        }, err => {
+            console.error('Listener error:', err);
+            showError('Error checking approval status.');
+        });
+    }
+    function generateTaskCards() {
+        const container = document.getElementById('taskCards');
+        container.innerHTML = '';
+        const tasksToShow = userLevel >= 4 ? 5 : (userLevel >= 3 ? 4 : 1);
+        const levelDetails = getLevelDetails(userLevel);
+        for (let i = 0; i < tasksToShow && i < tasks.length; i++) {
+            const card = document.createElement('div');
+            card.className = 'task-card';
+            card.innerHTML = `
+                <h3 class="task-title">${tasks[i].title}</h3>
+                <p class="task-description">
+                    ✅ Give a 5-star Trustpilot review<br>
+                    💰 Instant payment via Binance<br>
+                    💵 $${levelDetails.pay} per review<br>
+                    📅 ${levelDetails.perDay} reviews per day
+                </p>
+                <a href="${tasks[i].trustpilotUrl}" target="_blank" class="write-review-btn" onclick="markTaskComplete()">✍️ Write Review</a>
+            `;
+            container.appendChild(card);
+        }
+    }
+    function submitToAdmin() {
+        window.location.href = "https://t.me/sufyanthedev";
+    }
+    async function restoreUserState() {
+        const userId = localStorage.getItem('userId');
+        if (!userId) return false;
+        try {
+            showLoading("Restoring your session...");
+            const userRef = db.collection('users').doc(userId);
+            const doc = await userRef.get();
+            hideLoading();
+            if (!doc.exists) {
+                localStorage.clear();
+                return false;
+            }
+            const data = doc.data();
+            reviewCount = parseInt(localStorage.getItem('reviewCount'));
+            userLevel = parseInt(localStorage.getItem('userLevel'));
+            trustpilotLink = localStorage.getItem('trustpilotLink');
+            selectedCountry = localStorage.getItem('selectedCountry');
+            if ([reviewCount, userLevel, trustpilotLink, selectedCountry].some(v => v === null || v === undefined)) {
+                localStorage.clear();
+                return false;
+            }
+            if (data.deleted) {
+                document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+                document.getElementById('review-section').classList.add('active');
+                document.getElementById('approval-status').textContent = 'Application Rejected';
+                document.getElementById('approval-status').style.color = '#dc3545';
+                return true;
+            }
+            if (data.approved) {
+                document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+                document.getElementById('tasks-section').classList.add('active');
+                document.getElementById('fixedSubmit').classList.add('visible');
+                document.getElementById('submitDescription').classList.add('visible');
+                updateUserInfo();
+                generateTaskCards();
+                return true;
+            }
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById('review-section').classList.add('active');
+            document.getElementById('approval-status').textContent = 'Pending Review';
+            document.getElementById('approval-status').style.color = '#6c757d';
+            setupApprovalListener();
+            return true;
+        } catch (error) {
+            console.error('Restore error:', error);
+            hideLoading();
+            localStorage.clear();
+            return false;
+        }
+    }
+    document.addEventListener('DOMContentLoaded', async () => {
+        const telegramOK = initTelegram();
+        if (!telegramOK) {
+            document.querySelector('.message-box').innerHTML += '<br><br><strong style="color:#dc3545;">Error:</strong> Open this app in Telegram.';
+        }
+        const restored = await restoreUserState();
+        if (!restored) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById('welcome-section').classList.add('active');
+        }
+    });
+    document.addEventListener('touchstart', () => {}, { passive: true });
+    </script>
+</body>
+</html>
