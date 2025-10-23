@@ -474,12 +474,6 @@
             margin-bottom: 16px;
             line-height: 1.5;
         }
-        .task-description ul {
-            padding-left: 20px;
-        }
-        .task-description li {
-            margin-bottom: 8px;
-        }
         .write-review-btn {
             display: inline-block;
             padding: 12px 20px;
@@ -801,11 +795,11 @@
         }
     }
     const tasks = [
-        { id: 1, title: "Trustpilot Review 1", description: "✅ Give a 5-star Trustpilot review\n💰 Instant payment via Binance\n💵 $0.20 per review", trustpilotUrl: "https://www.trustpilot.com/review/bump-box.online" },
-        { id: 2, title: "Trustpilot Review 2", description: "✅ Give a 5-star Trustpilot review\n💰 Instant payment via Binance\n💵 $0.20 per review", trustpilotUrl: "https://www.trustpilot.com/review/riffs.online" },
-        { id: 3, title: "Trustpilot Review 3", description: "✅ Give a 5-star Trustpilot review\n💰 Instant payment via Binance\n💵 $0.20 per review", trustpilotUrl: "https://www.trustpilot.com/review/mugsy.shop" },
-        { id: 4, title: "Trustpilot Review 4", description: "✅ Give a 5-star Trustpilot review\n💰 Instant payment via Binance\n💵 $0.20 per review", trustpilotUrl: "https://www.trustpilot.com/review/noodl.online" },
-        { id: 5, title: "Trustpilot Review 5", description: "✅ Give a 5-star Trustpilot review\n💰 Instant payment via Binance\n💵 $0.20 per review", trustpilotUrl: "https://www.trustpilot.com/review/holloway.world" }
+        { id: 1, title: "Trustpilot Review 1", trustpilotUrl: "https://www.trustpilot.com/review/bump-box.online" },
+        { id: 2, title: "Trustpilot Review 2", trustpilotUrl: "https://www.trustpilot.com/review/riffs.online" },
+        { id: 3, title: "Trustpilot Review 3", trustpilotUrl: "https://www.trustpilot.com/review/mugsy.shop" },
+        { id: 4, title: "Trustpilot Review 4", trustpilotUrl: "https://www.trustpilot.com/review/noodl.online" },
+        { id: 5, title: "Trustpilot Review 5", trustpilotUrl: "https://www.trustpilot.com/review/holloway.world" }
     ];
     const countries = ["Australia", "Canada", "Ireland", "Netherlands", "Germany"];
     let reviewCount = null;
@@ -829,13 +823,10 @@
             4: { min: 30, max: Infinity, pay: 0.20, perDay: 5 }
         }[level];
     }
-    // FIXED: Simplified and corrected regex for Trustpilot link validation
     function validateTrustpilotLink() {
         const linkInput = document.getElementById('trustpilot-link');
         const linkHint = document.getElementById('link-hint');
-        // This regex matches any two-letter country code or 'www' followed by '.trustpilot.com/users/'
         const trustpilotRegex = /^https:\/\/(?:[a-z]{2}|www)\.trustpilot\.com\/users\/.+$/;
-
         if (!linkInput.value) {
             linkInput.classList.remove('valid', 'invalid');
             linkHint.classList.remove('error');
@@ -853,11 +844,9 @@
         }
         validateForm();
     }
-
     function validateForm() {
         const linkInput = document.getElementById('trustpilot-link');
         const continueButton = document.getElementById('continueButton');
-        // Use the same simplified regex here for consistency
         const trustpilotRegex = /^https:\/\/(?:[a-z]{2}|www)\.trustpilot\.com\/users\/.+$/;
         continueButton.disabled = !(linkInput.value && trustpilotRegex.test(linkInput.value) && reviewCount !== null);
     }
@@ -874,7 +863,6 @@
         const description = document.getElementById('fixedDescription');
         const supportButton = document.getElementById('fixedSupportButton');
         const currentSection = document.querySelector('.section.active');
-        // Hide by default
         container.classList.remove('visible');
         button.style.display = 'none';
         supportButton.style.display = 'none';
@@ -935,7 +923,6 @@
     }
     function continueToCountry() {
         trustpilotLink = document.getElementById('trustpilot-link').value;
-        // Use the same simplified regex here for consistency
         const trustpilotRegex = /^https:\/\/(?:[a-z]{2}|www)\.trustpilot\.com\/users\/.+$/;
         if (!trustpilotLink || !trustpilotRegex.test(trustpilotLink)) {
             showError('Please enter a valid Trustpilot profile link');
@@ -1043,8 +1030,8 @@
                     updateFixedButton();
                     updateUserInfo();
                     generateTaskCards();
-                    statusEl.textContent = 'Approved';
-                    statusEl.style.color = '#28a745';
+                    // Start listening for level-up responses
+                    setupLevelUpListener();
                 } else {
                     document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
                     document.getElementById('review-section').classList.add('active');
@@ -1058,6 +1045,8 @@
             showError('Error checking approval status.');
         });
     }
+
+    // ===== LEVEL UP FEATURE =====
     function generateTaskCards() {
         const container = document.getElementById('taskCards');
         container.innerHTML = '';
@@ -1078,7 +1067,83 @@
             `;
             container.appendChild(card);
         }
+
+        // Add Level Up button if user is below max level
+        if (userLevel < 4) {
+            const levelUpBtn = document.createElement('button');
+            levelUpBtn.className = 'btn';
+            levelUpBtn.textContent = '🚀 Request Level Up';
+            levelUpBtn.onclick = requestLevelUp;
+            container.appendChild(levelUpBtn);
+        }
     }
+
+    async function requestLevelUp() {
+        if (!initTelegram()) {
+            showError('Please open this app in Telegram.');
+            return;
+        }
+
+        const userId = localStorage.getItem('userId');
+        const trustpilotLink = localStorage.getItem('trustpilotLink');
+        const telegramUsername = telegramUser.username || telegramUser.first_name;
+        const telegramUserId = telegramUser.id;
+
+        if (!userId || !trustpilotLink) {
+            showError('Profile data missing. Please restart the app.');
+            return;
+        }
+
+        try {
+            showLoading("Sending level-up request...");
+            const requestId = db.collection('levelUpRequests').doc().id;
+            await db.collection('levelUpRequests').doc(requestId).set({
+                userId: userId,
+                telegramUserId: telegramUserId,
+                telegramUsername: telegramUsername,
+                trustpilotLink: trustpilotLink,
+                currentLevel: userLevel,
+                status: 'pending',
+                requestedAt: firebase.firestore.FieldValue.serverTimestamp(),
+                newLevel: null,
+                reviewedAt: null
+            });
+            hideLoading();
+            alert('✅ Level-up request sent! Admins will review it shortly.');
+        } catch (error) {
+            console.error('Level-up request error:', error);
+            hideLoading();
+            showError('Failed to send request. Try again.');
+        }
+    }
+
+    function setupLevelUpListener() {
+        const userId = localStorage.getItem('userId');
+        if (!userId) return;
+
+        db.collection('levelUpRequests')
+            .where('userId', '==', userId)
+            .where('status', 'in', ['approved', 'rejected'])
+            .orderBy('requestedAt', 'desc')
+            .limit(1)
+            .onSnapshot(snapshot => {
+                snapshot.docChanges().forEach(change => {
+                    if (change.type === 'added' || change.type === 'modified') {
+                        const req = change.doc.data();
+                        if (req.status === 'approved' && req.newLevel > userLevel) {
+                            userLevel = req.newLevel;
+                            localStorage.setItem('userLevel', userLevel);
+                            updateUserInfo();
+                            generateTaskCards();
+                            alert(`🎉 Congratulations! You've been upgraded to Level ${req.newLevel}!\n\nPerks:\n• $${getLevelDetails(req.newLevel).pay} per review\n• ${getLevelDetails(req.newLevel).perDay} reviews per day`);
+                        } else if (req.status === 'rejected') {
+                            alert('❌ Your level-up request was denied.\nYou need more verified reviews to qualify.');
+                        }
+                    }
+                });
+            });
+    }
+
     function submitToAdmin() {
         window.location.href = "https://t.me/sufyanthedev";
     }
@@ -1117,6 +1182,7 @@
                 updateFixedButton();
                 updateUserInfo();
                 generateTaskCards();
+                setupLevelUpListener(); // Start listening after restore
                 return true;
             }
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
