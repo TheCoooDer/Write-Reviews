@@ -499,7 +499,6 @@
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
-        /* Fixed bottom button container - CENTERED */
         .fixed-button-container {
             position: fixed;
             bottom: 0;
@@ -530,7 +529,6 @@
             color: var(--text-secondary);
             margin-bottom: 8px;
         }
-        /* Mobile-friendly level grid */
         @media (max-width: 480px) {
             .level-grid {
                 grid-template-columns: 1fr;
@@ -567,14 +565,13 @@
                 padding: 12px;
             }
         }
-        /* Level Up Button Styles */
         .level-up-btn {
             position: absolute;
             right: 16px;
             top: 50%;
             transform: translateY(-50%);
             padding: 8px 16px;
-            background-color: #0088cc;
+            background-color: #28a745;
             color: white;
             border: none;
             border-radius: 20px;
@@ -586,7 +583,7 @@
             z-index: 10;
         }
         .level-up-btn:hover {
-            background-color: #0066aa;
+            background-color: #218838;
             transform: translateY(-50%) scale(1.05);
         }
         .level-up-btn:disabled {
@@ -594,50 +591,18 @@
             cursor: not-allowed;
             transform: translateY(-50%);
         }
-        /* Resubmit Button Styles */
-        .resubmit-btn {
-            display: block;
-            width: 100%;
-            padding: 14px 20px;
-            background-color: #17a2b8;
+        .level-up-btn.pending {
+            background-color: #ffc107;
+            color: #212529;
+        }
+        .level-up-btn.approved {
+            background-color: #28a745;
             color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-align: center;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            margin-top: 16px;
         }
-        .resubmit-btn:hover {
-            background-color: #138496;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        .level-up-btn.denied {
+            background-color: #dc3545;
+            color: white;
         }
-        .resubmit-section {
-            margin-top: 30px;
-            padding: 20px;
-            background-color: #f8f9fa;
-            border-radius: 12px;
-            border: 1px solid #dee2e6;
-        }
-        .resubmit-title {
-            font-size: 18px;
-            font-weight: 600;
-            color: #dc3545;
-            margin-bottom: 12px;
-            text-align: center;
-        }
-        .resubmit-message {
-            font-size: 16px;
-            color: #6c757d;
-            margin-bottom: 20px;
-            text-align: center;
-            line-height: 1.5;
-        }
-        /* Notification styles */
         .notification {
             position: fixed;
             top: 20px;
@@ -664,6 +629,18 @@
             background-color: #ffc107;
             color: #212529;
         }
+        .rejected-message {
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            border-radius: 8px;
+            padding: 16px;
+            margin-top: 20px;
+            text-align: center;
+        }
+        .rejected-message strong {
+            color: #721c24;
+            font-weight: 700;
+        }
     </style>
 </head>
 <body>
@@ -686,6 +663,7 @@
             </div>
         </div>
     </div>
+    
     <!-- Level System Section -->
     <div id="level-section" class="section">
         <div class="container">
@@ -739,6 +717,7 @@
             </div>
         </div>
     </div>
+    
     <!-- Question Section -->
     <div id="question-section" class="section">
         <div class="container">
@@ -769,6 +748,7 @@
             </div>
         </div>
     </div>
+    
     <!-- Country Suggestion Section -->
     <div id="country-section" class="section">
         <div class="container">
@@ -790,29 +770,26 @@
             </div>
         </div>
     </div>
+    
     <!-- Review Section -->
     <div id="review-section" class="section">
         <div class="container">
-            <h2 class="header">Application Status</h2>
+            <h2 class="header">Account Under Review</h2>
             <div class="message-box">
-                <strong id="status-title">Your application is being processed</strong><br>
-                <span id="status-description">This process typically takes up to 1 hour. You will be notified once approved.</span>
+                <strong>Your application is being processed</strong><br>
+                This process typically takes up to 1 hour. You will be notified once approved.
+            </div>
+            <div id="rejected-message" class="rejected-message" style="display: none;">
+                <strong>Your application was rejected.</strong><br>
+                Please make sure you followed all the mandatory steps and try again.
             </div>
             <div style="margin-top: 40px;"></div>
             <div id="status-message" style="text-align: center; margin-top: 24px; font-size: 14px; color: #6c757d;">
                 Status: <span id="approval-status">Pending Review</span>
             </div>
-            
-            <!-- Resubmit Section (initially hidden) -->
-            <div id="resubmit-section" class="resubmit-section" style="display: none;">
-                <h3 class="resubmit-title">Application Rejected</h3>
-                <p class="resubmit-message">
-                    Your application has been rejected. Please review our requirements and submit a new application.
-                </p>
-                <button class="resubmit-btn" onclick="resubmitApplication()">Resubmit Application</button>
-            </div>
         </div>
     </div>
+    
     <!-- Tasks Section -->
     <div id="tasks-section" class="section">
         <div class="container">
@@ -823,23 +800,80 @@
                     <div class="user-level-text" id="userLevelText">Level 1</div>
                 </div>
                 <div class="level-badge-corner" id="levelBadgeCorner">1</div>
-                <!-- Changed button to show level system -->
-                <button class="level-up-btn" id="levelUpButton" onclick="showLevelSystem()">View Level System</button>
+                <button class="level-up-btn" id="levelUpButton" onclick="showLevelSystemForApprovedUser()">View Level System</button>
             </div>
             <div id="taskCards"></div>
         </div>
     </div>
+    
+    <!-- Level System Section for Approved Users -->
+    <div id="level-system-section" class="section">
+        <div class="container">
+            <h2 class="header">Level System</h2>
+            <div class="level-info">
+                <h3 class="level-title">Review Rules & Earnings</h3>
+                <p class="level-subtitle">Your level determines how many tasks you can complete each day and how much you earn per task</p>
+                <div class="level-grid">
+                    <div class="level-card">
+                        <div class="level-badge level-1">Level 1</div>
+                        <p class="level-description">If you have done 0-9 reviews, you will get:</p>
+                        <div class="level-stats">
+                            <div class="stat-item"><span class="stat-label">Per Task</span> <span class="stat-value">$0.10</span></div>
+                            <div class="stat-item"><span class="stat-label">Daily Limit</span> <span class="stat-value">1 task/day</span></div>
+                            <div class="stat-item"><span class="stat-label">Next Level</span> <span class="stat-value">10 reviews</span></div>
+                        </div>
+                    </div>
+                    <div class="level-card">
+                        <div class="level-badge level-2">Level 2</div>
+                        <p class="level-description">If you have done 10-19 reviews, you will get:</p>
+                        <div class="level-stats">
+                            <div class="stat-item"><span class="stat-label">Per Task</span> <span class="stat-value">$0.12</span></div>
+                            <div class="stat-item"><span class="stat-label">Daily Limit</span> <span class="stat-value">1 task/day</span></div>
+                            <div class="stat-item"><span class="stat-label">Next Level</span> <span class="stat-value">20 reviews</span></div>
+                        </div>
+                    </div>
+                    <div class="level-card">
+                        <div class="level-badge level-3">Level 3</div>
+                        <p class="level-description">If you have done 20-29 reviews, you will get:</p>
+                        <div class="level-stats">
+                            <div class="stat-item"><span class="stat-label">Per Task</span> <span class="stat-value">$0.15</span></div>
+                            <div class="stat-item"><span class="stat-label">Daily Limit</span> <span class="stat-value">4 tasks/day</span></div>
+                            <div class="stat-item"><span class="stat-label">Next Level</span> <span class="stat-value">30 reviews</span></div>
+                        </div>
+                    </div>
+                    <div class="level-card">
+                        <div class="level-badge level-4">Level 4</div>
+                        <p class="level-description">If you have done 30+ reviews, you will get:</p>
+                        <div class="level-stats">
+                            <div class="stat-item"><span class="stat-label">Per Task</span> <span class="stat-value">$0.20</span></div>
+                            <div class="stat-item"><span class="stat-label">Daily Limit</span> <span class="stat-value">5 tasks/day</span></div>
+                            <div class="stat-item"><span class="stat-label">Max Level</span> <span class="stat-value">Highest tier</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div style="background-color: rgba(255, 255, 255, 0.8); border-radius: 10px; padding: 16px; margin-top: 16px; border: 1px solid rgba(255, 255, 255, 0.5);">
+                    <p style="font-size: 14px; color: #333; text-align: center;">
+                        <strong>How to progress:</strong> Complete more reviews to unlock higher levels with better rates and daily limits.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
     <!-- Fixed bottom button container - CENTERED -->
     <div class="fixed-button-container" id="fixedButtonContainer">
         <div class="fixed-description" id="fixedDescription"></div>
         <button class="btn" id="fixedButton">Continue</button>
         <button class="btn btn-support" id="fixedSupportButton" style="display: none;">📤 Send Profile Link to Admin</button>
     </div>
+    
     <div id="loadingOverlay" class="loading-overlay" style="display: none;">
         <div class="spinner"></div>
         <p class="loading-text">Loading...</p>
     </div>
+    
     <div id="notification" class="notification"></div>
+    
     <script>
     const firebaseConfig = {
       apiKey: "AIzaSyAxtDaiDZdNA8Zl9OgNVbkYEDdKywo3F4Q",
@@ -854,15 +888,18 @@
     const db = firebase.firestore();
     let tg;
     let telegramUser = null;
+    
     function showLoading(message = "Loading...") {
         const overlay = document.getElementById('loadingOverlay');
         const text = overlay.querySelector('.loading-text');
         text.textContent = message;
         overlay.style.display = 'flex';
     }
+    
     function hideLoading() {
         document.getElementById('loadingOverlay').style.display = 'none';
     }
+    
     function showError(message) {
         const errorBox = document.getElementById('section-error');
         const errorMessage = document.getElementById('error-message');
@@ -870,6 +907,7 @@
         errorBox.classList.add('visible');
         setTimeout(() => errorBox.classList.remove('visible'), 5000);
     }
+    
     function initTelegram() {
         if (window.Telegram && window.Telegram.WebApp) {
             tg = window.Telegram.WebApp;
@@ -883,6 +921,7 @@
         }
         return false;
     }
+    
     function updateUserInfo() {
         if (telegramUser) {
             const userInfo = document.getElementById('userInfo');
@@ -890,6 +929,8 @@
             const userName = document.getElementById('userName');
             const userLevelText = document.getElementById('userLevelText');
             const levelBadge = document.getElementById('levelBadgeCorner');
+            const levelUpButton = document.getElementById('levelUpButton');
+            
             userInfo.style.display = 'flex';
             if (telegramUser.photo_url) {
                 userAvatar.src = telegramUser.photo_url;
@@ -906,8 +947,13 @@
                 (userLevel === 2) ? '#2e7d32' :
                 (userLevel === 3) ? '#ff8f00' :
                 '#c62828';
+                
+            // Change button for approved users
+            levelUpButton.textContent = 'View Level System';
+            levelUpButton.onclick = showLevelSystemForApprovedUser;
         }
     }
+    
     const tasks = [
         { id: 1, title: "Trustpilot Review 1", description: "✅ Give a 5-star Trustpilot review\n💰 Instant payment via Binance\n💵 $0.20 per review", trustpilotUrl: "https://www.trustpilot.com/review/bump-box.online" },
         { id: 2, title: "Trustpilot Review 2", description: "✅ Give a 5-star Trustpilot review\n💰 Instant payment via Binance\n💵 $0.20 per review", trustpilotUrl: "https://www.trustpilot.com/review/riffs.online" },
@@ -915,28 +961,33 @@
         { id: 4, title: "Trustpilot Review 4", description: "✅ Give a 5-star Trustpilot review\n💰 Instant payment via Binance\n💵 $0.20 per review", trustpilotUrl: "https://www.trustpilot.com/review/noodl.online" },
         { id: 5, title: "Trustpilot Review 5", description: "✅ Give a 5-star Trustpilot review\n💰 Instant payment via Binance\n💵 $0.20 per review", trustpilotUrl: "https://www.trustpilot.com/review/holloway.world" }
     ];
+    
     const countries = ["Australia", "Canada", "Ireland", "Netherlands", "Germany"];
     let reviewCount = null;
     let userLevel = null;
     let selectedCountry = "";
     let trustpilotLink = "";
+    
     function selectRandomCountry() {
         return countries[Math.floor(Math.random() * countries.length)];
     }
+    
     function determineUserLevel(count) {
         if (count >= 30) return 4;
         if (count >= 20) return 3;
         if (count >= 10) return 2;
         return 1;
     }
+    
     function getLevelDetails(level) {
         return {
             1: { min: 0, max: 9, pay: 0.10, perDay: 1 },
-            2: { min: 10, max: 19, pay: 0.12, perDay: 1 },
+            2: { min: 10, max: 19, pay: 0.10, perDay: 1 },
             3: { min: 20, max: 29, pay: 0.15, perDay: 4 },
             4: { min: 30, max: Infinity, pay: 0.20, perDay: 5 }
         }[level];
     }
+    
     function validateTrustpilotLink() {
         const linkInput = document.getElementById('trustpilot-link');
         const linkHint = document.getElementById('link-hint');
@@ -959,13 +1010,14 @@
         }
         validateForm();
     }
-
+    
     function validateForm() {
         const linkInput = document.getElementById('trustpilot-link');
         const continueButton = document.getElementById('continueButton');
         const trustpilotRegex = /^https:\/\/(?:[a-z]{2}|www)\.trustpilot\.com\/users\/.+$/;
         continueButton.disabled = !(linkInput.value && trustpilotRegex.test(linkInput.value) && reviewCount !== null);
     }
+    
     function selectReviewCount(count) {
         reviewCount = count;
         userLevel = determineUserLevel(reviewCount);
@@ -973,17 +1025,7 @@
         event.target.classList.add('selected');
         validateForm();
     }
-    function showLevelSystem() {
-        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-        document.getElementById('level-section').classList.add('active');
-        updateFixedButton();
-    }
-    function showTasks() {
-        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-        document.getElementById('tasks-section').classList.add('active');
-        updateFixedButton();
-        updateUserInfo();
-    }
+    
     function updateFixedButton() {
         const container = document.getElementById('fixedButtonContainer');
         const button = document.getElementById('fixedButton');
@@ -1007,10 +1049,9 @@
                     container.classList.add('visible');
                     break;
                 case 'level-section':
-                    button.textContent = '← Back to Tasks';
-                    button.onclick = showTasks;
+                    button.textContent = '✅ Continue';
+                    button.onclick = showQuestion;
                     button.style.display = 'block';
-                    description.textContent = 'View the level system and earning rates';
                     container.classList.add('visible');
                     break;
                 case 'question-section':
@@ -1026,13 +1067,31 @@
                     container.classList.add('visible');
                     break;
                 case 'review-section':
-                    const statusEl = document.getElementById('approval-status');
-                    if (statusEl.textContent === 'Application Rejected') {
-                        button.textContent = '📤 Send Profile Link to Admin';
-                        button.onclick = () => window.open('https://t.me/sufyanthedev', '_blank');
-                        button.style.display = 'block';
-                        description.textContent = 'Send your profile link to admin to discuss rejection';
-                        container.classList.add('visible');
+                    // Check if user is rejected
+                    const userId = localStorage.getItem('userId');
+                    if (userId) {
+                        db.collection('users').doc(userId).get().then(doc => {
+                            if (doc.exists && doc.data().deleted) {
+                                button.textContent = '🔄 Resubmit Application';
+                                button.onclick = resubmitApplication;
+                                button.style.display = 'block';
+                                description.textContent = 'Click to resubmit your application';
+                                container.classList.add('visible');
+                            } else {
+                                button.textContent = '📤 Send Profile Link to Admin';
+                                button.onclick = () => window.open('https://t.me/sufyanthedev', '_blank');
+                                button.style.display = 'block';
+                                description.textContent = 'Send your profile link to admin to speed up approval';
+                                container.classList.add('visible');
+                            }
+                        }).catch(err => {
+                            console.error('Error checking user status:', err);
+                            button.textContent = '📤 Send Profile Link to Admin';
+                            button.onclick = () => window.open('https://t.me/sufyanthedev', '_blank');
+                            button.style.display = 'block';
+                            description.textContent = 'Send your profile link to admin to speed up approval';
+                            container.classList.add('visible');
+                        });
                     } else {
                         button.textContent = '📤 Send Profile Link to Admin';
                         button.onclick = () => window.open('https://t.me/sufyanthedev', '_blank');
@@ -1048,14 +1107,33 @@
                     description.textContent = 'Only LIVE reviews will be accepted';
                     container.classList.add('visible');
                     break;
+                case 'level-system-section':
+                    button.textContent = 'Back to Tasks';
+                    button.onclick = () => {
+                        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+                        document.getElementById('tasks-section').classList.add('active');
+                        updateFixedButton();
+                        updateUserInfo();
+                    };
+                    button.style.display = 'block';
+                    container.classList.add('visible');
+                    break;
             }
         }
     }
+    
+    function showLevelSystem() {
+        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+        document.getElementById('level-section').classList.add('active');
+        updateFixedButton();
+    }
+    
     function showQuestion() {
         document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
         document.getElementById('question-section').classList.add('active');
         updateFixedButton();
     }
+    
     function continueToCountry() {
         trustpilotLink = document.getElementById('trustpilot-link').value;
         const trustpilotRegex = /^https:\/\/(?:[a-z]{2}|www)\.trustpilot\.com\/users\/.+$/;
@@ -1074,6 +1152,7 @@
         document.getElementById('country-section').classList.add('active');
         updateFixedButton();
     }
+    
     async function saveUserData() {
         try {
             showLoading("Submitting your application...");
@@ -1110,6 +1189,7 @@
             document.getElementById('review-section').classList.add('active');
             document.getElementById('approval-status').textContent = 'Pending Review';
             document.getElementById('approval-status').style.color = '#6c757d';
+            document.getElementById('rejected-message').style.display = 'none';
             setupApprovalListener();
         } catch (error) {
             console.error('Error saving user data:', error);
@@ -1117,6 +1197,7 @@
             showError('Error saving your data. Please try again.');
         }
     }
+    
     async function updateReviewCount() {
         try {
             const userId = localStorage.getItem('userId');
@@ -1134,6 +1215,7 @@
             showError('Error updating your review count.');
         }
     }
+    
     function markTaskComplete() {
         reviewCount++;
         userLevel = determineUserLevel(reviewCount);
@@ -1141,6 +1223,29 @@
         updateUserInfo();
         generateTaskCards();
     }
+    
+    function showNotification(message, type = 'success') {
+        const notification = document.getElementById('notification');
+        notification.textContent = message;
+        notification.className = 'notification show';
+        
+        if (type === 'error') {
+            notification.classList.add('error');
+        } else if (type === 'warning') {
+            notification.classList.add('warning');
+        }
+        
+        setTimeout(() => {
+            notification.classList.remove('show');
+        }, 3000);
+    }
+    
+    function showLevelSystemForApprovedUser() {
+        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+        document.getElementById('level-system-section').classList.add('active');
+        updateFixedButton();
+    }
+    
     async function submitApplication() {
         if (!initTelegram()) {
             showError('Please open this app in Telegram to continue');
@@ -1148,6 +1253,26 @@
         }
         await saveUserData();
     }
+    
+    function displayReviewSection(data) {
+        const statusEl = document.getElementById('approval-status');
+        const rejectedMessage = document.getElementById('rejected-message');
+        
+        if (data.deleted) {
+            statusEl.textContent = 'Application Rejected';
+            statusEl.style.color = '#dc3545';
+            rejectedMessage.style.display = 'block';
+        } else if (data.approved) {
+            statusEl.textContent = 'Approved';
+            statusEl.style.color = '#28a745';
+            rejectedMessage.style.display = 'none';
+        } else {
+            statusEl.textContent = 'Pending Review';
+            statusEl.style.color = '#6c757d';
+            rejectedMessage.style.display = 'none';
+        }
+    }
+    
     function setupApprovalListener() {
         const userId = localStorage.getItem('userId');
         if (!userId) return;
@@ -1155,40 +1280,22 @@
         userRef.onSnapshot(doc => {
             if (doc.exists) {
                 const data = doc.data();
-                const statusEl = document.getElementById('approval-status');
-                const statusTitle = document.getElementById('status-title');
-                const statusDescription = document.getElementById('status-description');
-                const resubmitSection = document.getElementById('resubmit-section');
+                displayReviewSection(data);
                 
                 if (data.deleted) {
-                    // Application rejected
-                    statusEl.textContent = 'Application Rejected';
-                    statusEl.style.color = '#dc3545';
-                    statusTitle.textContent = 'Application Rejected';
-                    statusDescription.textContent = 'Your application has been rejected. Please review our requirements and submit a new application.';
-                    resubmitSection.style.display = 'block';
+                    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+                    document.getElementById('review-section').classList.add('active');
+                    updateFixedButton();
                 } else if (data.approved) {
-                    // Application approved
                     document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
                     document.getElementById('tasks-section').classList.add('active');
                     updateFixedButton();
                     updateUserInfo();
                     generateTaskCards();
-                    statusEl.textContent = 'Approved';
-                    statusEl.style.color = '#28a745';
-                    statusTitle.textContent = 'Application Approved';
-                    statusDescription.textContent = 'Congratulations! Your application has been approved. You can now start completing tasks.';
-                    resubmitSection.style.display = 'none';
                 } else {
-                    // Pending review
                     document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
                     document.getElementById('review-section').classList.add('active');
                     updateFixedButton();
-                    statusEl.textContent = 'Pending Review';
-                    statusEl.style.color = '#6c757d';
-                    statusTitle.textContent = 'Application Under Review';
-                    statusDescription.textContent = 'Your application is being processed. This typically takes up to 1 hour.';
-                    resubmitSection.style.display = 'none';
                 }
             }
         }, err => {
@@ -1196,6 +1303,7 @@
             showError('Error checking approval status.');
         });
     }
+    
     function generateTaskCards() {
         const container = document.getElementById('taskCards');
         container.innerHTML = '';
@@ -1217,46 +1325,45 @@
             container.appendChild(card);
         }
     }
+    
     function submitToAdmin() {
         window.location.href = "https://t.me/sufyanthedev";
     }
     
-    function resubmitApplication() {
-        // Clear the current application data
-        localStorage.removeItem('userId');
-        localStorage.removeItem('reviewCount');
-        localStorage.removeItem('userLevel');
-        localStorage.removeItem('trustpilotLink');
-        localStorage.removeItem('selectedCountry');
+    async function resubmitApplication() {
+        const userId = localStorage.getItem('userId');
+        if (!userId) return;
         
-        // Reset form fields
-        document.getElementById('trustpilot-link').value = '';
-        document.querySelectorAll('.answer-button').forEach(btn => btn.classList.remove('selected'));
-        reviewCount = null;
+        showLoading("Resetting your application...");
         
-        // Go back to the question section
-        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-        document.getElementById('question-section').classList.add('active');
-        updateFixedButton();
-        
-        // Show a notification
-        showNotification('Please fill out your application again', 'warning');
-    }
-    
-    function showNotification(message, type = 'success') {
-        const notification = document.getElementById('notification');
-        notification.textContent = message;
-        notification.className = 'notification show';
-        
-        if (type === 'error') {
-            notification.classList.add('error');
-        } else if (type === 'warning') {
-            notification.classList.add('warning');
+        try {
+            const userRef = db.collection('users').doc(userId);
+            await userRef.update({
+                deleted: false,
+                approved: false,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            });
+            
+            // Reset local storage
+            localStorage.removeItem('userId');
+            localStorage.removeItem('reviewCount');
+            localStorage.removeItem('userLevel');
+            localStorage.removeItem('trustpilotLink');
+            localStorage.removeItem('selectedCountry');
+            
+            hideLoading();
+            
+            // Show country section
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById('country-section').classList.add('active');
+            updateFixedButton();
+            
+            showNotification('Application reset successfully. Please resubmit.');
+        } catch (error) {
+            console.error('Error resubmitting application:', error);
+            hideLoading();
+            showError('Error resubmitting application. Please try again.');
         }
-        
-        setTimeout(() => {
-            notification.classList.remove('show');
-        }, 3000);
     }
     
     async function restoreUserState() {
@@ -1280,11 +1387,10 @@
                 localStorage.clear();
                 return false;
             }
+            displayReviewSection(data);
             if (data.deleted) {
                 document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
                 document.getElementById('review-section').classList.add('active');
-                document.getElementById('approval-status').textContent = 'Application Rejected';
-                document.getElementById('approval-status').style.color = '#dc3545';
                 updateFixedButton();
                 return true;
             }
@@ -1298,9 +1404,6 @@
             }
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
             document.getElementById('review-section').classList.add('active');
-            document.getElementById('approval-status').textContent = 'Pending Review';
-            document.getElementById('approval-status').style.color = '#6c757d';
-            updateFixedButton();
             setupApprovalListener();
             return true;
         } catch (error) {
@@ -1310,6 +1413,7 @@
             return false;
         }
     }
+    
     document.addEventListener('DOMContentLoaded', async () => {
         const telegramOK = initTelegram();
         if (!telegramOK) {
@@ -1322,6 +1426,7 @@
             updateFixedButton();
         }
     });
+    
     document.addEventListener('touchstart', () => {}, { passive: true });
     </script>
 </body>
