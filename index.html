@@ -1129,9 +1129,22 @@
     }
     
     function showQuestion() {
+        resetQuestionForm();
         document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
         document.getElementById('question-section').classList.add('active');
         updateFixedButton();
+    }
+    
+    function resetQuestionForm() {
+        const linkInput = document.getElementById('trustpilot-link');
+        linkInput.value = '';
+        linkInput.classList.remove('valid', 'invalid');
+        const linkHint = document.getElementById('link-hint');
+        linkHint.classList.remove('error');
+        linkHint.textContent = 'Enter your Trustpilot profile link';
+        document.querySelectorAll('.answer-button').forEach(btn => btn.classList.remove('selected'));
+        reviewCount = null;
+        validateForm();
     }
     
     function continueToCountry() {
@@ -1353,12 +1366,12 @@
             
             hideLoading();
             
-            // Show country section
+            // Show welcome section as a new user
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-            document.getElementById('country-section').classList.add('active');
+            document.getElementById('welcome-section').classList.add('active');
             updateFixedButton();
             
-            showNotification('Application reset successfully. Please resubmit.');
+            showNotification('Application reset successfully. Please start over as a new user.');
         } catch (error) {
             console.error('Error resubmitting application:', error);
             hideLoading();
