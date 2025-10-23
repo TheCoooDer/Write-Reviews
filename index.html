@@ -641,260 +641,6 @@
             color: #721c24;
             font-weight: 700;
         }
-        
-        /* Referral System Styles */
-        .referral-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.6);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 10000;
-        }
-        
-        .referral-modal.active {
-            display: flex;
-        }
-        
-        .referral-content {
-            background-color: white;
-            border-radius: 16px;
-            padding: 24px;
-            width: 90%;
-            max-width: 400px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            position: relative;
-        }
-        
-        .referral-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        
-        .referral-title {
-            font-size: 22px;
-            font-weight: 700;
-            color: var(--primary-color);
-        }
-        
-        .close-btn {
-            background: none;
-            border: none;
-            font-size: 24px;
-            cursor: pointer;
-            color: var(--text-secondary);
-            transition: var(--transition);
-        }
-        
-        .close-btn:hover {
-            color: var(--text-color);
-            transform: rotate(90deg);
-        }
-        
-        .referral-code-container {
-            background-color: #e7f5ff;
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        
-        .referral-label {
-            font-size: 16px;
-            color: #0066cc;
-            margin-bottom: 12px;
-        }
-        
-        .referral-code {
-            font-size: 24px;
-            font-weight: 700;
-            color: #0066cc;
-            letter-spacing: 2px;
-            margin-bottom: 16px;
-            padding: 12px;
-            background-color: white;
-            border-radius: 8px;
-            display: inline-block;
-            min-width: 200px;
-        }
-        
-        .copy-btn {
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            padding: 10px 20px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            margin: 0 auto;
-        }
-        
-        .copy-btn:hover {
-            background-color: var(--primary-hover);
-            transform: translateY(-2px);
-        }
-        
-        .referral-benefits {
-            margin-bottom: 24px;
-        }
-        
-        .benefit-title {
-            font-size: 18px;
-            font-weight: 600;
-            color: var(--text-color);
-            margin-bottom: 16px;
-            text-align: center;
-        }
-        
-        .benefit-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 0;
-            border-bottom: 1px solid var(--border-color);
-        }
-        
-        .benefit-item:last-child {
-            border-bottom: none;
-        }
-        
-        .benefit-label {
-            font-size: 16px;
-            color: var(--text-secondary);
-        }
-        
-        .benefit-value {
-            font-size: 18px;
-            font-weight: 700;
-            color: var(--primary-color);
-        }
-        
-        .share-btn {
-            background-color: var(--secondary-color);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            padding: 14px 20px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            width: 100%;
-            margin-bottom: 12px;
-        }
-        
-        .share-btn:hover {
-            background-color: var(--secondary-hover);
-            transform: translateY(-2px);
-        }
-        
-        .earnings-section {
-            background-color: #f8f9fa;
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 24px;
-        }
-        
-        .earnings-title {
-            font-size: 18px;
-            font-weight: 600;
-            color: var(--text-color);
-            margin-bottom: 16px;
-            text-align: center;
-        }
-        
-        .earnings-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 0;
-            border-bottom: 1px solid var(--border-color);
-        }
-        
-        .earnings-item:last-child {
-            border-bottom: none;
-        }
-        
-        .earnings-label {
-            font-size: 16px;
-            color: var(--text-secondary);
-        }
-        
-        .earnings-value {
-            font-size: 18px;
-            font-weight: 700;
-            color: var(--primary-color);
-        }
-        
-        .total-earnings {
-            margin-top: 16px;
-            padding-top: 16px;
-            border-top: 2px solid var(--border-color);
-        }
-        
-        .total-label {
-            font-size: 18px;
-            font-weight: 600;
-            color: var(--text-color);
-        }
-        
-        .total-value {
-            font-size: 22px;
-            font-weight: 700;
-            color: var(--secondary-color);
-        }
-        
-        .referral-stats {
-            background-color: #e7f5ff;
-            border-radius: 12px;
-            padding: 16px;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        
-        .referral-stats-title {
-            font-size: 16px;
-            font-weight: 600;
-            color: #0066cc;
-            margin-bottom: 12px;
-        }
-        
-        .referral-stats-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-        }
-        
-        .stat-card {
-            background-color: white;
-            border-radius: 8px;
-            padding: 12px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-        
-        .stat-value {
-            font-size: 20px;
-            font-weight: 700;
-            color: #0066cc;
-            margin-bottom: 4px;
-        }
-        
-        .stat-label {
-            font-size: 14px;
-            color: var(--text-secondary);
-        }
     </style>
 </head>
 <body>
@@ -915,11 +661,9 @@
                 • Level 2: $0.15/review (1/day)<br>
                 • Level 3: $0.20/review (4/day)<br>
                 • Level 4: $0.35/review (5/day)<br>
-                • 🎁 Referral Bonus: $0.50 per referral
             </div>
         </div>
     </div>
-    
     <!-- Level System Section -->
     <div id="level-section" class="section">
         <div class="container">
@@ -973,7 +717,6 @@
             </div>
         </div>
     </div>
-    
     <!-- Question Section -->
     <div id="question-section" class="section">
         <div class="container">
@@ -1004,7 +747,6 @@
             </div>
         </div>
     </div>
-    
     <!-- Country Suggestion Section -->
     <div id="country-section" class="section">
         <div class="container">
@@ -1026,7 +768,6 @@
             </div>
         </div>
     </div>
-    
     <!-- Review Section -->
     <div id="review-section" class="section">
         <div class="container">
@@ -1045,7 +786,6 @@
             </div>
         </div>
     </div>
-    
     <!-- Tasks Section -->
     <div id="tasks-section" class="section">
         <div class="container">
@@ -1058,27 +798,9 @@
                 <div class="level-badge-corner" id="levelBadgeCorner">1</div>
                 <button class="level-up-btn" id="levelUpButton" onclick="showLevelSystemForApprovedUser()">View Level System</button>
             </div>
-            
-            <div class="earnings-section" id="earningsSection" style="display: none;">
-                <h3 class="earnings-title">Your Earnings</h3>
-                <div class="earnings-item">
-                    <span class="earnings-label">Review Earnings:</span>
-                    <span class="earnings-value" id="reviewEarnings">$0.00</span>
-                </div>
-                <div class="earnings-item">
-                    <span class="earnings-label">Referral Earnings:</span>
-                    <span class="earnings-value" id="referralEarnings">$0.00</span>
-                </div>
-                <div class="earnings-item total-earnings">
-                    <span class="total-label">Total Earnings:</span>
-                    <span class="total-value" id="totalEarnings">$0.00</span>
-                </div>
-            </div>
-            
             <div id="taskCards"></div>
         </div>
     </div>
-    
     <!-- Level System Section for Approved Users -->
     <div id="level-system-section" class="section">
         <div class="container">
@@ -1132,74 +854,17 @@
             </div>
         </div>
     </div>
-    
-    <!-- Referral Modal -->
-    <div id="referralModal" class="referral-modal">
-        <div class="referral-content">
-            <div class="referral-header">
-                <h3 class="referral-title">Referral Program</h3>
-                <button class="close-btn" onclick="closeReferralModal()">×</button>
-            </div>
-            
-            <div class="referral-code-container">
-                <div class="referral-label">Your Referral Code</div>
-                <div class="referral-code" id="referralCode">TRUST123</div>
-                <button class="copy-btn" onclick="copyReferralCode()">
-                    <span>📋</span> Copy Code
-                </button>
-            </div>
-            
-            <div class="referral-benefits">
-                <h4 class="benefit-title">Referral Benefits</h4>
-                <div class="benefit-item">
-                    <span class="benefit-label">You earn per referral</span>
-                    <span class="benefit-value">$0.50</span>
-                </div>
-                <div class="benefit-item">
-                    <span class="benefit-label">Your friend earns</span>
-                    <span class="benefit-value">$0.10</span>
-                </div>
-                <div class="benefit-item">
-                    <span class="benefit-label">Minimum payout</span>
-                    <span class="benefit-value">$5.00</span>
-                </div>
-            </div>
-            
-            <button class="share-btn" onclick="shareReferralLink()">
-                📤 Share Referral Link
-            </button>
-            
-            <div class="referral-stats">
-                <div class="referral-stats-title">Your Referral Stats</div>
-                <div class="referral-stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-value" id="referralCount">0</div>
-                        <div class="stat-label">Referrals</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value" id="referralEarningsStat">$0.00</div>
-                        <div class="stat-label">Earnings</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    
     <!-- Fixed bottom button container - CENTERED -->
     <div class="fixed-button-container" id="fixedButtonContainer">
         <div class="fixed-description" id="fixedDescription"></div>
         <button class="btn" id="fixedButton">Continue</button>
         <button class="btn btn-support" id="fixedSupportButton" style="display: none;">📤 Send Profile Link to Admin</button>
-        <button class="btn btn-support" id="referralButton" style="display: none;">🔗 Referral Program</button>
     </div>
-    
     <div id="loadingOverlay" class="loading-overlay" style="display: none;">
         <div class="spinner"></div>
         <p class="loading-text">Loading...</p>
     </div>
-    
     <div id="notification" class="notification"></div>
-    
     <script>
     const firebaseConfig = {
       apiKey: "AIzaSyAxtDaiDZdNA8Zl9OgNVbkYEDdKywo3F4Q",
@@ -1214,21 +879,15 @@
     const db = firebase.firestore();
     let tg;
     let telegramUser = null;
-    let referralCode = null;
-    let referralCount = 0;
-    let referralEarnings = 0;
-    
     function showLoading(message = "Loading...") {
         const overlay = document.getElementById('loadingOverlay');
         const text = overlay.querySelector('.loading-text');
         text.textContent = message;
         overlay.style.display = 'flex';
     }
-    
     function hideLoading() {
         document.getElementById('loadingOverlay').style.display = 'none';
     }
-    
     function showError(message) {
         const errorBox = document.getElementById('section-error');
         const errorMessage = document.getElementById('error-message');
@@ -1236,7 +895,6 @@
         errorBox.classList.add('visible');
         setTimeout(() => errorBox.classList.remove('visible'), 5000);
     }
-    
     function initTelegram() {
         if (window.Telegram && window.Telegram.WebApp) {
             tg = window.Telegram.WebApp;
@@ -1250,7 +908,6 @@
         }
         return false;
     }
-    
     function updateUserInfo() {
         if (telegramUser) {
             const userInfo = document.getElementById('userInfo');
@@ -1260,14 +917,12 @@
             const levelBadge = document.getElementById('levelBadgeCorner');
             const levelUpButton = document.getElementById('levelUpButton');
             userInfo.style.display = 'flex';
-            
             if (telegramUser.photo_url) {
                 userAvatar.src = telegramUser.photo_url;
             } else {
                 const name = telegramUser.first_name;
                 userAvatar.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=0088cc&color=fff&size=60`;
             }
-            
             const fullName = telegramUser.first_name + (telegramUser.last_name ? ' ' + telegramUser.last_name : '');
             userName.textContent = fullName;
             userLevelText.textContent = `Level ${userLevel || 1}`;
@@ -1281,7 +936,6 @@
             levelUpButton.onclick = showLevelSystemForApprovedUser;
         }
     }
-    
     const tasks = [
         { id: 1, title: "Trustpilot Review 1", description: "✅ Give a 5-star Trustpilot review\n💰 Instant payment via Binance\n💵 $0.20 per review", trustpilotUrl: "https://www.trustpilot.com/review/bump-box.online" },
         { id: 2, title: "Trustpilot Review 2", description: "✅ Give a 5-star Trustpilot review\n💰 Instant payment via Binance\n💵 $0.20 per review", trustpilotUrl: "https://www.trustpilot.com/review/riffs.online" },
@@ -1289,124 +943,20 @@
         { id: 4, title: "Trustpilot Review 4", description: "✅ Give a 5-star Trustpilot review\n💰 Instant payment via Binance\n💵 $0.20 per review", trustpilotUrl: "https://www.trustpilot.com/review/noodl.online" },
         { id: 5, title: "Trustpilot Review 5", description: "✅ Give a 5-star Trustpilot review\n💰 Instant payment via Binance\n💵 $0.20 per review", trustpilotUrl: "https://www.trustpilot.com/review/holloway.world" }
     ];
-    
     const countries = ["Australia", "Canada", "Ireland", "Netherlands", "Germany"];
     let reviewCount = null;
     let userLevel = null;
     let selectedCountry = "";
     let trustpilotLink = "";
-    
-    function generateReferralCode() {
-        const prefix = "TRUST";
-        const random = Math.floor(1000 + Math.random() * 9000);
-        return prefix + random;
-    }
-    
-    function copyReferralCode() {
-        if (!referralCode) return;
-        
-        navigator.clipboard.writeText(referralCode).then(() => {
-            showNotification("Referral code copied to clipboard!");
-        }).catch(err => {
-            console.error('Failed to copy: ', err);
-            showNotification("Failed to copy code", "error");
-        });
-    }
-    
-    function shareReferralLink() {
-        if (!referralCode) return;
-        
-        const referralLink = `https://t.me/YourBotUsername?start=${referralCode}`;
-        
-        if (tg && tg.share) {
-            tg.shareText(`Join Trustpilot Review Bot and earn money! Use my referral code: ${referralCode}`);
-        } else {
-            const shareText = `Join Trustpilot Review Bot and earn money! Use my referral code: ${referralCode}`;
-            
-            if (navigator.share) {
-                navigator.share({
-                    title: 'Trustpilot Review Bot',
-                    text: shareText,
-                    url: referralLink
-                });
-            } else {
-                const tempInput = document.createElement('input');
-                tempInput.value = referralLink;
-                document.body.appendChild(tempInput);
-                tempInput.select();
-                document.execCommand('copy');
-                document.body.removeChild(tempInput);
-                
-                showNotification("Referral link copied to clipboard!");
-            }
-        }
-    }
-    
-    function closeReferralModal() {
-        document.getElementById('referralModal').classList.remove('active');
-    }
-    
-    function showReferralModal() {
-        if (!referralCode) {
-            referralCode = generateReferralCode();
-            document.getElementById('referralCode').textContent = referralCode;
-        }
-        
-        document.getElementById('referralCount').textContent = referralCount;
-        document.getElementById('referralEarningsStat').textContent = `$${referralEarnings.toFixed(2)}`;
-        
-        document.getElementById('referralModal').classList.add('active');
-    }
-    
-    function updateEarningsDisplay() {
-        const reviewEarnings = (reviewCount || 0) * getLevelDetails(userLevel || 1).pay;
-        const totalEarnings = reviewEarnings + referralEarnings;
-        
-        document.getElementById('reviewEarnings').textContent = `$${reviewEarnings.toFixed(2)}`;
-        document.getElementById('referralEarnings').textContent = `$${referralEarnings.toFixed(2)}`;
-        document.getElementById('totalEarnings').textContent = `$${totalEarnings.toFixed(2)}`;
-    }
-    
-    function processReferral(referralCodeParam) {
-        if (!referralCodeParam) return;
-        
-        try {
-            const referrerRef = db.collection('users').doc(referralCodeParam);
-            referrerRef.get().then(doc => {
-                if (doc.exists) {
-                    referrerRef.update({
-                        referralEarnings: firebase.firestore.FieldValue.increment(0.50),
-                        referralCount: firebase.firestore.FieldValue.increment(1)
-                    });
-                    
-                    const userId = localStorage.getItem('userId');
-                    if (userId) {
-                        const userRef = db.collection('users').doc(userId);
-                        userRef.update({
-                            refereeEarnings: 0.10
-                        });
-                    }
-                    
-                    showNotification("Referral processed successfully!");
-                }
-            });
-        } catch (error) {
-            console.error('Error processing referral:', error);
-            showNotification("Error processing referral", "error");
-        }
-    }
-    
     function selectRandomCountry() {
         return countries[Math.floor(Math.random() * countries.length)];
     }
-    
     function determineUserLevel(count) {
         if (count >= 30) return 4;
         if (count >= 20) return 3;
         if (count >= 10) return 2;
         return 1;
     }
-    
     function getLevelDetails(level) {
         return {
             1: { min: 0, max: 9,   pay: 0.10, perDay: 1 },
@@ -1415,7 +965,6 @@
             4: { min: 30, max: Infinity, pay: 0.35, perDay: 5 }
         }[level];
     }
-    
     function validateTrustpilotLink() {
         const linkInput = document.getElementById('trustpilot-link');
         const linkHint = document.getElementById('link-hint');
@@ -1437,14 +986,12 @@
         }
         validateForm();
     }
-    
     function validateForm() {
         const linkInput = document.getElementById('trustpilot-link');
         const continueButton = document.getElementById('continueButton');
         const trustpilotRegex = /^https:\/\/(?:[a-z]{2}|www)\.trustpilot\.com\/users\/.+$/;
         continueButton.disabled = !(linkInput.value && trustpilotRegex.test(linkInput.value) && reviewCount !== null);
     }
-    
     function selectReviewCount(count) {
         reviewCount = count;
         userLevel = determineUserLevel(reviewCount);
@@ -1452,22 +999,16 @@
         event.target.classList.add('selected');
         validateForm();
     }
-    
     function updateFixedButton() {
         const container = document.getElementById('fixedButtonContainer');
         const button = document.getElementById('fixedButton');
         const description = document.getElementById('fixedDescription');
         const supportButton = document.getElementById('fixedSupportButton');
-        const referralButton = document.getElementById('referralButton');
-        const earningsSection = document.getElementById('earningsSection');
-        
+        const currentSection = document.querySelector('.section.active');
         container.classList.remove('visible');
         button.style.display = 'none';
         supportButton.style.display = 'none';
-        if (referralButton) referralButton.style.display = 'none';
-        earningsSection.style.display = 'none';
-        
-        const currentSection = document.querySelector('.section.active');
+        description.textContent = '';
         if (currentSection) {
             const sectionId = currentSection.id;
             switch(sectionId) {
@@ -1510,7 +1051,7 @@
                                 button.onclick = () => window.open('https://t.me/sufyanthedev', '_blank');
                                 button.style.display = 'block';
                                 description.textContent = 'Send your profile link to admin to speed up approval';
-                                container.classList.add('visible';
+                                container.classList.add('visible');
                             }
                         }).catch(err => {
                             console.error('Error checking user status:', err);
@@ -1534,16 +1075,6 @@
                     button.style.display = 'block';
                     description.textContent = 'Only LIVE reviews will be accepted';
                     container.classList.add('visible');
-                    
-                    // Add referral button
-                    if (referralButton) {
-                        referralButton.style.display = 'block';
-                        referralButton.onclick = showReferralModal;
-                    }
-                    
-                    // Show earnings section
-                    earningsSection.style.display = 'block';
-                    updateEarningsDisplay();
                     break;
                 case 'level-system-section':
                     button.textContent = 'Back to Tasks';
@@ -1559,19 +1090,16 @@
             }
         }
     }
-    
     function showLevelSystem() {
         document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
         document.getElementById('level-section').classList.add('active');
         updateFixedButton();
     }
-    
     function showQuestion() {
         document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
         document.getElementById('question-section').classList.add('active');
         updateFixedButton();
     }
-    
     function continueToCountry() {
         trustpilotLink = document.getElementById('trustpilot-link').value;
         const trustpilotRegex = /^https:\/\/(?:[a-z]{2}|www)\.trustpilot\.com\/users\/.+$/;
@@ -1590,7 +1118,6 @@
         document.getElementById('country-section').classList.add('active');
         updateFixedButton();
     }
-    
     async function saveUserData() {
         try {
             showLoading("Submitting your application...");
@@ -1603,11 +1130,6 @@
             if (telegramUser) {
                 fullName = telegramUser.first_name + (telegramUser.last_name ? ' ' + telegramUser.last_name : '');
             }
-            
-            // Check for referral code in URL
-            const urlParams = new URLSearchParams(window.location.search);
-            const referralParam = urlParams.get('ref');
-            
             const doc = await userRef.get();
             await userRef.set({
                 trustpilotLink,
@@ -1620,25 +1142,13 @@
                 telegramUsername,
                 telegramFirstName,
                 fullName,
-                referralCode: referralCode || generateReferralCode(),
-                referralCount: 0,
-                referralEarnings: 0,
-                refereeEarnings: 0,
                 timestamp: firebase.firestore.FieldValue.serverTimestamp()
             });
-            
-            // Process referral if exists
-            if (referralParam) {
-                processReferral(referralParam);
-            }
-            
             localStorage.setItem('userId', userId);
             localStorage.setItem('reviewCount', reviewCount);
             localStorage.setItem('userLevel', userLevel);
             localStorage.setItem('trustpilotLink', trustpilotLink);
             localStorage.setItem('selectedCountry', selectedCountry);
-            localStorage.setItem('referralCode', referralCode || generateReferralCode());
-            
             hideLoading();
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
             document.getElementById('review-section').classList.add('active');
@@ -1652,7 +1162,23 @@
             showError('Error saving your data. Please try again.');
         }
     }
-    
+    async function updateReviewCount() {
+        try {
+            const userId = localStorage.getItem('userId');
+            if (!userId) return;
+            const userRef = db.collection('users').doc(userId);
+            await userRef.update({
+                reviewCount,
+                userLevel,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            });
+            localStorage.setItem('reviewCount', reviewCount);
+            localStorage.setItem('userLevel', userLevel);
+        } catch (error) {
+            console.error('Error updating review count:', error);
+            showError('Error updating your review count.');
+        }
+    }
     function markTaskComplete() {
         reviewCount++;
         userLevel = determineUserLevel(reviewCount);
@@ -1660,7 +1186,6 @@
         updateUserInfo();
         generateTaskCards();
     }
-    
     function showNotification(message, type = 'success') {
         const notification = document.getElementById('notification');
         notification.textContent = message;
@@ -1674,13 +1199,11 @@
             notification.classList.remove('show');
         }, 3000);
     }
-    
     function showLevelSystemForApprovedUser() {
         document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
         document.getElementById('level-system-section').classList.add('active');
         updateFixedButton();
     }
-    
     async function submitApplication() {
         if (!initTelegram()) {
             showError('Please open this app in Telegram to continue');
@@ -1688,7 +1211,6 @@
         }
         await saveUserData();
     }
-    
     function displayReviewSection(data) {
         const statusEl = document.getElementById('approval-status');
         const rejectedMessage = document.getElementById('rejected-message');
@@ -1706,7 +1228,6 @@
             rejectedMessage.style.display = 'none';
         }
     }
-    
     function setupApprovalListener() {
         const userId = localStorage.getItem('userId');
         if (!userId) return;
@@ -1715,7 +1236,6 @@
             if (doc.exists) {
                 const data = doc.data();
                 displayReviewSection(data);
-                
                 if (data.deleted) {
                     document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
                     document.getElementById('review-section').classList.add('active');
@@ -1726,7 +1246,6 @@
                     updateFixedButton();
                     updateUserInfo();
                     generateTaskCards();
-                    updateUserEarnings();
                 } else {
                     document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
                     document.getElementById('review-section').classList.add('active');
@@ -1738,13 +1257,11 @@
             showError('Error checking approval status.');
         });
     }
-    
     function generateTaskCards() {
         const container = document.getElementById('taskCards');
         container.innerHTML = '';
         const tasksToShow = userLevel >= 4 ? 5 : (userLevel >= 3 ? 4 : 1);
         const levelDetails = getLevelDetails(userLevel);
-        
         for (let i = 0; i < tasksToShow && i < tasks.length; i++) {
             const card = document.createElement('div');
             card.className = 'task-card';
@@ -1760,14 +1277,10 @@
             `;
             container.appendChild(card);
         }
-        
-        updateEarningsDisplay();
     }
-    
     function submitToAdmin() {
         window.location.href = "https://t.me/sufyanthedev";
     }
-    
     async function resubmitApplication() {
         const userId = localStorage.getItem('userId');
         if (!userId) return;
@@ -1795,7 +1308,6 @@
             showError('Error resubmitting application. Please try again.');
         }
     }
-    
     async function restoreUserState() {
         const userId = localStorage.getItem('userId');
         if (!userId) return false;
@@ -1813,15 +1325,10 @@
             userLevel = parseInt(localStorage.getItem('userLevel'));
             trustpilotLink = localStorage.getItem('trustpilotLink');
             selectedCountry = localStorage.getItem('selectedCountry');
-            referralCode = localStorage.getItem('referralCode');
-            referralCount = data.referralCount || 0;
-            referralEarnings = data.referralEarnings || 0;
-            
             if ([reviewCount, userLevel, trustpilotLink, selectedCountry].some(v => v === null || v === undefined)) {
                 localStorage.clear();
                 return false;
             }
-            
             displayReviewSection(data);
             if (data.deleted) {
                 document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
@@ -1835,7 +1342,6 @@
                 updateFixedButton();
                 updateUserInfo();
                 generateTaskCards();
-                updateUserEarnings();
                 return true;
             }
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
@@ -1849,39 +1355,18 @@
             return false;
         }
     }
-    
-    function updateUserEarnings() {
-        const userId = localStorage.getItem('userId');
-        if (!userId) return;
-        
-        db.collection('users').doc(userId).get().then(doc => {
-            if (doc.exists) {
-                const data = doc.data();
-                referralCount = data.referralCount || 0;
-                referralEarnings = data.referralEarnings || 0;
-                updateEarningsDisplay();
-            }
-        }).catch(err => {
-            console.error('Error updating earnings:', err);
-        });
-    }
-    
     document.addEventListener('DOMContentLoaded', async () => {
         const telegramOK = initTelegram();
         if (!telegramOK) {
             document.querySelector('.message-box').innerHTML += '<br><br><strong style="color:#dc3545;">Error:</strong> Open this app in Telegram.';
         }
-        
         const restored = await restoreUserState();
         if (!restored) {
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
             document.getElementById('welcome-section').classList.add('active');
             updateFixedButton();
-        } else {
-            updateUserEarnings();
         }
     });
-    
     document.addEventListener('touchstart', () => {}, { passive: true });
     </script>
 </body>
