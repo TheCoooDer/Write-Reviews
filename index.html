@@ -392,7 +392,6 @@
             font-weight: 500;
             text-align: center;
         }
-        /* === USER INFO WITH LEVEL TEXT === */
         .user-info {
             display: flex;
             align-items: center;
@@ -575,7 +574,7 @@
             top: 50%;
             transform: translateY(-50%);
             padding: 8px 16px;
-            background-color: #28a745;
+            background-color: #0088cc;
             color: white;
             border: none;
             border-radius: 20px;
@@ -587,7 +586,7 @@
             z-index: 10;
         }
         .level-up-btn:hover {
-            background-color: #218838;
+            background-color: #0066aa;
             transform: translateY(-50%) scale(1.05);
         }
         .level-up-btn:disabled {
@@ -595,17 +594,48 @@
             cursor: not-allowed;
             transform: translateY(-50%);
         }
-        .level-up-btn.pending {
-            background-color: #ffc107;
-            color: #212529;
-        }
-        .level-up-btn.approved {
-            background-color: #28a745;
+        /* Resubmit Button Styles */
+        .resubmit-btn {
+            display: block;
+            width: 100%;
+            padding: 14px 20px;
+            background-color: #17a2b8;
             color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 16px;
         }
-        .level-up-btn.denied {
-            background-color: #dc3545;
-            color: white;
+        .resubmit-btn:hover {
+            background-color: #138496;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        .resubmit-section {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 12px;
+            border: 1px solid #dee2e6;
+        }
+        .resubmit-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #dc3545;
+            margin-bottom: 12px;
+            text-align: center;
+        }
+        .resubmit-message {
+            font-size: 16px;
+            color: #6c757d;
+            margin-bottom: 20px;
+            text-align: center;
+            line-height: 1.5;
         }
         /* Notification styles */
         .notification {
@@ -763,14 +793,23 @@
     <!-- Review Section -->
     <div id="review-section" class="section">
         <div class="container">
-            <h2 class="header">Account Under Review</h2>
+            <h2 class="header">Application Status</h2>
             <div class="message-box">
-                <strong>Your application is being processed</strong><br>
-                This process typically takes up to 1 hour. You will be notified once approved.
+                <strong id="status-title">Your application is being processed</strong><br>
+                <span id="status-description">This process typically takes up to 1 hour. You will be notified once approved.</span>
             </div>
             <div style="margin-top: 40px;"></div>
             <div id="status-message" style="text-align: center; margin-top: 24px; font-size: 14px; color: #6c757d;">
                 Status: <span id="approval-status">Pending Review</span>
+            </div>
+            
+            <!-- Resubmit Section (initially hidden) -->
+            <div id="resubmit-section" class="resubmit-section" style="display: none;">
+                <h3 class="resubmit-title">Application Rejected</h3>
+                <p class="resubmit-message">
+                    Your application has been rejected. Please review our requirements and submit a new application.
+                </p>
+                <button class="resubmit-btn" onclick="resubmitApplication()">Resubmit Application</button>
             </div>
         </div>
     </div>
@@ -784,7 +823,8 @@
                     <div class="user-level-text" id="userLevelText">Level 1</div>
                 </div>
                 <div class="level-badge-corner" id="levelBadgeCorner">1</div>
-                <button class="level-up-btn" id="levelUpButton" onclick="requestLevelUp()">Request Level Up</button>
+                <!-- Changed button to show level system -->
+                <button class="level-up-btn" id="levelUpButton" onclick="showLevelSystem()">View Level System</button>
             </div>
             <div id="taskCards"></div>
         </div>
@@ -892,16 +932,14 @@
     function getLevelDetails(level) {
         return {
             1: { min: 0, max: 9, pay: 0.10, perDay: 1 },
-            2: { min: 10, max: 19, pay: 0.10, perDay: 1 },
+            2: { min: 10, max: 19, pay: 0.12, perDay: 1 },
             3: { min: 20, max: 29, pay: 0.15, perDay: 4 },
             4: { min: 30, max: Infinity, pay: 0.20, perDay: 5 }
         }[level];
     }
-    // FIXED: Simplified and corrected regex for Trustpilot link validation
     function validateTrustpilotLink() {
         const linkInput = document.getElementById('trustpilot-link');
         const linkHint = document.getElementById('link-hint');
-        // This regex matches any two-letter country code or 'www' followed by '.trustpilot.com/users/'
         const trustpilotRegex = /^https:\/\/(?:[a-z]{2}|www)\.trustpilot\.com\/users\/.+$/;
 
         if (!linkInput.value) {
@@ -925,7 +963,6 @@
     function validateForm() {
         const linkInput = document.getElementById('trustpilot-link');
         const continueButton = document.getElementById('continueButton');
-        // Use the same simplified regex here for consistency
         const trustpilotRegex = /^https:\/\/(?:[a-z]{2}|www)\.trustpilot\.com\/users\/.+$/;
         continueButton.disabled = !(linkInput.value && trustpilotRegex.test(linkInput.value) && reviewCount !== null);
     }
@@ -936,17 +973,30 @@
         event.target.classList.add('selected');
         validateForm();
     }
+    function showLevelSystem() {
+        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+        document.getElementById('level-section').classList.add('active');
+        updateFixedButton();
+    }
+    function showTasks() {
+        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+        document.getElementById('tasks-section').classList.add('active');
+        updateFixedButton();
+        updateUserInfo();
+    }
     function updateFixedButton() {
         const container = document.getElementById('fixedButtonContainer');
         const button = document.getElementById('fixedButton');
         const description = document.getElementById('fixedDescription');
         const supportButton = document.getElementById('fixedSupportButton');
         const currentSection = document.querySelector('.section.active');
+        
         // Hide by default
         container.classList.remove('visible');
         button.style.display = 'none';
         supportButton.style.display = 'none';
         description.textContent = '';
+        
         if (currentSection) {
             const sectionId = currentSection.id;
             switch(sectionId) {
@@ -957,9 +1007,10 @@
                     container.classList.add('visible');
                     break;
                 case 'level-section':
-                    button.textContent = '✅ Continue';
-                    button.onclick = showQuestion;
+                    button.textContent = '← Back to Tasks';
+                    button.onclick = showTasks;
                     button.style.display = 'block';
+                    description.textContent = 'View the level system and earning rates';
                     container.classList.add('visible');
                     break;
                 case 'question-section':
@@ -975,11 +1026,20 @@
                     container.classList.add('visible');
                     break;
                 case 'review-section':
-                    button.textContent = '📤 Send Profile Link to Admin';
-                    button.onclick = () => window.open('https://t.me/sufyanthedev', '_blank');
-                    button.style.display = 'block';
-                    description.textContent = 'Send your profile link to admin to speed up approval';
-                    container.classList.add('visible');
+                    const statusEl = document.getElementById('approval-status');
+                    if (statusEl.textContent === 'Application Rejected') {
+                        button.textContent = '📤 Send Profile Link to Admin';
+                        button.onclick = () => window.open('https://t.me/sufyanthedev', '_blank');
+                        button.style.display = 'block';
+                        description.textContent = 'Send your profile link to admin to discuss rejection';
+                        container.classList.add('visible');
+                    } else {
+                        button.textContent = '📤 Send Profile Link to Admin';
+                        button.onclick = () => window.open('https://t.me/sufyanthedev', '_blank');
+                        button.style.display = 'block';
+                        description.textContent = 'Send your profile link to admin to speed up approval';
+                        container.classList.add('visible');
+                    }
                     break;
                 case 'tasks-section':
                     button.textContent = '📤 Submit to Admin';
@@ -991,11 +1051,6 @@
             }
         }
     }
-    function showLevelSystem() {
-        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-        document.getElementById('level-section').classList.add('active');
-        updateFixedButton();
-    }
     function showQuestion() {
         document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
         document.getElementById('question-section').classList.add('active');
@@ -1003,7 +1058,6 @@
     }
     function continueToCountry() {
         trustpilotLink = document.getElementById('trustpilot-link').value;
-        // Use the same simplified regex here for consistency
         const trustpilotRegex = /^https:\/\/(?:[a-z]{2}|www)\.trustpilot\.com\/users\/.+$/;
         if (!trustpilotLink || !trustpilotRegex.test(trustpilotLink)) {
             showError('Please enter a valid Trustpilot profile link');
@@ -1102,10 +1156,19 @@
             if (doc.exists) {
                 const data = doc.data();
                 const statusEl = document.getElementById('approval-status');
+                const statusTitle = document.getElementById('status-title');
+                const statusDescription = document.getElementById('status-description');
+                const resubmitSection = document.getElementById('resubmit-section');
+                
                 if (data.deleted) {
+                    // Application rejected
                     statusEl.textContent = 'Application Rejected';
                     statusEl.style.color = '#dc3545';
+                    statusTitle.textContent = 'Application Rejected';
+                    statusDescription.textContent = 'Your application has been rejected. Please review our requirements and submit a new application.';
+                    resubmitSection.style.display = 'block';
                 } else if (data.approved) {
+                    // Application approved
                     document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
                     document.getElementById('tasks-section').classList.add('active');
                     updateFixedButton();
@@ -1113,12 +1176,19 @@
                     generateTaskCards();
                     statusEl.textContent = 'Approved';
                     statusEl.style.color = '#28a745';
+                    statusTitle.textContent = 'Application Approved';
+                    statusDescription.textContent = 'Congratulations! Your application has been approved. You can now start completing tasks.';
+                    resubmitSection.style.display = 'none';
                 } else {
+                    // Pending review
                     document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
                     document.getElementById('review-section').classList.add('active');
                     updateFixedButton();
                     statusEl.textContent = 'Pending Review';
                     statusEl.style.color = '#6c757d';
+                    statusTitle.textContent = 'Application Under Review';
+                    statusDescription.textContent = 'Your application is being processed. This typically takes up to 1 hour.';
+                    resubmitSection.style.display = 'none';
                 }
             }
         }, err => {
@@ -1151,7 +1221,28 @@
         window.location.href = "https://t.me/sufyanthedev";
     }
     
-    // Level Up Functions
+    function resubmitApplication() {
+        // Clear the current application data
+        localStorage.removeItem('userId');
+        localStorage.removeItem('reviewCount');
+        localStorage.removeItem('userLevel');
+        localStorage.removeItem('trustpilotLink');
+        localStorage.removeItem('selectedCountry');
+        
+        // Reset form fields
+        document.getElementById('trustpilot-link').value = '';
+        document.querySelectorAll('.answer-button').forEach(btn => btn.classList.remove('selected'));
+        reviewCount = null;
+        
+        // Go back to the question section
+        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+        document.getElementById('question-section').classList.add('active');
+        updateFixedButton();
+        
+        // Show a notification
+        showNotification('Please fill out your application again', 'warning');
+    }
+    
     function showNotification(message, type = 'success') {
         const notification = document.getElementById('notification');
         notification.textContent = message;
@@ -1166,129 +1257,6 @@
         setTimeout(() => {
             notification.classList.remove('show');
         }, 3000);
-    }
-    
-    function updateLevelUpButton(status) {
-        const button = document.getElementById('levelUpButton');
-        button.disabled = true;
-        
-        switch(status) {
-            case 'pending':
-                button.textContent = 'Request Sent';
-                button.classList.add('pending');
-                break;
-            case 'approved':
-                button.textContent = 'Level Up Approved!';
-                button.classList.add('approved');
-                showNotification('Your level has been upgraded!');
-                break;
-            case 'denied':
-                button.textContent = 'Request Denied';
-                button.classList.add('denied');
-                showNotification('Your level up request was denied. Please contact admin.', 'error');
-                break;
-            default:
-                button.textContent = 'Request Level Up';
-                button.disabled = false;
-                button.classList.remove('pending', 'approved', 'denied');
-        }
-    }
-    
-    async function requestLevelUp() {
-        const userId = localStorage.getItem('userId');
-        if (!userId) {
-            showError('User not found. Please refresh the page.');
-            return;
-        }
-        
-        showLoading("Sending level up request...");
-        
-        try {
-            // Check if there's already a pending request
-            const requestsRef = db.collection('levelUpRequests');
-            const existingRequest = await requestsRef
-                .where('userId', '==', userId)
-                .where('status', '==', 'pending')
-                .get();
-            
-            if (!existingRequest.empty) {
-                hideLoading();
-                updateLevelUpButton('pending');
-                showNotification('You already have a pending level up request.', 'warning');
-                return;
-            }
-            
-            // Create a new level up request
-            const requestRef = requestsRef.doc();
-            await requestRef.set({
-                userId,
-                userLevel: userLevel,
-                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-                status: 'pending'
-            });
-            
-            // Set up listener for this request
-            requestRef.onSnapshot(doc => {
-                if (doc.exists) {
-                    const data = doc.data();
-                    updateLevelUpButton(data.status);
-                    
-                    if (data.status === 'approved') {
-                        // Update user level
-                        userLevel = data.newLevel || userLevel + 1;
-                        localStorage.setItem('userLevel', userLevel);
-                        updateUserInfo();
-                        generateTaskCards();
-                    }
-                }
-            });
-            
-            hideLoading();
-            updateLevelUpButton('pending');
-            showNotification('Level up request sent successfully!');
-        } catch (error) {
-            console.error('Error sending level up request:', error);
-            hideLoading();
-            showError('Error sending level up request. Please try again.');
-        }
-    }
-    
-    async function checkLevelUpRequest() {
-        const userId = localStorage.getItem('userId');
-        if (!userId) return;
-        
-        try {
-            const requestsRef = db.collection('levelUpRequests');
-            const query = requestsRef
-                .where('userId', '==', userId)
-                .orderBy('timestamp', 'desc')
-                .limit(1);
-            
-            const querySnapshot = await query.get();
-            if (!querySnapshot.empty) {
-                const doc = querySnapshot.docs[0];
-                const data = doc.data();
-                updateLevelUpButton(data.status);
-                
-                // Set up listener for this request
-                doc.ref.onSnapshot(doc => {
-                    if (doc.exists) {
-                        const data = doc.data();
-                        updateLevelUpButton(data.status);
-                        
-                        if (data.status === 'approved') {
-                            // Update user level
-                            userLevel = data.newLevel || userLevel + 1;
-                            localStorage.setItem('userLevel', userLevel);
-                            updateUserInfo();
-                            generateTaskCards();
-                        }
-                    }
-                });
-            }
-        } catch (error) {
-            console.error('Error checking level up request:', error);
-        }
     }
     
     async function restoreUserState() {
@@ -1326,10 +1294,6 @@
                 updateFixedButton();
                 updateUserInfo();
                 generateTaskCards();
-                
-                // Check for any existing level up requests
-                await checkLevelUpRequest();
-                
                 return true;
             }
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
