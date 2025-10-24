@@ -23,6 +23,8 @@
             --text-secondary: #666666;
             --border-color: #e0e0e0;
             --error-color: #dc3545;
+            --success-color: #28a745;
+            --warning-color: #ffc107;
             --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
             --transition: all 0.3s ease;
         }
@@ -36,7 +38,7 @@
             background-color: var(--background-color);
             color: var(--text-color);
             line-height: 1.6;
-            padding-bottom: 100px;
+            padding-bottom: 120px;
             transition: var(--transition);
             overflow-x: hidden;
             min-height: 100vh;
@@ -136,6 +138,19 @@
         .error-box.visible {
             display: block;
         }
+        .success-box {
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 16px;
+            font-size: 14px;
+            color: #155724;
+            display: none;
+        }
+        .success-box.visible {
+            display: block;
+        }
         .btn {
             display: block;
             width: 100%;
@@ -152,7 +167,12 @@
             box-shadow: var(--shadow);
             margin-bottom: 16px;
         }
-        .btn:hover {
+        .btn:disabled {
+            background-color: #6c757d;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .btn:hover:not(:disabled) {
             background-color: var(--primary-hover);
             transform: translateY(-2px);
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
@@ -166,7 +186,7 @@
             background-color: var(--secondary-color);
             margin-top: 16px;
         }
-        .btn-support:hover {
+        .btn-support:hover:not(:disabled) {
             background-color: var(--secondary-hover);
         }
         .input-group {
@@ -194,7 +214,7 @@
             box-shadow: 0 0 0 3px rgba(0, 136, 204, 0.1);
         }
         .input-field.valid {
-            border-color: var(--secondary-color);
+            border-color: var(--success-color);
         }
         .input-field.invalid {
             border-color: var(--error-color);
@@ -520,7 +540,7 @@
         .fixed-button-container .btn-support {
             background-color: var(--secondary-color);
         }
-        .fixed-button-container .btn-support:hover {
+        .fixed-button-container .btn-support:hover:not(:disabled) {
             background-color: var(--secondary-hover);
         }
         .fixed-description {
@@ -529,6 +549,7 @@
             color: var(--text-secondary);
             margin-bottom: 8px;
         }
+        /* Enhanced Media Queries */
         @media (max-width: 480px) {
             .level-grid {
                 grid-template-columns: 1fr;
@@ -565,6 +586,72 @@
                 padding: 12px;
             }
         }
+        
+        @media (max-width: 360px) {
+            .container {
+                padding: 0 12px;
+            }
+            .header {
+                font-size: 20px;
+            }
+            .btn {
+                padding: 12px 16px;
+                font-size: 14px;
+            }
+            .input-field {
+                padding: 10px 14px;
+                font-size: 14px;
+            }
+        }
+        
+        @media (max-width: 320px) {
+            .container {
+                padding: 0 8px;
+            }
+            .header {
+                font-size: 18px;
+            }
+            .btn {
+                padding: 10px 14px;
+                font-size: 13px;
+            }
+            .input-field {
+                padding: 8px 12px;
+                font-size: 13px;
+            }
+        }
+        
+        @media (orientation: landscape) and (max-height: 600px) {
+            body {
+                padding-bottom: 80px;
+            }
+            .fixed-button-container {
+                padding: 8px;
+            }
+            .section {
+                padding: 10px 0;
+            }
+        }
+        
+        /* Accessibility improvements */
+        .btn:focus, .input-field:focus, .answer-button:focus {
+            outline: 3px solid #0088cc;
+            outline-offset: 2px;
+        }
+        
+        /* Touch-friendly styles */
+        @media (hover: none) and (pointer: coarse) {
+            .btn, .answer-button {
+                min-height: 48px;
+                padding: 16px;
+            }
+            
+            .input-field {
+                min-height: 48px;
+                padding: 14px;
+            }
+        }
+        
         .level-up-btn {
             position: absolute;
             right: 16px;
@@ -582,7 +669,7 @@
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             z-index: 10;
         }
-        .level-up-btn:hover {
+        .level-up-btn:hover:not(:disabled) {
             background-color: #218838;
             transform: translateY(-50%) scale(1.05);
         }
@@ -602,32 +689,6 @@
         .level-up-btn.denied {
             background-color: #dc3545;
             color: white;
-        }
-        .notification {
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: #28a745;
-            color: white;
-            padding: 16px 24px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            z-index: 10000;
-            font-size: 16px;
-            font-weight: 600;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        .notification.show {
-            opacity: 1;
-        }
-        .notification.error {
-            background-color: #dc3545;
-        }
-        .notification.warning {
-            background-color: #ffc107;
-            color: #212529;
         }
         .rejected-message {
             background-color: #f8d7da;
@@ -742,8 +803,11 @@
                     <button class="answer-button" onclick="selectReviewCount(30)">30+ reviews</button>
                 </div>
             </div>
-            <div class="error-box" id="section-error">
+            <div class="error-box" id="error-box">
                 <span id="error-message"></span>
+            </div>
+            <div class="success-box" id="success-box">
+                <span id="success-message"></span>
             </div>
         </div>
     </div>
@@ -864,7 +928,6 @@
         <div class="spinner"></div>
         <p class="loading-text">Loading...</p>
     </div>
-    <div id="notification" class="notification"></div>
     <script>
     const firebaseConfig = {
       apiKey: "AIzaSyAxtDaiDZdNA8Zl9OgNVbkYEDdKywo3F4Q",
@@ -879,35 +942,56 @@
     const db = firebase.firestore();
     let tg;
     let telegramUser = null;
+    
     function showLoading(message = "Loading...") {
         const overlay = document.getElementById('loadingOverlay');
         const text = overlay.querySelector('.loading-text');
         text.textContent = message;
         overlay.style.display = 'flex';
     }
+    
     function hideLoading() {
         document.getElementById('loadingOverlay').style.display = 'none';
     }
+    
     function showError(message) {
-        const errorBox = document.getElementById('section-error');
+        const errorBox = document.getElementById('error-box');
         const errorMessage = document.getElementById('error-message');
         errorMessage.textContent = message;
         errorBox.classList.add('visible');
         setTimeout(() => errorBox.classList.remove('visible'), 5000);
     }
-    function initTelegram() {
-        if (window.Telegram && window.Telegram.WebApp) {
-            tg = window.Telegram.WebApp;
-            tg.ready();
-            telegramUser = tg.initDataUnsafe.user;
-            localStorage.setItem('telegramUserId', telegramUser.id);
-            localStorage.setItem('telegramUsername', telegramUser.username);
-            localStorage.setItem('telegramFirstName', telegramUser.first_name);
-            updateUserInfo();
-            return true;
-        }
-        return false;
+    
+    function showSuccess(message) {
+        const successBox = document.getElementById('success-box');
+        const successMessage = document.getElementById('success-message');
+        successMessage.textContent = message;
+        successBox.classList.add('visible');
+        setTimeout(() => successBox.classList.remove('visible'), 5000);
     }
+    
+    function initTelegram() {
+        try {
+            if (window.Telegram && window.Telegram.WebApp) {
+                tg = window.Telegram.WebApp;
+                tg.ready();
+                telegramUser = tg.initDataUnsafe.user;
+                if (telegramUser) {
+                    localStorage.setItem('telegramUserId', telegramUser.id);
+                    localStorage.setItem('telegramUsername', telegramUser.username);
+                    localStorage.setItem('telegramFirstName', telegramUser.first_name);
+                    updateUserInfo();
+                    return true;
+                }
+            }
+            return false;
+        } catch (error) {
+            console.error('Telegram initialization error:', error);
+            showError('Error initializing Telegram. Please try again.');
+            return false;
+        }
+    }
+    
     function updateUserInfo() {
         if (telegramUser) {
             const userInfo = document.getElementById('userInfo');
@@ -916,26 +1000,32 @@
             const userLevelText = document.getElementById('userLevelText');
             const levelBadge = document.getElementById('levelBadgeCorner');
             const levelUpButton = document.getElementById('levelUpButton');
+            
             userInfo.style.display = 'flex';
+            
             if (telegramUser.photo_url) {
                 userAvatar.src = telegramUser.photo_url;
             } else {
                 const name = telegramUser.first_name;
                 userAvatar.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=0088cc&color=fff&size=60`;
             }
+            
             const fullName = telegramUser.first_name + (telegramUser.last_name ? ' ' + telegramUser.last_name : '');
             userName.textContent = fullName;
             userLevelText.textContent = `Level ${userLevel || 1}`;
             levelBadge.textContent = userLevel || 1;
+            
             levelBadge.style.backgroundColor = 
                 (userLevel === 1) ? '#0d47a1' :
                 (userLevel === 2) ? '#2e7d32' :
                 (userLevel === 3) ? '#ff8f00' :
                 '#c62828';
+                
             levelUpButton.textContent = 'View Level System';
             levelUpButton.onclick = showLevelSystemForApprovedUser;
         }
     }
+    
     const tasks = [
         { id: 1, title: "Trustpilot Review 1", description: "✅ Give a 5-star Trustpilot review\n💰 Instant payment via Binance\n💵 $0.20 per review", trustpilotUrl: "https://www.trustpilot.com/review/bump-box.online" },
         { id: 2, title: "Trustpilot Review 2", description: "✅ Give a 5-star Trustpilot review\n💰 Instant payment via Binance\n💵 $0.20 per review", trustpilotUrl: "https://www.trustpilot.com/review/riffs.online" },
@@ -943,20 +1033,24 @@
         { id: 4, title: "Trustpilot Review 4", description: "✅ Give a 5-star Trustpilot review\n💰 Instant payment via Binance\n💵 $0.20 per review", trustpilotUrl: "https://www.trustpilot.com/review/noodl.online" },
         { id: 5, title: "Trustpilot Review 5", description: "✅ Give a 5-star Trustpilot review\n💰 Instant payment via Binance\n💵 $0.20 per review", trustpilotUrl: "https://www.trustpilot.com/review/holloway.world" }
     ];
+    
     const countries = ["Australia", "Canada", "Ireland", "Netherlands", "Germany"];
     let reviewCount = null;
     let userLevel = null;
     let selectedCountry = "";
     let trustpilotLink = "";
+    
     function selectRandomCountry() {
         return countries[Math.floor(Math.random() * countries.length)];
     }
+    
     function determineUserLevel(count) {
         if (count >= 30) return 4;
         if (count >= 20) return 3;
         if (count >= 10) return 2;
         return 1;
     }
+    
     function getLevelDetails(level) {
         return {
             1: { min: 0, max: 9,   pay: 0.10, perDay: 1 },
@@ -965,10 +1059,12 @@
             4: { min: 30, max: Infinity, pay: 0.35, perDay: 5 }
         }[level];
     }
+    
     function validateTrustpilotLink() {
         const linkInput = document.getElementById('trustpilot-link');
         const linkHint = document.getElementById('link-hint');
         const trustpilotRegex = /^https:\/\/(?:[a-z]{2}|www)\.trustpilot\.com\/users\/.+$/;
+        
         if (!linkInput.value) {
             linkInput.classList.remove('valid', 'invalid');
             linkHint.classList.remove('error');
@@ -984,171 +1080,213 @@
             linkHint.classList.add('error');
             linkHint.textContent = 'Invalid format. Example: https://www.trustpilot.com/users/username';
         }
+        
         validateForm();
     }
+    
     function validateForm() {
         const linkInput = document.getElementById('trustpilot-link');
-        const continueButton = document.getElementById('continueButton');
         const trustpilotRegex = /^https:\/\/(?:[a-z]{2}|www)\.trustpilot\.com\/users\/.+$/;
-        continueButton.disabled = !(linkInput.value && trustpilotRegex.test(linkInput.value) && reviewCount !== null);
+        const continueButton = document.getElementById('fixedButton');
+        
+        if (!continueButton) return;
+        
+        const isValidLink = linkInput.value && trustpilotRegex.test(linkInput.value);
+        const isReviewCountSelected = reviewCount !== null;
+        
+        continueButton.disabled = !(isValidLink && isReviewCountSelected);
     }
+    
     function selectReviewCount(count) {
         reviewCount = count;
         userLevel = determineUserLevel(reviewCount);
+        
         document.querySelectorAll('.answer-button').forEach(btn => btn.classList.remove('selected'));
         event.target.classList.add('selected');
+        
         validateForm();
     }
+    
     function updateFixedButton() {
         const container = document.getElementById('fixedButtonContainer');
         const button = document.getElementById('fixedButton');
         const description = document.getElementById('fixedDescription');
         const supportButton = document.getElementById('fixedSupportButton');
-        const currentSection = document.querySelector('.section.active');
+        
+        // Reset visibility
         container.classList.remove('visible');
         button.style.display = 'none';
         supportButton.style.display = 'none';
         description.textContent = '';
-        if (currentSection) {
-            const sectionId = currentSection.id;
-            switch(sectionId) {
-                case 'welcome-section':
-                    button.textContent = '✅ I Understand - Continue';
-                    button.onclick = showLevelSystem;
-                    button.style.display = 'block';
-                    container.classList.add('visible');
-                    break;
-                case 'level-section':
-                    button.textContent = '✅ Continue';
-                    button.onclick = showQuestion;
-                    button.style.display = 'block';
-                    container.classList.add('visible');
-                    break;
-                case 'question-section':
-                    button.textContent = 'Continue';
-                    button.onclick = continueToCountry;
-                    button.style.display = 'block';
-                    container.classList.add('visible');
-                    break;
-                case 'country-section':
-                    button.textContent = 'Submit Application';
-                    button.onclick = submitApplication;
-                    button.style.display = 'block';
-                    container.classList.add('visible');
-                    break;
-                case 'review-section':
-                    const userId = localStorage.getItem('userId');
-                    if (userId) {
-                        db.collection('users').doc(userId).get().then(doc => {
-                            if (doc.exists && doc.data().deleted) {
-                                button.textContent = '🔄 Resubmit Application';
-                                button.onclick = resubmitApplication;
-                                button.style.display = 'block';
-                                description.textContent = 'Click to resubmit your application';
-                                container.classList.add('visible');
-                            } else {
-                                button.textContent = '📤 Send Profile Link to Admin';
-                                button.onclick = () => window.open('https://t.me/sufyanthedev', '_blank');
-                                button.style.display = 'block';
-                                description.textContent = 'Send your profile link to admin to speed up approval';
-                                container.classList.add('visible');
-                            }
-                        }).catch(err => {
-                            console.error('Error checking user status:', err);
+        
+        const currentSection = document.querySelector('.section.active');
+        if (!currentSection) return;
+        
+        const sectionId = currentSection.id;
+        
+        // Adjust for different screen sizes
+        if (window.innerWidth <= 480) {
+            container.style.padding = '12px';
+        } else {
+            container.style.padding = '16px';
+        }
+        
+        switch(sectionId) {
+            case 'welcome-section':
+                button.textContent = '✅ I Understand - Continue';
+                button.onclick = showLevelSystem;
+                button.style.display = 'block';
+                container.classList.add('visible');
+                break;
+            case 'level-section':
+                button.textContent = '✅ Continue';
+                button.onclick = showQuestion;
+                button.style.display = 'block';
+                container.classList.add('visible');
+                break;
+            case 'question-section':
+                button.textContent = 'Continue';
+                button.onclick = continueToCountry;
+                button.style.display = 'block';
+                container.classList.add('visible');
+                break;
+            case 'country-section':
+                button.textContent = 'Submit Application';
+                button.onclick = submitApplication;
+                button.style.display = 'block';
+                container.classList.add('visible');
+                break;
+            case 'review-section':
+                const userId = localStorage.getItem('userId');
+                if (userId) {
+                    db.collection('users').doc(userId).get().then(doc => {
+                        if (doc.exists && doc.data().deleted) {
+                            button.textContent = '🔄 Resubmit Application';
+                            button.onclick = resubmitApplication;
+                            button.style.display = 'block';
+                            description.textContent = 'Click to resubmit your application';
+                            container.classList.add('visible');
+                        } else {
                             button.textContent = '📤 Send Profile Link to Admin';
                             button.onclick = () => window.open('https://t.me/sufyanthedev', '_blank');
                             button.style.display = 'block';
                             description.textContent = 'Send your profile link to admin to speed up approval';
                             container.classList.add('visible');
-                        });
-                    } else {
+                        }
+                    }).catch(err => {
+                        console.error('Error checking user status:', err);
                         button.textContent = '📤 Send Profile Link to Admin';
                         button.onclick = () => window.open('https://t.me/sufyanthedev', '_blank');
                         button.style.display = 'block';
                         description.textContent = 'Send your profile link to admin to speed up approval';
                         container.classList.add('visible');
-                    }
-                    break;
-                case 'tasks-section':
-                    button.textContent = '📤 Submit to Admin';
-                    button.onclick = submitToAdmin;
+                    });
+                } else {
+                    button.textContent = '📤 Send Profile Link to Admin';
+                    button.onclick = () => window.open('https://t.me/sufyanthedev', '_blank');
                     button.style.display = 'block';
-                    description.textContent = 'Only LIVE reviews will be accepted';
+                    description.textContent = 'Send your profile link to admin to speed up approval';
                     container.classList.add('visible');
-                    break;
-                case 'level-system-section':
-                    button.textContent = 'Back to Tasks';
-                    button.onclick = () => {
-                        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-                        document.getElementById('tasks-section').classList.add('active');
-                        updateFixedButton();
-                        updateUserInfo();
-                    };
-                    button.style.display = 'block';
-                    container.classList.add('visible');
-                    break;
-            }
+                }
+                break;
+            case 'tasks-section':
+                button.textContent = '📤 Submit to Admin';
+                button.onclick = submitToAdmin;
+                button.style.display = 'block';
+                description.textContent = 'Only LIVE reviews will be accepted';
+                container.classList.add('visible');
+                break;
+            case 'level-system-section':
+                button.textContent = 'Back to Tasks';
+                button.onclick = () => {
+                    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+                    document.getElementById('tasks-section').classList.add('active');
+                    updateFixedButton();
+                    updateUserInfo();
+                };
+                button.style.display = 'block';
+                container.classList.add('visible');
+                break;
+        }
+        
+        // Adjust button position on smaller screens
+        if (window.innerWidth <= 360) {
+            container.style.bottom = '10px';
+        } else {
+            container.style.bottom = '0';
         }
     }
+    
     function showLevelSystem() {
         document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
         document.getElementById('level-section').classList.add('active');
         updateFixedButton();
     }
+    
     function showQuestion() {
         document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
         document.getElementById('question-section').classList.add('active');
         updateFixedButton();
     }
+    
     function continueToCountry() {
         trustpilotLink = document.getElementById('trustpilot-link').value;
         const trustpilotRegex = /^https:\/\/(?:[a-z]{2}|www)\.trustpilot\.com\/users\/.+$/;
+        
         if (!trustpilotLink || !trustpilotRegex.test(trustpilotLink)) {
             showError('Please enter a valid Trustpilot profile link');
             return;
         }
+        
         if (reviewCount === null) {
             showError('Please select your review count');
             return;
         }
+        
         selectedCountry = selectRandomCountry();
         document.getElementById('selectedCountry').textContent = selectedCountry;
         document.getElementById('countryNameInText').textContent = selectedCountry;
+        
         document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
         document.getElementById('country-section').classList.add('active');
         updateFixedButton();
     }
+    
     async function saveUserData() {
         try {
             showLoading("Submitting your application...");
             const userId = trustpilotLink.split('/users/')[1];
             const userRef = db.collection('users').doc(userId);
-            const telegramUserId = localStorage.getItem('telegramUserId');
-            const telegramUsername = localStorage.getItem('telegramUsername');
-            const telegramFirstName = localStorage.getItem('telegramFirstName');
-            let fullName = '';
-            if (telegramUser) {
-                fullName = telegramUser.first_name + (telegramUser.last_name ? ' ' + telegramUser.last_name : '');
-            }
+            
+            // Check if user already exists
             const doc = await userRef.get();
-            await userRef.set({
+            const existingData = doc.exists ? doc.data() : {};
+            
+            // Merge existing data with new data
+            const userData = {
+                ...existingData,
                 trustpilotLink,
                 reviewCount,
                 userLevel,
                 selectedCountry,
-                approved: doc.exists ? doc.data().approved : false,
-                deleted: doc.exists ? doc.data().deleted : false,
-                telegramUserId,
-                telegramUsername,
-                telegramFirstName,
-                fullName,
+                approved: existingData.approved || false,
+                deleted: existingData.deleted || false,
+                telegramUserId: localStorage.getItem('telegramUserId'),
+                telegramUsername: localStorage.getItem('telegramUsername'),
+                telegramFirstName: localStorage.getItem('telegramFirstName'),
+                fullName: telegramUser ? `${telegramUser.first_name} ${telegramUser.last_name || ''}` : '',
                 timestamp: firebase.firestore.FieldValue.serverTimestamp()
-            });
+            };
+            
+            await userRef.set(userData);
+            
+            // Update localStorage with consistent data
             localStorage.setItem('userId', userId);
             localStorage.setItem('reviewCount', reviewCount);
             localStorage.setItem('userLevel', userLevel);
             localStorage.setItem('trustpilotLink', trustpilotLink);
             localStorage.setItem('selectedCountry', selectedCountry);
+            
             hideLoading();
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
             document.getElementById('review-section').classList.add('active');
@@ -1160,18 +1298,23 @@
             console.error('Error saving user data:', error);
             hideLoading();
             showError('Error saving your data. Please try again.');
+            // Clear inconsistent localStorage data
+            localStorage.removeItem('userId');
         }
     }
+    
     async function updateReviewCount() {
         try {
             const userId = localStorage.getItem('userId');
             if (!userId) return;
+            
             const userRef = db.collection('users').doc(userId);
             await userRef.update({
                 reviewCount,
                 userLevel,
                 timestamp: firebase.firestore.FieldValue.serverTimestamp()
             });
+            
             localStorage.setItem('reviewCount', reviewCount);
             localStorage.setItem('userLevel', userLevel);
         } catch (error) {
@@ -1179,6 +1322,7 @@
             showError('Error updating your review count.');
         }
     }
+    
     function markTaskComplete() {
         reviewCount++;
         userLevel = determineUserLevel(reviewCount);
@@ -1186,34 +1330,26 @@
         updateUserInfo();
         generateTaskCards();
     }
-    function showNotification(message, type = 'success') {
-        const notification = document.getElementById('notification');
-        notification.textContent = message;
-        notification.className = 'notification show';
-        if (type === 'error') {
-            notification.classList.add('error');
-        } else if (type === 'warning') {
-            notification.classList.add('warning');
-        }
-        setTimeout(() => {
-            notification.classList.remove('show');
-        }, 3000);
-    }
+    
     function showLevelSystemForApprovedUser() {
         document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
         document.getElementById('level-system-section').classList.add('active');
         updateFixedButton();
     }
+    
     async function submitApplication() {
         if (!initTelegram()) {
             showError('Please open this app in Telegram to continue');
             return;
         }
+        
         await saveUserData();
     }
+    
     function displayReviewSection(data) {
         const statusEl = document.getElementById('approval-status');
         const rejectedMessage = document.getElementById('rejected-message');
+        
         if (data.deleted) {
             statusEl.textContent = 'Application Rejected';
             statusEl.style.color = '#dc3545';
@@ -1228,14 +1364,17 @@
             rejectedMessage.style.display = 'none';
         }
     }
+    
     function setupApprovalListener() {
         const userId = localStorage.getItem('userId');
         if (!userId) return;
+        
         const userRef = db.collection('users').doc(userId);
         userRef.onSnapshot(doc => {
             if (doc.exists) {
                 const data = doc.data();
                 displayReviewSection(data);
+                
                 if (data.deleted) {
                     document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
                     document.getElementById('review-section').classList.add('active');
@@ -1257,11 +1396,17 @@
             showError('Error checking approval status.');
         });
     }
+    
     function generateTaskCards() {
         const container = document.getElementById('taskCards');
         container.innerHTML = '';
+        
         const tasksToShow = userLevel >= 4 ? 5 : (userLevel >= 3 ? 4 : 1);
         const levelDetails = getLevelDetails(userLevel);
+        
+        // Use document fragment to reduce reflows
+        const fragment = document.createDocumentFragment();
+        
         for (let i = 0; i < tasksToShow && i < tasks.length; i++) {
             const card = document.createElement('div');
             card.className = 'task-card';
@@ -1275,15 +1420,21 @@
                 </p>
                 <a href="${tasks[i].trustpilotUrl}" target="_blank" class="write-review-btn" onclick="markTaskComplete()">✍️ Write Review</a>
             `;
-            container.appendChild(card);
+            fragment.appendChild(card);
         }
+        
+        // Replace all content at once
+        container.appendChild(fragment);
     }
+    
     function submitToAdmin() {
         window.location.href = "https://t.me/sufyanthedev";
     }
+    
     async function resubmitApplication() {
         const userId = localStorage.getItem('userId');
         if (!userId) return;
+        
         showLoading("Resetting your application...");
         try {
             const userRef = db.collection('users').doc(userId);
@@ -1292,50 +1443,61 @@
                 approved: false,
                 timestamp: firebase.firestore.FieldValue.serverTimestamp()
             });
+            
             localStorage.removeItem('userId');
             localStorage.removeItem('reviewCount');
             localStorage.removeItem('userLevel');
             localStorage.removeItem('trustpilotLink');
             localStorage.removeItem('selectedCountry');
+            
             hideLoading();
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
             document.getElementById('country-section').classList.add('active');
             updateFixedButton();
-            showNotification('Application reset successfully. Please resubmit.');
+            showSuccess('Application reset successfully. Please resubmit.');
         } catch (error) {
             console.error('Error resubmitting application:', error);
             hideLoading();
             showError('Error resubmitting application. Please try again.');
         }
     }
+    
     async function restoreUserState() {
         const userId = localStorage.getItem('userId');
         if (!userId) return false;
+        
         try {
             showLoading("Restoring your session...");
             const userRef = db.collection('users').doc(userId);
             const doc = await userRef.get();
             hideLoading();
+            
             if (!doc.exists) {
                 localStorage.clear();
                 return false;
             }
+            
             const data = doc.data();
             reviewCount = parseInt(localStorage.getItem('reviewCount'));
             userLevel = parseInt(localStorage.getItem('userLevel'));
             trustpilotLink = localStorage.getItem('trustpilotLink');
             selectedCountry = localStorage.getItem('selectedCountry');
+            
+            // Validate all stored data
             if ([reviewCount, userLevel, trustpilotLink, selectedCountry].some(v => v === null || v === undefined)) {
                 localStorage.clear();
                 return false;
             }
+            
             displayReviewSection(data);
+            
             if (data.deleted) {
                 document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
                 document.getElementById('review-section').classList.add('active');
                 updateFixedButton();
                 return true;
             }
+            
             if (data.approved) {
                 document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
                 document.getElementById('tasks-section').classList.add('active');
@@ -1344,6 +1506,7 @@
                 generateTaskCards();
                 return true;
             }
+            
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
             document.getElementById('review-section').classList.add('active');
             setupApprovalListener();
@@ -1355,11 +1518,27 @@
             return false;
         }
     }
+    
+    // Debounce function for window resize
+    function debounce(func, wait) {
+        let timeout;
+        return function() {
+            const context = this;
+            const args = arguments;
+            clearTimeout(timeout);
+            timeout = setTimeout(() => func.apply(context, args), wait);
+        };
+    }
+    
+    // Update fixed button on resize
+    window.addEventListener('resize', debounce(updateFixedButton, 250));
+    
     document.addEventListener('DOMContentLoaded', async () => {
         const telegramOK = initTelegram();
         if (!telegramOK) {
             document.querySelector('.message-box').innerHTML += '<br><br><strong style="color:#dc3545;">Error:</strong> Open this app in Telegram.';
         }
+        
         const restored = await restoreUserState();
         if (!restored) {
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
@@ -1367,6 +1546,7 @@
             updateFixedButton();
         }
     });
+    
     document.addEventListener('touchstart', () => {}, { passive: true });
     </script>
 </body>
