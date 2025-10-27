@@ -9,8 +9,6 @@
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
     <!-- Telegram Web App SDK -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <!-- Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --primary-color: #0088cc;
@@ -40,7 +38,7 @@
             background-color: var(--background-color);
             color: var(--text-color);
             line-height: 1.6;
-            padding-bottom: 180px;
+            padding-bottom: 120px;
             transition: var(--transition);
             overflow-x: hidden;
             min-height: 100vh;
@@ -56,6 +54,7 @@
             display: none;
             padding: 20px 0;
             animation: fadeIn 0.3s ease;
+            min-height: calc(100vh - 120px);
         }
         .section.active {
             display: block;
@@ -64,7 +63,7 @@
             from { opacity: 0; }
             to { opacity: 1; }
         }
-        /* === LOADING ANIMATION === */
+        /* Loading Animation */
         .loading-overlay {
             position: fixed;
             top: 0;
@@ -178,11 +177,6 @@
             background-color: var(--primary-hover);
             transform: translateY(-2px);
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-        }
-        .btn-full {
-            display: block;
-            width: 100%;
-            margin: 0 auto;
         }
         .btn-support {
             background-color: var(--secondary-color);
@@ -521,63 +515,261 @@
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
-        .social-links-container {
+        /* Referral Section Styles */
+        .referral-section {
+            padding-bottom: 80px;
+        }
+        .referral-card {
             background-color: white;
             border-radius: 12px;
             padding: 20px;
             box-shadow: var(--shadow);
             margin-bottom: 20px;
-            border: 1px solid var(--border-color);
         }
-        .social-links-title {
+        .referral-title {
             font-size: 18px;
             font-weight: 600;
             color: var(--primary-color);
             margin-bottom: 16px;
             text-align: center;
         }
-        .social-links-grid {
+        .referral-code-container {
+            display: flex;
+            align-items: center;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 16px;
+        }
+        .referral-code {
+            flex: 1;
+            font-size: 18px;
+            font-weight: 700;
+            color: #333;
+            text-align: center;
+            padding: 8px;
+            background-color: white;
+            border-radius: 6px;
+            margin-right: 10px;
+            border: 1px solid var(--border-color);
+        }
+        .copy-button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 8px 12px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .copy-button:hover {
+            background-color: var(--primary-hover);
+        }
+        .referral-stats {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+        .stat-card {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 16px;
+            text-align: center;
+        }
+        .stat-card-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 4px;
+        }
+        .stat-card-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        .referral-instructions {
+            background-color: #e7f5ff;
+            border: 1px solid #b3d9ff;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 20px;
+        }
+        .referral-instructions-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #0066cc;
+            margin-bottom: 12px;
+        }
+        .referral-instructions-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        .referral-instructions-list li {
+            position: relative;
+            padding-left: 24px;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #333;
+        }
+        .referral-instructions-list li::before {
+            content: '•';
+            position: absolute;
+            left: 8px;
+            color: #0066cc;
+            font-weight: bold;
+        }
+        .share-button {
+            width: 100%;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 14px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-bottom: 16px;
+        }
+        .share-button:hover {
+            background-color: var(--primary-hover);
+        }
+        /* Social Section Styles */
+        .social-section {
+            padding-bottom: 80px;
+        }
+        .social-card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
+            transition: var(--transition);
+        }
+        .social-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+        .social-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 16px;
+            text-align: center;
+        }
+        .social-links {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
         }
         .social-link {
             display: flex;
-            flex-direction: column;
             align-items: center;
             padding: 16px;
             background-color: #f8f9fa;
-            border-radius: 12px;
+            border-radius: 8px;
             text-decoration: none;
+            color: var(--text-color);
             transition: var(--transition);
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
         .social-link:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            background-color: #e9ecef;
+            transform: translateY(-2px);
         }
         .social-icon {
-            font-size: 32px;
-            margin-bottom: 8px;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 16px;
+            font-size: 24px;
+            flex-shrink: 0;
         }
-        .social-icon.telegram-channel {
-            color: #0088cc;
+        .telegram-icon {
+            background-color: #0088cc;
+            color: white;
         }
-        .social-icon.telegram-group {
-            color: #00a8cc;
+        .facebook-icon {
+            background-color: #1877f2;
+            color: white;
         }
-        .social-icon.facebook {
-            color: #1877f2;
+        .social-details {
+            flex: 1;
         }
         .social-name {
-            font-size: 14px;
+            font-size: 16px;
             font-weight: 600;
-            text-align: center;
-            color: #333;
+            margin-bottom: 4px;
         }
-        .fixed-button-container {
+        .social-description {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        .social-arrow {
+            font-size: 20px;
+            color: var(--text-secondary);
+            margin-left: 8px;
+        }
+        /* Tab Navigation */
+        .tab-navigation {
             position: fixed;
             bottom: 0;
+            left: 0;
+            width: 100%;
+            max-width: 500px;
+            background-color: white;
+            box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 1000;
+            display: flex;
+            justify-content: space-around;
+            padding: 8px 0;
+            border-top: 1px solid var(--border-color);
+        }
+        .tab-button {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 4px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            color: var(--text-secondary);
+            font-size: 12px;
+            font-weight: 600;
+            position: relative;
+        }
+        .tab-button.active {
+            color: var(--primary-color);
+        }
+        .tab-button.active::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 3px;
+            background-color: var(--primary-color);
+            border-radius: 0 0 3px 3px;
+        }
+        .tab-icon {
+            font-size: 24px;
+            margin-bottom: 4px;
+        }
+        .tab-label {
+            font-size: 12px;
+        }
+        /* Fixed Button Container */
+        .fixed-button-container {
+            position: fixed;
+            bottom: 80px;
             left: 50%;
             transform: translateX(-50%);
             width: 100%;
@@ -585,10 +777,12 @@
             background-color: white;
             padding: 16px;
             box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.15);
-            z-index: 1000;
+            z-index: 999;
             display: flex;
             flex-direction: column;
             gap: 12px;
+            border-radius: 12px;
+            margin: 0 16px;
         }
         .fixed-button-container .btn {
             margin-bottom: 0;
@@ -604,6 +798,18 @@
             font-size: 14px;
             color: var(--text-secondary);
             margin-bottom: 8px;
+        }
+        .rejected-message {
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            border-radius: 8px;
+            padding: 16px;
+            margin-top: 20px;
+            text-align: center;
+        }
+        .rejected-message strong {
+            color: #721c24;
+            font-weight: 700;
         }
         /* Enhanced Media Queries */
         @media (max-width: 480px) {
@@ -638,18 +844,13 @@
                 top: -6px;
                 right: -6px;
             }
-            .social-links-grid {
+            .referral-stats {
                 grid-template-columns: 1fr;
-                gap: 8px;
-            }
-            .social-link {
-                padding: 12px;
-            }
-            .social-icon {
-                font-size: 28px;
             }
             .fixed-button-container {
+                bottom: 70px;
                 padding: 12px;
+                margin: 0 12px;
             }
         }
         
@@ -668,6 +869,17 @@
                 padding: 10px 14px;
                 font-size: 14px;
             }
+            .tab-icon {
+                font-size: 22px;
+            }
+            .tab-label {
+                font-size: 11px;
+            }
+            .fixed-button-container {
+                bottom: 60px;
+                padding: 10px;
+                margin: 0 8px;
+            }
         }
         
         @media (max-width: 320px) {
@@ -685,17 +897,32 @@
                 padding: 8px 12px;
                 font-size: 13px;
             }
+            .tab-icon {
+                font-size: 20px;
+            }
+            .tab-label {
+                font-size: 10px;
+            }
+            .fixed-button-container {
+                bottom: 50px;
+                padding: 8px;
+                margin: 0 4px;
+            }
         }
         
         @media (orientation: landscape) and (max-height: 600px) {
             body {
-                padding-bottom: 80px;
+                padding-bottom: 100px;
             }
-            .fixed-button-container {
-                padding: 8px;
+            .tab-navigation {
+                padding: 6px 0;
             }
             .section {
                 padding: 10px 0;
+                min-height: auto;
+            }
+            .fixed-button-container {
+                bottom: 70px;
             }
         }
         
@@ -707,66 +934,14 @@
         
         /* Touch-friendly styles */
         @media (hover: none) and (pointer: coarse) {
-            .btn, .answer-button, .social-link {
+            .btn, .answer-button, .tab-button {
                 min-height: 48px;
-                padding: 16px;
             }
             
             .input-field {
                 min-height: 48px;
                 padding: 14px;
             }
-        }
-        
-        .level-up-btn {
-            position: absolute;
-            right: 16px;
-            top: 50%;
-            transform: translateY(-50%);
-            padding: 8px 16px;
-            background-color: #28a745;
-            color: white;
-            border: none;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            z-index: 10;
-        }
-        .level-up-btn:hover:not(:disabled) {
-            background-color: #218838;
-            transform: translateY(-50%) scale(1.05);
-        }
-        .level-up-btn:disabled {
-            background-color: #6c757d;
-            cursor: not-allowed;
-            transform: translateY(-50%);
-        }
-        .level-up-btn.pending {
-            background-color: #ffc107;
-            color: #212529;
-        }
-        .level-up-btn.approved {
-            background-color: #28a745;
-            color: white;
-        }
-        .level-up-btn.denied {
-            background-color: #dc3545;
-            color: white;
-        }
-        .rejected-message {
-            background-color: #f8d7da;
-            border: 1px solid #f5c6cb;
-            border-radius: 8px;
-            padding: 16px;
-            margin-top: 20px;
-            text-align: center;
-        }
-        .rejected-message strong {
-            color: #721c24;
-            font-weight: 700;
         }
     </style>
 </head>
@@ -791,6 +966,7 @@
             </div>
         </div>
     </div>
+    
     <!-- Level System Section -->
     <div id="level-section" class="section">
         <div class="container">
@@ -844,6 +1020,7 @@
             </div>
         </div>
     </div>
+    
     <!-- Question Section -->
     <div id="question-section" class="section">
         <div class="container">
@@ -877,6 +1054,7 @@
             </div>
         </div>
     </div>
+    
     <!-- Country Suggestion Section -->
     <div id="country-section" class="section">
         <div class="container">
@@ -898,6 +1076,7 @@
             </div>
         </div>
     </div>
+    
     <!-- Review Section -->
     <div id="review-section" class="section">
         <div class="container">
@@ -916,6 +1095,7 @@
             </div>
         </div>
     </div>
+    
     <!-- Tasks Section -->
     <div id="tasks-section" class="section">
         <div class="container">
@@ -928,29 +1108,99 @@
                 <div class="level-badge-corner" id="levelBadgeCorner">1</div>
                 <button class="level-up-btn" id="levelUpButton" onclick="showLevelSystemForApprovedUser()">View Level System</button>
             </div>
+            <div id="taskCards"></div>
+        </div>
+    </div>
+    
+    <!-- Referral Section -->
+    <div id="referral-section" class="section referral-section">
+        <div class="container">
+            <h2 class="header">Referral Program</h2>
+            <div class="referral-card">
+                <h3 class="referral-title">Your Referral Code</h3>
+                <div class="referral-code-container">
+                    <div class="referral-code" id="referralCode">TRUST2024</div>
+                    <button class="copy-button" onclick="copyReferralCode()">Copy</button>
+                </div>
+                <p style="text-align: center; margin-bottom: 20px; color: #666;">Share this code with friends to earn rewards!</p>
+            </div>
             
-            <!-- Social Links Section for Approved Users -->
-            <div class="social-links-container" id="socialLinksContainer" style="display: none;">
-                <h3 class="social-links-title">📱 Connect with Us</h3>
-                <div class="social-links-grid">
-                    <a href="https://t.me/trustpilotreviews_channel" target="_blank" class="social-link">
-                        <i class="fas fa-paper-plane social-icon telegram-channel"></i>
-                        <span class="social-name">Telegram Channel</span>
+            <div class="referral-stats">
+                <div class="stat-card">
+                    <div class="stat-card-value" id="referralCount">0</div>
+                    <div class="stat-card-label">Referrals</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-value" id="referralEarnings">$0.00</div>
+                    <div class="stat-card-label">Earnings</div>
+                </div>
+            </div>
+            
+            <div class="referral-instructions">
+                <h4 class="referral-instructions-title">How to earn:</h4>
+                <ul class="referral-instructions-list">
+                    <li>Share your referral code with friends</li>
+                    <li>Friend must sign up using your code</li>
+                    <li>Friend completes 5 reviews</li>
+                    <li>You earn $1.00 per successful referral</li>
+                    <li>No limit on how many referrals you can make</li>
+                </ul>
+            </div>
+            
+            <button class="share-button" onclick="shareReferralLink()">
+                📤 Share Referral Link
+            </button>
+        </div>
+    </div>
+    
+    <!-- Social Section -->
+    <div id="social-section" class="section social-section">
+        <div class="container">
+            <h2 class="header">Social Media</h2>
+            <div class="social-card">
+                <h3 class="social-title">Official Channels</h3>
+                <div class="social-links">
+                    <a href="https://t.me/trustpilot_reviews" class="social-link" target="_blank">
+                        <div class="social-icon telegram-icon">📱</div>
+                        <div class="social-details">
+                            <div class="social-name">Telegram Channel</div>
+                            <div class="social-description">Get updates and announcements</div>
+                        </div>
+                        <div class="social-arrow">→</div>
                     </a>
-                    <a href="https://t.me/trustpilotreviews_group" target="_blank" class="social-link">
-                        <i class="fas fa-users social-icon telegram-group"></i>
-                        <span class="social-name">Telegram Group</span>
+                    <a href="https://t.me/trustpilot_group" class="social-link" target="_blank">
+                        <div class="social-icon telegram-icon">💬</div>
+                        <div class="social-details">
+                            <div class="social-name">Telegram Group</div>
+                            <div class="social-description">Join our community discussion</div>
+                        </div>
+                        <div class="social-arrow">→</div>
                     </a>
-                    <a href="https://facebook.com/trustpilotreviews" target="_blank" class="social-link">
-                        <i class="fab fa-facebook social-icon facebook"></i>
-                        <span class="social-name">Facebook Admin</span>
+                    <a href="https://facebook.com/trustpilotreviews" class="social-link" target="_blank">
+                        <div class="social-icon facebook-icon">📘</div>
+                        <div class="social-details">
+                            <div class="social-name">Admin Facebook</div>
+                            <div class="social-description">Contact support directly</div>
+                        </div>
+                        <div class="social-arrow">→</div>
                     </a>
                 </div>
             </div>
             
-            <div id="taskCards"></div>
+            <div class="social-card">
+                <h3 class="social-title">Community Guidelines</h3>
+                <div style="background-color: #f8f9fa; border-radius: 8px; padding: 16px;">
+                    <ul style="list-style: none; padding-left: 0;">
+                        <li style="margin-bottom: 12px;">📌 Be respectful to all community members</li>
+                        <li style="margin-bottom: 12px;">📌 No spam or self-promotion</li>
+                        <li style="margin-bottom: 12px;">📌 Follow Trustpilot's review guidelines</li>
+                        <li style="margin-bottom: 12px;">📌 Report any suspicious activity to admin</li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
+    
     <!-- Level System Section for Approved Users -->
     <div id="level-system-section" class="section">
         <div class="container">
@@ -1004,16 +1254,35 @@
             </div>
         </div>
     </div>
-    <!-- Fixed bottom button container - CENTERED -->
+    
+    <!-- Fixed bottom button container -->
     <div class="fixed-button-container" id="fixedButtonContainer">
         <div class="fixed-description" id="fixedDescription"></div>
         <button class="btn" id="fixedButton">Continue</button>
         <button class="btn btn-support" id="fixedSupportButton" style="display: none;">📤 Send Profile Link to Admin</button>
     </div>
+    
+    <!-- Tab Navigation -->
+    <div class="tab-navigation" id="tabNavigation" style="display: none;">
+        <button class="tab-button active" id="tasks-tab" onclick="switchTab('tasks')">
+            <div class="tab-icon">📋</div>
+            <div class="tab-label">Tasks</div>
+        </button>
+        <button class="tab-button" id="referral-tab" onclick="switchTab('referral')">
+            <div class="tab-icon">👥</div>
+            <div class="tab-label">Referral</div>
+        </button>
+        <button class="tab-button" id="social-tab" onclick="switchTab('social')">
+            <div class="tab-icon">📱</div>
+            <div class="tab-label">Social</div>
+        </button>
+    </div>
+    
     <div id="loadingOverlay" class="loading-overlay" style="display: none;">
         <div class="spinner"></div>
         <p class="loading-text">Loading...</p>
     </div>
+    
     <script>
     const firebaseConfig = {
       apiKey: "AIzaSyAxtDaiDZdNA8Zl9OgNVbkYEDdKywo3F4Q",
@@ -1125,6 +1394,7 @@
     let userLevel = null;
     let selectedCountry = "";
     let trustpilotLink = "";
+    let currentTab = 'tasks';
     
     function selectRandomCountry() {
         return countries[Math.floor(Math.random() * countries.length)];
@@ -1210,6 +1480,13 @@
         
         const sectionId = currentSection.id;
         
+        // Hide tab navigation for non-approved sections
+        if (['welcome-section', 'level-section', 'question-section', 'country-section', 'review-section'].includes(sectionId)) {
+            hideTabNavigation();
+        } else {
+            showTabNavigation();
+        }
+        
         // Adjust for different screen sizes
         if (window.innerWidth <= 480) {
             container.style.padding = '12px';
@@ -1276,6 +1553,8 @@
                 }
                 break;
             case 'tasks-section':
+            case 'referral-section':
+            case 'social-section':
                 button.textContent = '📤 Submit to Admin';
                 button.onclick = submitToAdmin;
                 button.style.display = 'block';
@@ -1285,10 +1564,7 @@
             case 'level-system-section':
                 button.textContent = 'Back to Tasks';
                 button.onclick = () => {
-                    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-                    document.getElementById('tasks-section').classList.add('active');
-                    updateFixedButton();
-                    updateUserInfo();
+                    switchTab('tasks');
                 };
                 button.style.display = 'block';
                 container.classList.add('visible');
@@ -1348,6 +1624,9 @@
             const doc = await userRef.get();
             const existingData = doc.exists ? doc.data() : {};
             
+            // Generate referral code if not exists
+            const referralCode = existingData.referralCode || generateReferralCode(userId);
+            
             // Merge existing data with new data
             const userData = {
                 ...existingData,
@@ -1361,6 +1640,7 @@
                 telegramUsername: localStorage.getItem('telegramUsername'),
                 telegramFirstName: localStorage.getItem('telegramFirstName'),
                 fullName: telegramUser ? `${telegramUser.first_name} ${telegramUser.last_name || ''}` : '',
+                referralCode,
                 timestamp: firebase.firestore.FieldValue.serverTimestamp()
             };
             
@@ -1372,6 +1652,7 @@
             localStorage.setItem('userLevel', userLevel);
             localStorage.setItem('trustpilotLink', trustpilotLink);
             localStorage.setItem('selectedCountry', selectedCountry);
+            localStorage.setItem('referralCode', referralCode);
             
             hideLoading();
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
@@ -1387,6 +1668,13 @@
             // Clear inconsistent localStorage data
             localStorage.removeItem('userId');
         }
+    }
+    
+    function generateReferralCode(userId) {
+        // Generate a unique referral code based on user ID
+        const prefix = "TRUST";
+        const random = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
+        return `${prefix}${random}`;
     }
     
     async function updateReviewCount() {
@@ -1471,8 +1759,7 @@
                     updateFixedButton();
                     updateUserInfo();
                     generateTaskCards();
-                    // Show social links for approved users
-                    document.getElementById('socialLinksContainer').style.display = 'block';
+                    showTabNavigation();
                 } else {
                     document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
                     document.getElementById('review-section').classList.add('active');
@@ -1537,6 +1824,7 @@
             localStorage.removeItem('userLevel');
             localStorage.removeItem('trustpilotLink');
             localStorage.removeItem('selectedCountry');
+            localStorage.removeItem('referralCode');
             
             hideLoading();
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
@@ -1547,6 +1835,109 @@
             console.error('Error resubmitting application:', error);
             hideLoading();
             showError('Error resubmitting application. Please try again.');
+        }
+    }
+    
+    function showTabNavigation() {
+        document.getElementById('tabNavigation').style.display = 'flex';
+    }
+    
+    function hideTabNavigation() {
+        document.getElementById('tabNavigation').style.display = 'none';
+    }
+    
+    function switchTab(tab) {
+        currentTab = tab;
+        
+        // Update active tab button
+        document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+        document.getElementById(`${tab}-tab`).classList.add('active');
+        
+        // Show corresponding section
+        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+        
+        switch(tab) {
+            case 'tasks':
+                document.getElementById('tasks-section').classList.add('active');
+                updateFixedButton();
+                break;
+            case 'referral':
+                document.getElementById('referral-section').classList.add('active');
+                updateFixedButton();
+                loadReferralData();
+                break;
+            case 'social':
+                document.getElementById('social-section').classList.add('active');
+                updateFixedButton();
+                break;
+        }
+    }
+    
+    async function loadReferralData() {
+        try {
+            const userId = localStorage.getItem('userId');
+            if (!userId) return;
+            
+            const userRef = db.collection('users').doc(userId);
+            const doc = await userRef.get();
+            
+            if (doc.exists) {
+                const data = doc.data();
+                const referralCode = data.referralCode || generateReferralCode(userId);
+                
+                // Update referral code display
+                document.getElementById('referralCode').textContent = referralCode;
+                
+                // Calculate referral stats
+                const referrals = data.referrals || [];
+                const referralCount = referrals.filter(r => r.completed).length;
+                const referralEarnings = referralCount * 1.0; // $1 per referral
+                
+                // Update stats display
+                document.getElementById('referralCount').textContent = referralCount;
+                document.getElementById('referralEarnings').textContent = `$${referralEarnings.toFixed(2)}`;
+                
+                // Save referral code to localStorage
+                localStorage.setItem('referralCode', referralCode);
+            }
+        } catch (error) {
+            console.error('Error loading referral data:', error);
+            showError('Error loading referral data.');
+        }
+    }
+    
+    function copyReferralCode() {
+        const referralCode = document.getElementById('referralCode').textContent;
+        navigator.clipboard.writeText(referralCode).then(() => {
+            showSuccess('Referral code copied to clipboard!');
+        }).catch(err => {
+            console.error('Failed to copy referral code:', err);
+            showError('Failed to copy referral code.');
+        });
+    }
+    
+    function shareReferralLink() {
+        const referralCode = document.getElementById('referralCode').textContent;
+        const shareText = `Join Trustpilot Review Bot and use my referral code ${referralCode} to get started!`;
+        
+        if (navigator.share) {
+            navigator.share({
+                title: 'Trustpilot Review Bot',
+                text: shareText,
+                url: `https://yourapp.com/referral/${referralCode}`
+            }).then(() => {
+                console.log('Shared successfully');
+            }).catch(err => {
+                console.error('Error sharing:', err);
+            });
+        } else {
+            // Fallback: copy to clipboard
+            navigator.clipboard.writeText(`${shareText}\n\nhttps://yourapp.com/referral/${referralCode}`).then(() => {
+                showSuccess('Referral link copied to clipboard!');
+            }).catch(err => {
+                console.error('Failed to copy referral link:', err);
+                showError('Failed to copy referral link.');
+            });
         }
     }
     
@@ -1570,6 +1961,7 @@
             userLevel = parseInt(localStorage.getItem('userLevel'));
             trustpilotLink = localStorage.getItem('trustpilotLink');
             selectedCountry = localStorage.getItem('selectedCountry');
+            const referralCode = localStorage.getItem('referralCode');
             
             // Validate all stored data
             if ([reviewCount, userLevel, trustpilotLink, selectedCountry].some(v => v === null || v === undefined)) {
@@ -1592,8 +1984,7 @@
                 updateFixedButton();
                 updateUserInfo();
                 generateTaskCards();
-                // Show social links for approved users
-                document.getElementById('socialLinksContainer').style.display = 'block';
+                showTabNavigation();
                 return true;
             }
             
