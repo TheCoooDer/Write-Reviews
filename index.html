@@ -9,6 +9,8 @@
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
     <!-- Telegram Web App SDK -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --primary-color: #0088cc;
@@ -38,7 +40,7 @@
             background-color: var(--background-color);
             color: var(--text-color);
             line-height: 1.6;
-            padding-bottom: 120px;
+            padding-bottom: 180px;
             transition: var(--transition);
             overflow-x: hidden;
             min-height: 100vh;
@@ -519,6 +521,60 @@
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
+        .social-links-container {
+            background-color: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+        }
+        .social-links-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 16px;
+            text-align: center;
+        }
+        .social-links-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+        .social-link {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 16px;
+            background-color: #f8f9fa;
+            border-radius: 12px;
+            text-decoration: none;
+            transition: var(--transition);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .social-link:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        .social-icon {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+        .social-icon.telegram-channel {
+            color: #0088cc;
+        }
+        .social-icon.telegram-group {
+            color: #00a8cc;
+        }
+        .social-icon.facebook {
+            color: #1877f2;
+        }
+        .social-name {
+            font-size: 14px;
+            font-weight: 600;
+            text-align: center;
+            color: #333;
+        }
         .fixed-button-container {
             position: fixed;
             bottom: 0;
@@ -582,6 +638,16 @@
                 top: -6px;
                 right: -6px;
             }
+            .social-links-grid {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+            .social-link {
+                padding: 12px;
+            }
+            .social-icon {
+                font-size: 28px;
+            }
             .fixed-button-container {
                 padding: 12px;
             }
@@ -641,7 +707,7 @@
         
         /* Touch-friendly styles */
         @media (hover: none) and (pointer: coarse) {
-            .btn, .answer-button {
+            .btn, .answer-button, .social-link {
                 min-height: 48px;
                 padding: 16px;
             }
@@ -862,6 +928,26 @@
                 <div class="level-badge-corner" id="levelBadgeCorner">1</div>
                 <button class="level-up-btn" id="levelUpButton" onclick="showLevelSystemForApprovedUser()">View Level System</button>
             </div>
+            
+            <!-- Social Links Section for Approved Users -->
+            <div class="social-links-container" id="socialLinksContainer" style="display: none;">
+                <h3 class="social-links-title">📱 Connect with Us</h3>
+                <div class="social-links-grid">
+                    <a href="https://t.me/trustpilotreviews_channel" target="_blank" class="social-link">
+                        <i class="fas fa-paper-plane social-icon telegram-channel"></i>
+                        <span class="social-name">Telegram Channel</span>
+                    </a>
+                    <a href="https://t.me/trustpilotreviews_group" target="_blank" class="social-link">
+                        <i class="fas fa-users social-icon telegram-group"></i>
+                        <span class="social-name">Telegram Group</span>
+                    </a>
+                    <a href="https://facebook.com/trustpilotreviews" target="_blank" class="social-link">
+                        <i class="fab fa-facebook social-icon facebook"></i>
+                        <span class="social-name">Facebook Admin</span>
+                    </a>
+                </div>
+            </div>
+            
             <div id="taskCards"></div>
         </div>
     </div>
@@ -1385,6 +1471,8 @@
                     updateFixedButton();
                     updateUserInfo();
                     generateTaskCards();
+                    // Show social links for approved users
+                    document.getElementById('socialLinksContainer').style.display = 'block';
                 } else {
                     document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
                     document.getElementById('review-section').classList.add('active');
@@ -1504,6 +1592,8 @@
                 updateFixedButton();
                 updateUserInfo();
                 generateTaskCards();
+                // Show social links for approved users
+                document.getElementById('socialLinksContainer').style.display = 'block';
                 return true;
             }
             
