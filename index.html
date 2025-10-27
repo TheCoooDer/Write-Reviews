@@ -715,38 +715,35 @@
             color: var(--text-secondary);
             margin-left: 8px;
         }
-        /* Redesigned Level System Button */
+        /* Redesigned Level System Button - Smaller Version */
         .level-system-btn {
             position: absolute;
             right: 16px;
             top: 50%;
             transform: translateY(-50%);
-            padding: 12px 24px;
+            padding: 6px 12px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border: none;
-            border-radius: 25px;
-            font-size: 15px;
-            font-weight: 700;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.4);
             z-index: 10;
-            display: flex;
-            align-items: center;
-            gap: 8px;
         }
         
         .level-system-btn:hover:not(:disabled) {
             transform: translateY(-50%) scale(1.05);
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.6);
         }
         
         .level-system-btn:disabled {
             background: linear-gradient(135deg, #9ca3af 0%, #6b7280 100%);
             cursor: not-allowed;
             transform: translateY(-50%);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 1px 4px rgba(0,0,0,0.1);
         }
         
         .level-system-btn.pending {
@@ -760,10 +757,34 @@
         .level-system-btn.denied {
             background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
         }
-        
-        .level-icon {
-            font-size: 18px;
+        /* Submit Tasks Button */
+        .submit-tasks-btn {
+            position: fixed;
+            top: 16px;
+            right: 16px;
+            left: 16px;
+            max-width: 500px;
+            margin: 0 auto;
+            z-index: 1001;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 14px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+            display: none;
         }
+        
+        .submit-tasks-btn:hover {
+            background-color: #218838;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(40, 167, 69, 0.4);
+        }
+        
         /* Tab Navigation */
         .tab-navigation {
             position: fixed;
@@ -903,8 +924,15 @@
                 margin: 0 12px;
             }
             .level-system-btn {
-                padding: 10px 20px;
-                font-size: 14px;
+                padding: 4px 10px;
+                font-size: 11px;
+            }
+            .submit-tasks-btn {
+                top: 12px;
+                right: 12px;
+                left: 12px;
+                padding: 12px;
+                font-size: 15px;
             }
         }
         
@@ -935,8 +963,15 @@
                 margin: 0 8px;
             }
             .level-system-btn {
-                padding: 8px 16px;
-                font-size: 13px;
+                padding: 3px 8px;
+                font-size: 10px;
+            }
+            .submit-tasks-btn {
+                top: 10px;
+                right: 10px;
+                left: 10px;
+                padding: 10px;
+                font-size: 14px;
             }
         }
         
@@ -967,8 +1002,15 @@
                 margin: 0 4px;
             }
             .level-system-btn {
-                padding: 6px 12px;
-                font-size: 12px;
+                padding: 2px 6px;
+                font-size: 9px;
+            }
+            .submit-tasks-btn {
+                top: 8px;
+                right: 8px;
+                left: 8px;
+                padding: 8px;
+                font-size: 13px;
             }
         }
         
@@ -985,6 +1027,9 @@
             }
             .fixed-button-container {
                 bottom: 70px;
+            }
+            .submit-tasks-btn {
+                top: 12px;
             }
         }
         
@@ -1008,6 +1053,9 @@
     </style>
 </head>
 <body>
+    <!-- Submit Tasks Button -->
+    <button class="submit-tasks-btn" id="submitTasksBtn" onclick="submitTasks()">Submit Tasks</button>
+    
     <!-- Welcome Section -->
     <div id="welcome-section" class="section active">
         <div class="container">
@@ -1168,9 +1216,7 @@
                     <div class="user-level-text" id="userLevelText">Level 1</div>
                 </div>
                 <div class="level-badge-corner" id="levelBadgeCorner">1</div>
-                <button class="level-system-btn" id="levelUpButton">
-                    <span class="level-icon">📊</span> View Level System
-                </button>
+                <button class="level-system-btn" id="levelUpButton">Level System</button>
             </div>
             <div id="taskCards"></div>
         </div>
@@ -1428,9 +1474,9 @@
                 (userLevel === 3) ? '#ff8f00' :
                 '#c62828';
                 
-            // Redesigned level system button
+            // Smaller level system button with text only
             levelUpButton.className = 'level-system-btn';
-            levelUpButton.innerHTML = '<span class="level-icon">📊</span> View Level System';
+            levelUpButton.textContent = 'Level System';
             levelUpButton.onclick = showLevelSystemForApprovedUser;
         }
     }
@@ -1522,12 +1568,16 @@
         const button = document.getElementById('fixedButton');
         const description = document.getElementById('fixedDescription');
         const supportButton = document.getElementById('fixedSupportButton');
+        const submitTasksBtn = document.getElementById('submitTasksBtn');
         
         // Reset visibility
         container.classList.remove('visible');
         button.style.display = 'none';
         supportButton.style.display = 'none';
         description.textContent = '';
+        
+        // Hide submit tasks button by default
+        submitTasksBtn.style.display = 'none';
         
         const currentSection = document.querySelector('.section.active');
         if (!currentSection) return;
@@ -1539,6 +1589,11 @@
             hideTabNavigation();
         } else {
             showTabNavigation();
+        }
+        
+        // Show submit tasks button only on tasks section
+        if (sectionId === 'tasks-section') {
+            submitTasksBtn.style.display = 'block';
         }
         
         // Adjust for different screen sizes
@@ -1858,6 +1913,11 @@
     }
     
     function submitToAdmin() {
+        window.location.href = "https://t.me/sufyanthedev";
+    }
+    
+    function submitTasks() {
+        // Function to handle task submission
         window.location.href = "https://t.me/sufyanthedev";
     }
     
