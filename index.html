@@ -38,7 +38,7 @@
             background-color: var(--background-color);
             color: var(--text-color);
             line-height: 1.6;
-            padding-bottom: 160px;
+            padding-bottom: 120px;
             transition: var(--transition);
             overflow-x: hidden;
             min-height: 100vh;
@@ -519,257 +519,6 @@
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
-        /* === TABS STYLES === */
-        .tabs-container {
-            background-color: var(--card-background);
-            border-radius: 12px;
-            box-shadow: var(--shadow);
-            overflow: hidden;
-            margin-bottom: 20px;
-        }
-        .tabs-header {
-            display: flex;
-            border-bottom: 1px solid var(--border-color);
-            background-color: #f8f9fa;
-        }
-        .tab-btn {
-            flex: 1;
-            padding: 16px;
-            background: none;
-            border: none;
-            font-size: 16px;
-            font-weight: 600;
-            color: var(--text-secondary);
-            cursor: pointer;
-            transition: var(--transition);
-            position: relative;
-        }
-        .tab-btn.active {
-            color: var(--primary-color);
-            background-color: white;
-        }
-        .tab-btn.active::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background-color: var(--primary-color);
-        }
-        .tab-btn:hover:not(.active) {
-            background-color: rgba(0, 136, 204, 0.05);
-            color: var(--primary-color);
-        }
-        .tabs-content {
-            padding: 20px;
-        }
-        .tab-pane {
-            display: none;
-        }
-        .tab-pane.active {
-            display: block;
-            animation: fadeIn 0.3s ease;
-        }
-        .tab-section {
-            padding: 0 10px;
-        }
-        .tab-section h3 {
-            font-size: 20px;
-            margin-bottom: 16px;
-            color: var(--primary-color);
-        }
-        .tab-section p {
-            margin-bottom: 20px;
-            color: var(--text-secondary);
-        }
-        /* LevelUp Tab Styles */
-        .level-progress {
-            margin-bottom: 30px;
-        }
-        .progress-bar {
-            height: 12px;
-            background-color: var(--border-color);
-            border-radius: 6px;
-            overflow: hidden;
-            margin-bottom: 12px;
-        }
-        .progress-fill {
-            height: 100%;
-            background-color: var(--primary-color);
-            border-radius: 6px;
-            transition: width 0.5s ease;
-        }
-        .progress-info {
-            display: flex;
-            justify-content: space-between;
-            font-size: 14px;
-            color: var(--text-secondary);
-        }
-        .level-benefits {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 16px;
-        }
-        .benefit-card {
-            background-color: #f8f9fa;
-            border-radius: 8px;
-            padding: 16px;
-            text-align: center;
-            transition: var(--transition);
-        }
-        .benefit-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-        }
-        .benefit-icon {
-            font-size: 32px;
-            margin-bottom: 12px;
-        }
-        .benefit-card h4 {
-            font-size: 16px;
-            margin-bottom: 8px;
-            color: var(--primary-color);
-        }
-        .benefit-card p {
-            font-size: 14px;
-            color: var(--text-secondary);
-            margin: 0;
-        }
-        /* Referral Tab Styles */
-        .referral-stats {
-            display: flex;
-            justify-content: space-around;
-            margin-bottom: 30px;
-        }
-        .stat-box {
-            text-align: center;
-            padding: 16px;
-            background-color: #f8f9fa;
-            border-radius: 8px;
-            min-width: 120px;
-        }
-        .stat-number {
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--primary-color);
-        }
-        .stat-label {
-            font-size: 14px;
-            color: var(--text-secondary);
-            margin-top: 4px;
-        }
-        .referral-code {
-            background-color: #f0f8ff;
-            border: 1px solid #b3d9ff;
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        .code-display {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            margin: 16px 0;
-        }
-        .code-display span {
-            font-size: 20px;
-            font-weight: 700;
-            color: var(--primary-color);
-            padding: 8px 16px;
-            background-color: white;
-            border-radius: 6px;
-            border: 1px solid var(--border-color);
-        }
-        .copy-btn {
-            padding: 8px 12px;
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: var(--transition);
-        }
-        .copy-btn:hover {
-            background-color: var(--primary-hover);
-        }
-        .share-text {
-            font-size: 14px;
-            color: var(--text-secondary);
-        }
-        .referral-rules {
-            background-color: #f8f9fa;
-            border-radius: 8px;
-            padding: 16px;
-        }
-        .referral-rules h4 {
-            font-size: 16px;
-            margin-bottom: 12px;
-            color: var(--primary-color);
-        }
-        .referral-rules ul {
-            padding-left: 20px;
-        }
-        .referral-rules li {
-            margin-bottom: 8px;
-            font-size: 14px;
-            color: var(--text-secondary);
-        }
-        /* Social Tab Styles */
-        .social-links {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 16px;
-            margin-bottom: 30px;
-        }
-        .social-link {
-            display: flex;
-            align-items: center;
-            padding: 16px;
-            background-color: #f8f9fa;
-            border-radius: 8px;
-            text-decoration: none;
-            color: var(--text-color);
-            transition: var(--transition);
-        }
-        .social-link:hover {
-            background-color: rgba(0, 136, 204, 0.1);
-            transform: translateY(-4px);
-        }
-        .social-icon {
-            font-size: 24px;
-            margin-right: 12px;
-        }
-        .community-stats {
-            background-color: #f8f9fa;
-            border-radius: 8px;
-            padding: 16px;
-        }
-        .community-stats h4 {
-            font-size: 16px;
-            margin-bottom: 16px;
-            color: var(--primary-color);
-        }
-        .stat-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 8px 0;
-            border-bottom: 1px solid var(--border-color);
-        }
-        .stat-row:last-child {
-            border-bottom: none;
-        }
-        .stat-row span:first-child {
-            color: var(--text-secondary);
-        }
-        .stat-row span:last-child {
-            font-weight: 600;
-            color: var(--text-color);
-        }
-        /* Fixed bottom button container */
         .fixed-button-container {
             position: fixed;
             bottom: 0;
@@ -835,16 +584,6 @@
             }
             .fixed-button-container {
                 padding: 12px;
-            }
-            .level-benefits {
-                grid-template-columns: 1fr;
-            }
-            .referral-stats {
-                flex-direction: column;
-                gap: 12px;
-            }
-            .social-links {
-                grid-template-columns: 1fr;
             }
         }
         
@@ -1124,127 +863,6 @@
                 <button class="level-up-btn" id="levelUpButton" onclick="showLevelSystemForApprovedUser()">View Level System</button>
             </div>
             <div id="taskCards"></div>
-            
-            <!-- Tabs Container - Only shown for approved users -->
-            <div id="tabsContainer" style="display: none;">
-                <div class="tabs-header">
-                    <button class="tab-btn active" data-tab="levelup">LevelUp</button>
-                    <button class="tab-btn" data-tab="referral">Referral</button>
-                    <button class="tab-btn" data-tab="social">Social</button>
-                </div>
-                
-                <div class="tabs-content">
-                    <!-- LevelUp Tab -->
-                    <div id="levelup-tab" class="tab-pane active">
-                        <div class="tab-section">
-                            <h3>Level Up Your Account</h3>
-                            <p>Complete more reviews to unlock higher levels with better rates and daily limits.</p>
-                            <div class="level-progress">
-                                <div class="progress-bar">
-                                    <div class="progress-fill" id="level-progress"></div>
-                                </div>
-                                <div class="progress-info">
-                                    <span id="current-level">Level 1</span>
-                                    <span id="next-level">Next: Level 2</span>
-                                </div>
-                            </div>
-                            <div class="level-benefits">
-                                <div class="benefit-card">
-                                    <div class="benefit-icon">⭐</div>
-                                    <h4>Higher Pay</h4>
-                                    <p>Unlock better rates per review</p>
-                                </div>
-                                <div class="benefit-card">
-                                    <div class="benefit-icon">📈</div>
-                                    <h4>More Tasks</h4>
-                                    <p>Complete more reviews per day</p>
-                                </div>
-                                <div class="benefit-card">
-                                    <div class="benefit-icon">🏆</div>
-                                    <h4>Premium Status</h4>
-                                    <p>Get priority support</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Referral Tab -->
-                    <div id="referral-tab" class="tab-pane">
-                        <div class="tab-section">
-                            <h3>Refer Friends & Earn</h3>
-                            <p>Invite your friends to join and earn bonus rewards for each successful referral.</p>
-                            <div class="referral-stats">
-                                <div class="stat-box">
-                                    <div class="stat-number" id="referral-count">0</div>
-                                    <div class="stat-label">Referrals</div>
-                                </div>
-                                <div class="stat-box">
-                                    <div class="stat-number" id="referral-earnings">$0.00</div>
-                                    <div class="stat-label">Earnings</div>
-                                </div>
-                            </div>
-                            <div class="referral-code">
-                                <h4>Your Referral Code</h4>
-                                <div class="code-display">
-                                    <span id="referral-code">TRUST123</span>
-                                    <button class="copy-btn" onclick="copyReferralCode()">📋 Copy</button>
-                                </div>
-                                <p class="share-text">Share this code with friends</p>
-                            </div>
-                            <div class="referral-rules">
-                                <h4>How It Works</h4>
-                                <ul>
-                                    <li>Share your referral code with friends</li>
-                                    <li>Friend signs up using your code</li>
-                                    <li>Friend completes 5 reviews</li>
-                                    <li>You earn $2.00 bonus</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Social Tab -->
-                    <div id="social-tab" class="tab-pane">
-                        <div class="tab-section">
-                            <h3>Connect With Us</h3>
-                            <p>Join our community for updates, tips, and exclusive offers.</p>
-                            <div class="social-links">
-                                <a href="#" class="social-link">
-                                    <div class="social-icon">📱</div>
-                                    <span>Telegram Group</span>
-                                </a>
-                                <a href="#" class="social-link">
-                                    <div class="social-icon">📸</div>
-                                    <span>Instagram</span>
-                                </a>
-                                <a href="#" class="social-link">
-                                    <div class="social-icon">🐦</div>
-                                    <span>Twitter</span>
-                                </a>
-                                <a href="#" class="social-link">
-                                    <div class="social-icon">📧</div>
-                                    <span>Newsletter</span>
-                                </a>
-                            </div>
-                            <div class="community-stats">
-                                <h4>Community Stats</h4>
-                                <div class="stat-row">
-                                    <span>Members:</span>
-                                    <span>5,234</span>
-                                </div>
-                                <div class="stat-row">
-                                    <span>Active Today:</span>
-                                    <span>1,456</span>
-                                </div>
-                                <div class="stat-row">
-                                    <span>New This Week:</span>
-                                    <span>324</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
     <!-- Level System Section for Approved Users -->
@@ -1767,7 +1385,6 @@
                     updateFixedButton();
                     updateUserInfo();
                     generateTaskCards();
-                    showTabsForApprovedUser();
                 } else {
                     document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
                     document.getElementById('review-section').classList.add('active');
@@ -1887,7 +1504,6 @@
                 updateFixedButton();
                 updateUserInfo();
                 generateTaskCards();
-                showTabsForApprovedUser();
                 return true;
             }
             
@@ -1901,88 +1517,6 @@
             localStorage.clear();
             return false;
         }
-    }
-    
-    // Tab functionality
-    function initTabs() {
-        const tabButtons = document.querySelectorAll('.tab-btn');
-        const tabPanes = document.querySelectorAll('.tab-pane');
-        
-        tabButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                const targetTab = button.getAttribute('data-tab');
-                
-                // Update active states
-                tabButtons.forEach(btn => btn.classList.remove('active'));
-                tabPanes.forEach(pane => pane.classList.remove('active'));
-                
-                button.classList.add('active');
-                document.getElementById(`${targetTab}-tab`).classList.add('active');
-            });
-        });
-    }
-    
-    // Copy referral code function
-    function copyReferralCode() {
-        const code = document.getElementById('referral-code').textContent;
-        navigator.clipboard.writeText(code).then(() => {
-            showSuccess('Referral code copied to clipboard!');
-        }).catch(err => {
-            showError('Failed to copy code. Please try again.');
-        });
-    }
-    
-    // Update level progress
-    function updateLevelProgress() {
-        const levelDetails = getLevelDetails(userLevel);
-        const nextLevel = userLevel < 4 ? userLevel + 1 : userLevel;
-        const progress = ((reviewCount - levelDetails.min) / (nextLevel === 4 ? 10 : (levelDetails.max - levelDetails.min))) * 100;
-        
-        document.getElementById('level-progress').style.width = `${Math.min(progress, 100)}%`;
-        document.getElementById('current-level').textContent = `Level ${userLevel}`;
-        document.getElementById('next-level').textContent = nextLevel === 4 ? 'Max Level Reached' : `Next: Level ${nextLevel}`;
-    }
-    
-    // Update referral stats
-    function updateReferralStats() {
-        // This would normally come from your database
-        const referralCount = 3; // Example value
-        const referralEarnings = referralCount * 2; // $2 per referral
-        
-        document.getElementById('referral-count').textContent = referralCount;
-        document.getElementById('referral-earnings').textContent = `$${referralEarnings.toFixed(2)}`;
-    }
-    
-    // Generate referral code
-    function generateReferralCode() {
-        const userId = localStorage.getItem('userId');
-        if (userId) {
-            const code = `TRUST${userId.substring(0, 3).toUpperCase()}${Math.floor(Math.random() * 1000)}`;
-            document.getElementById('referral-code').textContent = code;
-        }
-    }
-    
-    // Show tabs only for approved users
-    function showTabsForApprovedUser() {
-        const tabsContainer = document.getElementById('tabsContainer');
-        const userId = localStorage.getItem('userId');
-        
-        if (userId) {
-            db.collection('users').doc(userId).get().then(doc => {
-                if (doc.exists && doc.data().approved) {
-                    tabsContainer.style.display = 'block';
-                    updateTabsData();
-                }
-            }).catch(err => {
-                console.error('Error checking user approval:', err);
-            });
-        }
-    }
-    
-    // Update tabs data
-    function updateTabsData() {
-        updateLevelProgress();
-        updateReferralStats();
     }
     
     // Debounce function for window resize
@@ -2004,10 +1538,6 @@
         if (!telegramOK) {
             document.querySelector('.message-box').innerHTML += '<br><br><strong style="color:#dc3545;">Error:</strong> Open this app in Telegram.';
         }
-        
-        // Initialize tabs
-        initTabs();
-        generateReferralCode();
         
         const restored = await restoreUserState();
         if (!restored) {
