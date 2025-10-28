@@ -520,11 +520,11 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
         
-        /* Redesigned Additional buttons section - Mobile First */
+        /* Redesigned Additional buttons section */
         .additional-buttons-section {
             background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
             border-radius: 16px;
-            padding: 20px;
+            padding: 24px;
             margin-top: 24px;
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
             position: relative;
@@ -542,17 +542,17 @@
         }
         
         .additional-buttons-title {
-            font-size: 18px;
+            font-size: 20px;
             font-weight: 700;
             color: #333;
-            margin-bottom: 16px;
+            margin-bottom: 20px;
             text-align: center;
         }
         
         .additional-buttons-grid {
             display: grid;
-            grid-template-columns: 1fr;
-            gap: 12px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
         }
         
         .additional-btn {
@@ -613,11 +613,11 @@
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
         }
         
-        /* Referral section styles - Mobile First */
+        /* Referral section styles - Simplified */
         .referral-code-container {
             background-color: white;
             border-radius: 16px;
-            padding: 20px;
+            padding: 24px;
             margin-bottom: 24px;
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
             text-align: center;
@@ -643,12 +643,12 @@
         }
         
         .referral-code {
-            font-size: 24px;
+            font-size: 28px;
             font-weight: 700;
             color: var(--primary-color);
             background-color: #f5f5f5;
             border-radius: 12px;
-            padding: 16px 20px;
+            padding: 16px 24px;
             margin-bottom: 20px;
             letter-spacing: 2px;
             display: inline-block;
@@ -680,8 +680,7 @@
         
         .referral-stats {
             display: flex;
-            flex-direction: column;
-            gap: 16px;
+            justify-content: space-around;
             margin-bottom: 24px;
         }
         
@@ -691,6 +690,7 @@
             border-radius: 16px;
             padding: 20px;
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+            min-width: 120px;
             position: relative;
             overflow: hidden;
         }
@@ -769,12 +769,14 @@
             font-weight: 700;
         }
         
-        /* Fixed bottom button container - Mobile First */
+        /* Fixed bottom button container */
         .fixed-button-container {
             position: fixed;
             bottom: 0;
-            left: 0;
+            left: 50%;
+            transform: translateX(-50%);
             width: 100%;
+            max-width: 500px;
             background-color: white;
             padding: 16px;
             box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.15);
@@ -799,74 +801,96 @@
             margin-bottom: 8px;
         }
         
-        /* Enhanced Media Queries - Mobile First */
-        @media (min-width: 480px) {
+        /* Enhanced Media Queries */
+        @media (max-width: 480px) {
+            .level-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+            .level-card {
+                padding: 14px;
+            }
+            .level-badge {
+                padding: 5px 12px;
+                font-size: 13px;
+            }
+            .stat-label, .stat-value {
+                font-size: 12px;
+            }
+            .user-avatar {
+                width: 50px;
+                height: 50px;
+            }
+            .user-name {
+                font-size: 16px;
+            }
+            .user-level-text {
+                font-size: 13px;
+            }
+            .level-badge-corner {
+                width: 26px;
+                height: 26px;
+                font-size: 11px;
+                top: -6px;
+                right: -6px;
+            }
+            .fixed-button-container {
+                padding: 12px;
+            }
             .additional-buttons-grid {
-                grid-template-columns: repeat(2, 1fr);
+                grid-template-columns: 1fr;
+                gap: 12px;
             }
-            
             .referral-stats {
-                flex-direction: row;
-                justify-content: space-around;
+                flex-direction: column;
+                gap: 16px;
             }
-            
-            .referral-code {
-                font-size: 28px;
-            }
-            
-            .referral-stat .stat-value {
-                font-size: 28px;
+            .referral-stat {
+                width: 100%;
             }
         }
         
-        @media (min-width: 768px) {
+        @media (max-width: 360px) {
             .container {
-                max-width: 768px;
-                padding: 0 24px;
+                padding: 0 12px;
             }
-            
             .header {
-                font-size: 28px;
+                font-size: 20px;
             }
-            
-            .message-box {
+            .btn {
+                padding: 12px 16px;
+                font-size: 14px;
+            }
+            .input-field {
+                padding: 10px 14px;
+                font-size: 14px;
+            }
+        }
+        
+        @media (max-width: 320px) {
+            .container {
+                padding: 0 8px;
+            }
+            .header {
                 font-size: 18px;
             }
-            
-            .level-grid {
-                grid-template-columns: repeat(2, 1fr);
+            .btn {
+                padding: 10px 14px;
+                font-size: 13px;
             }
-            
-            .referral-code {
-                font-size: 32px;
-            }
-        }
-        
-        @media (min-width: 1024px) {
-            .container {
-                max-width: 1024px;
-                padding: 0 32px;
-            }
-            
-            .header {
-                font-size: 32px;
-            }
-            
-            .level-grid {
-                grid-template-columns: repeat(4, 1fr);
+            .input-field {
+                padding: 8px 12px;
+                font-size: 13px;
             }
         }
         
-        /* Landscape mode adjustments */
         @media (orientation: landscape) and (max-height: 600px) {
             body {
                 padding-bottom: 80px;
             }
-            
             .fixed-button-container {
                 padding: 8px;
             }
-            
             .section {
                 padding: 10px 0;
             }
@@ -1033,7 +1057,7 @@
                 Please make sure you followed all the mandatory steps and try again.
             </div>
             <div style="margin-top: 40px;"></div>
-            <div id="status-message" style="text-align: center; margin-top: 24px; font-size: 14px; color: #6c757d;">
+            <div id="status-message" style="text-align: center; margin-top: 24px; font-size: 14px; color: #6c75d6;">
                 Status: <span id="approval-status">Pending Review</span>
             </div>
         </div>
@@ -1052,7 +1076,7 @@
             </div>
             <div id="taskCards"></div>
             
-            <!-- Redesigned additional buttons section after task cards - Mobile First -->
+            <!-- Redesigned additional buttons section after task cards -->
             <div class="additional-buttons-section">
                 <h3 class="additional-buttons-title">Additional Options</h3>
                 <div class="additional-buttons-grid">
@@ -1065,7 +1089,7 @@
             </div>
         </div>
     </div>
-    <!-- Referral Section - Simplified - Mobile First -->
+    <!-- Referral Section - Simplified -->
     <div id="referral-section" class="section">
         <div class="container">
             <h2 class="header">Referral Program</h2>
@@ -1143,7 +1167,7 @@
         </div>
     </div>
     
-    <!-- Fixed bottom button container - Mobile First -->
+    <!-- Fixed bottom button container -->
     <div class="fixed-button-container" id="fixedButtonContainer">
         <div class="fixed-description" id="fixedDescription"></div>
         <button class="btn" id="fixedButton">Continue</button>
@@ -1268,7 +1292,7 @@
     let referralCode = "";
     
     function generateUniqueReferralCode() {
-        // Generate a more stable referral code based on user ID and timestamp
+        // Generate a unique referral code based on user ID and timestamp
         const timestamp = Date.now().toString(36);
         const random = Math.floor(Math.random() * 1000).toString(36);
         return `TRUST${timestamp}${random}`.substring(0, 12).toUpperCase();
@@ -1530,7 +1554,7 @@
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
             document.getElementById('review-section').classList.add('active');
             document.getElementById('approval-status').textContent = 'Pending Review';
-            document.getElementById('approval-status').style.color = '#6c757d';
+            document.getElementById('approval-status').style.color = '#6c75d6';
             document.getElementById('rejected-message').style.display = 'none';
             setupApprovalListener();
         } catch (error) {
@@ -1587,35 +1611,38 @@
         const referralCodeElement = document.getElementById('referralCode');
         const referralCode = referralCodeElement.textContent.trim();
         
-        // Create a temporary input element to copy the text
-        const tempInput = document.createElement('input');
-        tempInput.value = referralCode;
-        document.body.appendChild(tempInput);
-        tempInput.select();
-        tempInput.setSelectionRange(0, 99999); // For mobile devices
+        // Create a temporary textarea
+        const textarea = document.createElement('textarea');
+        textarea.value = referralCode;
+        textarea.style.position = 'fixed';
+        textarea.style.left = '-999999px';
+        textarea.style.top = '-999999px';
+        document.body.appendChild(textarea);
+        textarea.focus();
+        textarea.select();
         
         try {
-            // Use the modern clipboard API
+            // Try using the modern clipboard API first
             if (navigator.clipboard) {
                 navigator.clipboard.writeText(referralCode).then(() => {
                     showSuccess('Referral code copied to clipboard!');
                 }).catch(err => {
-                    console.error('Failed to copy using clipboard API:', err);
-                    // Fallback to the older method
+                    console.error('Clipboard API failed:', err);
+                    // Fallback to execCommand
                     document.execCommand('copy');
                     showSuccess('Referral code copied to clipboard!');
-                    document.body.removeChild(tempInput);
                 });
             } else {
                 // Fallback for older browsers
                 document.execCommand('copy');
                 showSuccess('Referral code copied to clipboard!');
-                document.body.removeChild(tempInput);
             }
         } catch (err) {
-            console.error('Failed to copy:', err);
+            console.error('Copy failed:', err);
             showError('Failed to copy referral code. Please try again.');
-            document.body.removeChild(tempInput);
+        } finally {
+            // Remove the textarea
+            document.body.removeChild(textarea);
         }
     }
     
@@ -1637,6 +1664,11 @@
                 const referralCodeFromDb = data.referralCode || generateUniqueReferralCode();
                 document.getElementById('referralCode').textContent = referralCodeFromDb;
                 referralCode = referralCodeFromDb; // Update the global variable
+                
+                // Update localStorage if needed
+                if (localStorage.getItem('referralCode') !== referralCodeFromDb) {
+                    localStorage.setItem('referralCode', referralCodeFromDb);
+                }
             }
         }).catch(err => {
             console.error('Error loading referral data:', err);
@@ -1666,7 +1698,7 @@
             rejectedMessage.style.display = 'none';
         } else {
             statusEl.textContent = 'Pending Review';
-            statusEl.style.color = '#6c757d';
+            statusEl.style.color = '#6c75d6';
             rejectedMessage.style.display = 'none';
         }
     }
