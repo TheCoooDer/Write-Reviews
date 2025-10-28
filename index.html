@@ -520,11 +520,11 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
         
-        /* Redesigned Additional buttons section */
+        /* Redesigned Additional buttons section - Mobile First */
         .additional-buttons-section {
             background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
             border-radius: 16px;
-            padding: 24px;
+            padding: 20px;
             margin-top: 24px;
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
             position: relative;
@@ -542,18 +542,17 @@
         }
         
         .additional-buttons-title {
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 700;
             color: #333;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
             text-align: center;
-            position: relative;
         }
         
         .additional-buttons-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 16px;
+            grid-template-columns: 1fr;
+            gap: 12px;
         }
         
         .additional-btn {
@@ -614,11 +613,11 @@
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
         }
         
-        /* Referral section styles - Simplified */
+        /* Referral section styles - Mobile First */
         .referral-code-container {
             background-color: white;
             border-radius: 16px;
-            padding: 24px;
+            padding: 20px;
             margin-bottom: 24px;
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
             text-align: center;
@@ -644,16 +643,17 @@
         }
         
         .referral-code {
-            font-size: 28px;
+            font-size: 24px;
             font-weight: 700;
             color: var(--primary-color);
             background-color: #f5f5f5;
             border-radius: 12px;
-            padding: 16px 24px;
+            padding: 16px 20px;
             margin-bottom: 20px;
             letter-spacing: 2px;
             display: inline-block;
             border: 2px dashed var(--primary-color);
+            word-break: break-all;
         }
         
         .btn-copy {
@@ -669,6 +669,7 @@
             box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
             display: inline-flex;
             align-items: center;
+            justify-content: center;
             gap: 8px;
         }
         
@@ -679,7 +680,8 @@
         
         .referral-stats {
             display: flex;
-            justify-content: space-around;
+            flex-direction: column;
+            gap: 16px;
             margin-bottom: 24px;
         }
         
@@ -689,7 +691,6 @@
             border-radius: 16px;
             padding: 20px;
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-            min-width: 120px;
             position: relative;
             overflow: hidden;
         }
@@ -768,14 +769,12 @@
             font-weight: 700;
         }
         
-        /* Fixed bottom button container */
+        /* Fixed bottom button container - Mobile First */
         .fixed-button-container {
             position: fixed;
             bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
+            left: 0;
             width: 100%;
-            max-width: 500px;
             background-color: white;
             padding: 16px;
             box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.15);
@@ -800,96 +799,74 @@
             margin-bottom: 8px;
         }
         
-        /* Enhanced Media Queries */
-        @media (max-width: 480px) {
-            .level-grid {
-                grid-template-columns: 1fr;
-                gap: 12px;
-            }
-            .level-card {
-                padding: 14px;
-            }
-            .level-badge {
-                padding: 5px 12px;
-                font-size: 13px;
-            }
-            .stat-label, .stat-value {
-                font-size: 12px;
-            }
-            .user-avatar {
-                width: 50px;
-                height: 50px;
-            }
-            .user-name {
-                font-size: 16px;
-            }
-            .user-level-text {
-                font-size: 13px;
-            }
-            .level-badge-corner {
-                width: 26px;
-                height: 26px;
-                font-size: 11px;
-                top: -6px;
-                right: -6px;
-            }
-            .fixed-button-container {
-                padding: 12px;
-            }
+        /* Enhanced Media Queries - Mobile First */
+        @media (min-width: 480px) {
             .additional-buttons-grid {
-                grid-template-columns: 1fr;
-                gap: 12px;
+                grid-template-columns: repeat(2, 1fr);
             }
+            
             .referral-stats {
-                flex-direction: column;
-                gap: 16px;
+                flex-direction: row;
+                justify-content: space-around;
             }
-            .referral-stat {
-                width: 100%;
+            
+            .referral-code {
+                font-size: 28px;
             }
-        }
-        
-        @media (max-width: 360px) {
-            .container {
-                padding: 0 12px;
-            }
-            .header {
-                font-size: 20px;
-            }
-            .btn {
-                padding: 12px 16px;
-                font-size: 14px;
-            }
-            .input-field {
-                padding: 10px 14px;
-                font-size: 14px;
+            
+            .referral-stat .stat-value {
+                font-size: 28px;
             }
         }
         
-        @media (max-width: 320px) {
+        @media (min-width: 768px) {
             .container {
-                padding: 0 8px;
+                max-width: 768px;
+                padding: 0 24px;
             }
+            
             .header {
+                font-size: 28px;
+            }
+            
+            .message-box {
                 font-size: 18px;
             }
-            .btn {
-                padding: 10px 14px;
-                font-size: 13px;
+            
+            .level-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
-            .input-field {
-                padding: 8px 12px;
-                font-size: 13px;
+            
+            .referral-code {
+                font-size: 32px;
             }
         }
         
+        @media (min-width: 1024px) {
+            .container {
+                max-width: 1024px;
+                padding: 0 32px;
+            }
+            
+            .header {
+                font-size: 32px;
+            }
+            
+            .level-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+        
+        /* Landscape mode adjustments */
         @media (orientation: landscape) and (max-height: 600px) {
             body {
                 padding-bottom: 80px;
             }
+            
             .fixed-button-container {
                 padding: 8px;
             }
+            
             .section {
                 padding: 10px 0;
             }
@@ -903,7 +880,7 @@
         
         /* Touch-friendly styles */
         @media (hover: none) and (pointer: coarse) {
-            .btn, .answer-button {
+            .btn, .answer-button, .additional-btn {
                 min-height: 48px;
                 padding: 16px;
             }
@@ -1075,7 +1052,7 @@
             </div>
             <div id="taskCards"></div>
             
-            <!-- Redesigned additional buttons section after task cards -->
+            <!-- Redesigned additional buttons section after task cards - Mobile First -->
             <div class="additional-buttons-section">
                 <h3 class="additional-buttons-title">Additional Options</h3>
                 <div class="additional-buttons-grid">
@@ -1088,7 +1065,7 @@
             </div>
         </div>
     </div>
-    <!-- Referral Section - Simplified -->
+    <!-- Referral Section - Simplified - Mobile First -->
     <div id="referral-section" class="section">
         <div class="container">
             <h2 class="header">Referral Program</h2>
@@ -1166,7 +1143,7 @@
         </div>
     </div>
     
-    <!-- Fixed bottom button container -->
+    <!-- Fixed bottom button container - Mobile First -->
     <div class="fixed-button-container" id="fixedButtonContainer">
         <div class="fixed-description" id="fixedDescription"></div>
         <button class="btn" id="fixedButton">Continue</button>
@@ -1291,8 +1268,9 @@
     let referralCode = "";
     
     function generateUniqueReferralCode() {
+        // Generate a more stable referral code based on user ID and timestamp
         const timestamp = Date.now().toString(36);
-        const random = Math.random().toString(36).substring(2, 8);
+        const random = Math.floor(Math.random() * 1000).toString(36);
         return `TRUST${timestamp}${random}`.substring(0, 12).toUpperCase();
     }
     
@@ -1379,13 +1357,6 @@
         if (!currentSection) return;
         
         const sectionId = currentSection.id;
-        
-        // Adjust for different screen sizes
-        if (window.innerWidth <= 480) {
-            container.style.padding = '12px';
-        } else {
-            container.style.padding = '16px';
-        }
         
         switch(sectionId) {
             case 'welcome-section':
@@ -1475,13 +1446,6 @@
                 container.classList.add('visible');
                 break;
         }
-        
-        // Adjust button position on smaller screens
-        if (window.innerWidth <= 360) {
-            container.style.bottom = '10px';
-        } else {
-            container.style.bottom = '0';
-        }
     }
     
     function showLevelSystem() {
@@ -1525,27 +1489,26 @@
             const userId = trustpilotLink.split('/users/')[1];
             const userRef = db.collection('users').doc(userId);
             
-            // Generate unique referral code if not already set
-            if (!referralCode) {
-                referralCode = generateUniqueReferralCode();
-            }
-            
-            // Check if user already exists
+            // Generate unique referral code only if it doesn't exist
             const doc = await userRef.get();
-            const existingData = doc.exists ? doc.data() : {};
+            if (!doc.exists || !doc.data().referralCode) {
+                referralCode = generateUniqueReferralCode();
+            } else {
+                referralCode = doc.data().referralCode;
+            }
             
             // Merge existing data with new data
             const userData = {
-                ...existingData,
+                ...doc.data(),
                 trustpilotLink,
                 reviewCount,
                 userLevel,
                 selectedCountry,
                 referralCode,
-                approved: existingData.approved || false,
-                deleted: existingData.deleted || false,
-                referrals: existingData.referrals || 0,
-                referralEarnings: existingData.referralEarnings || 0,
+                approved: doc.data().approved || false,
+                deleted: doc.data().deleted || false,
+                referrals: doc.data().referrals || 0,
+                referralEarnings: doc.data().referralEarnings || 0,
                 telegramUserId: localStorage.getItem('telegramUserId'),
                 telegramUsername: localStorage.getItem('telegramUsername'),
                 telegramFirstName: localStorage.getItem('telegramFirstName'),
@@ -1621,42 +1584,39 @@
     }
     
     function copyReferralCode() {
-        const referralCode = document.getElementById('referralCode').textContent;
+        const referralCodeElement = document.getElementById('referralCode');
+        const referralCode = referralCodeElement.textContent.trim();
         
-        // Modern clipboard API
-        if (navigator.clipboard) {
-            navigator.clipboard.writeText(referralCode).then(() => {
-                showSuccess('Referral code copied to clipboard!');
-            }).catch(err => {
-                console.error('Failed to copy referral code:', err);
-                fallbackCopyTextToClipboard(referralCode);
-            });
-        } else {
-            // Fallback for older browsers
-            fallbackCopyTextToClipboard(referralCode);
-        }
-    }
-    
-    function fallbackCopyTextToClipboard(text) {
-        const textArea = document.createElement("textarea");
-        textArea.value = text;
-        textArea.style.position = "fixed"; // Avoid scrolling to bottom
-        textArea.style.left = "-999999px";
-        textArea.style.top = "-999999px";
-        document.body.appendChild(textArea);
-        textArea.focus();
-        textArea.select();
+        // Create a temporary input element to copy the text
+        const tempInput = document.createElement('input');
+        tempInput.value = referralCode;
+        document.body.appendChild(tempInput);
+        tempInput.select();
+        tempInput.setSelectionRange(0, 99999); // For mobile devices
         
         try {
-            const successful = document.execCommand('copy');
-            const msg = successful ? 'Referral code copied to clipboard!' : 'Failed to copy';
-            showSuccess(msg);
+            // Use the modern clipboard API
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(referralCode).then(() => {
+                    showSuccess('Referral code copied to clipboard!');
+                }).catch(err => {
+                    console.error('Failed to copy using clipboard API:', err);
+                    // Fallback to the older method
+                    document.execCommand('copy');
+                    showSuccess('Referral code copied to clipboard!');
+                    document.body.removeChild(tempInput);
+                });
+            } else {
+                // Fallback for older browsers
+                document.execCommand('copy');
+                showSuccess('Referral code copied to clipboard!');
+                document.body.removeChild(tempInput);
+            }
         } catch (err) {
-            console.error('Fallback: Oops, unable to copy', err);
+            console.error('Failed to copy:', err);
             showError('Failed to copy referral code. Please try again.');
+            document.body.removeChild(tempInput);
         }
-        
-        document.body.removeChild(textArea);
     }
     
     function loadReferralData() {
@@ -1673,8 +1633,10 @@
                 document.getElementById('totalReferrals').textContent = referrals;
                 document.getElementById('totalEarnings').textContent = `$${earnings}`;
                 
-                // Set referral code - use existing code from database
-                document.getElementById('referralCode').textContent = data.referralCode || generateUniqueReferralCode();
+                // Use the referral code from the database
+                const referralCodeFromDb = data.referralCode || generateUniqueReferralCode();
+                document.getElementById('referralCode').textContent = referralCodeFromDb;
+                referralCode = referralCodeFromDb; // Update the global variable
             }
         }).catch(err => {
             console.error('Error loading referral data:', err);
@@ -1870,20 +1832,6 @@
             return false;
         }
     }
-    
-    // Debounce function for window resize
-    function debounce(func, wait) {
-        let timeout;
-        return function() {
-            const context = this;
-            const args = arguments;
-            clearTimeout(timeout);
-            timeout = setTimeout(() => func.apply(context, args), wait);
-        };
-    }
-    
-    // Update fixed button on resize
-    window.addEventListener('resize', debounce(updateFixedButton, 250));
     
     document.addEventListener('DOMContentLoaded', async () => {
         const telegramOK = initTelegram();
