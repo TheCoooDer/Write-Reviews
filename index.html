@@ -519,7 +519,6 @@
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
-        
         /* Redesigned Additional buttons section */
         .additional-buttons-section {
             background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
@@ -530,7 +529,6 @@
             position: relative;
             overflow: hidden;
         }
-        
         .additional-buttons-section::before {
             content: '';
             position: absolute;
@@ -540,7 +538,6 @@
             height: 4px;
             background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
         }
-        
         .additional-buttons-title {
             font-size: 20px;
             font-weight: 700;
@@ -548,13 +545,11 @@
             margin-bottom: 20px;
             text-align: center;
         }
-        
         .additional-buttons-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 16px;
         }
-        
         .additional-btn {
             position: relative;
             padding: 16px 20px;
@@ -570,7 +565,6 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             z-index: 1;
         }
-        
         .additional-btn::before {
             content: '';
             position: absolute;
@@ -583,36 +577,28 @@
             transition: transform 0.3s ease;
             z-index: -1;
         }
-        
         .additional-btn:hover::before {
             transform: translateY(0);
         }
-        
         .additional-btn.contact {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
-        
         .additional-btn.channel {
             background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
         }
-        
         .additional-btn.facebook {
             background: linear-gradient(135deg, #4267B2 0%, #8b92a9 100%);
         }
-        
         .additional-btn.youtube {
             background: linear-gradient(135deg, #FF0000 0%, #cc0000 100%);
         }
-        
         .additional-btn.referral {
             background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
         }
-        
         .additional-btn:hover {
             transform: translateY(-4px);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
         }
-        
         /* Referral section styles - Simplified */
         .referral-code-container {
             background-color: white;
@@ -624,7 +610,6 @@
             position: relative;
             overflow: hidden;
         }
-        
         .referral-code-container::before {
             content: '';
             position: absolute;
@@ -634,14 +619,12 @@
             height: 4px;
             background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
         }
-        
         .referral-code-label {
             font-size: 18px;
             font-weight: 600;
             color: #333;
             margin-bottom: 16px;
         }
-        
         .referral-code {
             font-size: 28px;
             font-weight: 700;
@@ -655,7 +638,6 @@
             border: 2px dashed var(--primary-color);
             word-break: break-all;
         }
-        
         .btn-copy {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
@@ -672,18 +654,15 @@
             justify-content: center;
             gap: 8px;
         }
-        
         .btn-copy:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 16px rgba(102, 126, 234, 0.5);
         }
-        
         .referral-stats {
             display: flex;
             justify-content: space-around;
             margin-bottom: 24px;
         }
-        
         .referral-stat {
             text-align: center;
             background-color: white;
@@ -694,7 +673,6 @@
             position: relative;
             overflow: hidden;
         }
-        
         .referral-stat::before {
             content: '';
             position: absolute;
@@ -704,20 +682,17 @@
             height: 4px;
             background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
         }
-        
         .referral-stat .stat-label {
             font-size: 14px;
             color: var(--text-secondary);
             margin-bottom: 8px;
             font-weight: 600;
         }
-        
         .referral-stat .stat-value {
             font-size: 24px;
             font-weight: 700;
             color: var(--primary-color);
         }
-        
         .level-up-btn {
             position: absolute;
             right: 16px;
@@ -768,7 +743,6 @@
             color: #721c24;
             font-weight: 700;
         }
-        
         /* Fixed bottom button container */
         .fixed-button-container {
             position: fixed;
@@ -800,7 +774,6 @@
             color: var(--text-secondary);
             margin-bottom: 8px;
         }
-        
         /* Enhanced Media Queries */
         @media (max-width: 480px) {
             .level-grid {
@@ -849,7 +822,6 @@
                 width: 100%;
             }
         }
-        
         @media (max-width: 360px) {
             .container {
                 padding: 0 12px;
@@ -866,7 +838,6 @@
                 font-size: 14px;
             }
         }
-        
         @media (max-width: 320px) {
             .container {
                 padding: 0 8px;
@@ -883,7 +854,6 @@
                 font-size: 13px;
             }
         }
-        
         @media (orientation: landscape) and (max-height: 600px) {
             body {
                 padding-bottom: 80px;
@@ -895,20 +865,17 @@
                 padding: 10px 0;
             }
         }
-        
         /* Accessibility improvements */
         .btn:focus, .input-field:focus, .answer-button:focus {
             outline: 3px solid #0088cc;
             outline-offset: 2px;
         }
-        
         /* Touch-friendly styles */
         @media (hover: none) and (pointer: coarse) {
             .btn, .answer-button, .additional-btn {
                 min-height: 48px;
                 padding: 16px;
             }
-            
             .input-field {
                 min-height: 48px;
                 padding: 14px;
@@ -1075,7 +1042,6 @@
                 <button class="level-up-btn" id="levelUpButton" onclick="showLevelSystemForApprovedUser()">View Level System</button>
             </div>
             <div id="taskCards"></div>
-            
             <!-- Redesigned additional buttons section after task cards -->
             <div class="additional-buttons-section">
                 <h3 class="additional-buttons-title">Additional Options</h3>
@@ -1100,7 +1066,6 @@
                     <span>📋</span> Copy Code
                 </button>
             </div>
-            
             <div class="referral-stats">
                 <div class="referral-stat">
                     <div class="stat-label">Total Referrals</div>
@@ -1166,14 +1131,12 @@
             </div>
         </div>
     </div>
-    
     <!-- Fixed bottom button container -->
     <div class="fixed-button-container" id="fixedButtonContainer">
         <div class="fixed-description" id="fixedDescription"></div>
         <button class="btn" id="fixedButton">Continue</button>
         <button class="btn btn-support" id="fixedSupportButton" style="display: none;">📤 Send Profile Link to Admin</button>
     </div>
-    
     <div id="loadingOverlay" class="loading-overlay" style="display: none;">
         <div class="spinner"></div>
         <p class="loading-text">Loading...</p>
@@ -1192,18 +1155,15 @@
     const db = firebase.firestore();
     let tg;
     let telegramUser = null;
-    
     function showLoading(message = "Loading...") {
         const overlay = document.getElementById('loadingOverlay');
         const text = overlay.querySelector('.loading-text');
         text.textContent = message;
         overlay.style.display = 'flex';
     }
-    
     function hideLoading() {
         document.getElementById('loadingOverlay').style.display = 'none';
     }
-    
     function showError(message) {
         const errorBox = document.getElementById('error-box');
         const errorMessage = document.getElementById('error-message');
@@ -1211,7 +1171,6 @@
         errorBox.classList.add('visible');
         setTimeout(() => errorBox.classList.remove('visible'), 5000);
     }
-    
     function showSuccess(message) {
         const successBox = document.getElementById('success-box');
         const successMessage = document.getElementById('success-message');
@@ -1219,7 +1178,6 @@
         successBox.classList.add('visible');
         setTimeout(() => successBox.classList.remove('visible'), 5000);
     }
-    
     function initTelegram() {
         try {
             if (window.Telegram && window.Telegram.WebApp) {
@@ -1241,7 +1199,6 @@
             return false;
         }
     }
-    
     function updateUserInfo() {
         if (telegramUser) {
             const userInfo = document.getElementById('userInfo');
@@ -1250,32 +1207,26 @@
             const userLevelText = document.getElementById('userLevelText');
             const levelBadge = document.getElementById('levelBadgeCorner');
             const levelUpButton = document.getElementById('levelUpButton');
-            
             userInfo.style.display = 'flex';
-            
             if (telegramUser.photo_url) {
                 userAvatar.src = telegramUser.photo_url;
             } else {
                 const name = telegramUser.first_name;
                 userAvatar.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=0088cc&color=fff&size=60`;
             }
-            
             const fullName = telegramUser.first_name + (telegramUser.last_name ? ' ' + telegramUser.last_name : '');
             userName.textContent = fullName;
             userLevelText.textContent = `Level ${userLevel || 1}`;
             levelBadge.textContent = userLevel || 1;
-            
             levelBadge.style.backgroundColor = 
                 (userLevel === 1) ? '#0d47a1' :
                 (userLevel === 2) ? '#2e7d32' :
                 (userLevel === 3) ? '#ff8f00' :
                 '#c62828';
-                
             levelUpButton.textContent = 'View Level System';
             levelUpButton.onclick = showLevelSystemForApprovedUser;
         }
     }
-    
     const tasks = [
         { id: 1, title: "Trustpilot Review 1", description: "✅ Give a 5-star Trustpilot review\n💰 Instant payment via Binance\n💵 $0.20 per review", trustpilotUrl: "https://www.trustpilot.com/review/mugsy.shop" },
         { id: 2, title: "Trustpilot Review 2", description: "✅ Give a 5-star Trustpilot review\n💰 Instant payment via Binance\n💵 $0.20 per review", trustpilotUrl: "https://www.trustpilot.com/review/riffs.online" },
@@ -1283,32 +1234,26 @@
         { id: 4, title: "Trustpilot Review 4", description: "✅ Give a 5-star Trustpilot review\n💰 Instant payment via Binance\n💵 $0.20 per review", trustpilotUrl: "https://www.trustpilot.com/review/noodl.online" },
         { id: 5, title: "Trustpilot Review 5", description: "✅ Give a 5-star Trustpilot review\n💰 Instant payment via Binance\n💵 $0.20 per review", trustpilotUrl: "https://www.trustpilot.com/review/holloway.world" }
     ];
-    
     const countries = ["Australia", "Canada", "Ireland", "Netherlands", "Germany"];
     let reviewCount = null;
     let userLevel = null;
     let selectedCountry = "";
     let trustpilotLink = "";
     let referralCode = "";
-    
     function generateUniqueReferralCode() {
-        // Generate a unique referral code based on user ID and timestamp
         const timestamp = Date.now().toString(36);
         const random = Math.floor(Math.random() * 1000).toString(36);
         return `TRUST${timestamp}${random}`.substring(0, 12).toUpperCase();
     }
-    
     function selectRandomCountry() {
         return countries[Math.floor(Math.random() * countries.length)];
     }
-    
     function determineUserLevel(count) {
         if (count >= 30) return 4;
         if (count >= 20) return 3;
         if (count >= 10) return 2;
         return 1;
     }
-    
     function getLevelDetails(level) {
         return {
             1: { min: 0, max: 9,   pay: 0.10, perDay: 1 },
@@ -1317,12 +1262,10 @@
             4: { min: 30, max: Infinity, pay: 0.30, perDay: 5 }
         }[level];
     }
-    
     function validateTrustpilotLink() {
         const linkInput = document.getElementById('trustpilot-link');
         const linkHint = document.getElementById('link-hint');
         const trustpilotRegex = /^https:\/\/(?:[a-z]{2}|www)\.trustpilot\.com\/users\/.+$/;
-        
         if (!linkInput.value) {
             linkInput.classList.remove('valid', 'invalid');
             linkHint.classList.remove('error');
@@ -1338,50 +1281,36 @@
             linkHint.classList.add('error');
             linkHint.textContent = 'Invalid format. Example: https://www.trustpilot.com/users/username';
         }
-        
         validateForm();
     }
-    
     function validateForm() {
         const linkInput = document.getElementById('trustpilot-link');
         const trustpilotRegex = /^https:\/\/(?:[a-z]{2}|www)\.trustpilot\.com\/users\/.+$/;
         const continueButton = document.getElementById('fixedButton');
-        
         if (!continueButton) return;
-        
         const isValidLink = linkInput.value && trustpilotRegex.test(linkInput.value);
         const isReviewCountSelected = reviewCount !== null;
-        
         continueButton.disabled = !(isValidLink && isReviewCountSelected);
     }
-    
     function selectReviewCount(count) {
         reviewCount = count;
         userLevel = determineUserLevel(reviewCount);
-        
         document.querySelectorAll('.answer-button').forEach(btn => btn.classList.remove('selected'));
         event.target.classList.add('selected');
-        
         validateForm();
     }
-    
     function updateFixedButton() {
         const container = document.getElementById('fixedButtonContainer');
         const button = document.getElementById('fixedButton');
         const description = document.getElementById('fixedDescription');
         const supportButton = document.getElementById('fixedSupportButton');
-        
-        // Reset visibility
         container.classList.remove('visible');
         button.style.display = 'none';
         supportButton.style.display = 'none';
         description.textContent = '';
-        
         const currentSection = document.querySelector('.section.active');
         if (!currentSection) return;
-        
         const sectionId = currentSection.id;
-        
         switch(sectionId) {
             case 'welcome-section':
                 button.textContent = '✅ I Understand - Continue';
@@ -1471,113 +1400,97 @@
                 break;
         }
     }
-    
     function showLevelSystem() {
         document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
         document.getElementById('level-section').classList.add('active');
         updateFixedButton();
     }
-    
     function showQuestion() {
         document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
         document.getElementById('question-section').classList.add('active');
         updateFixedButton();
     }
-    
     function continueToCountry() {
         trustpilotLink = document.getElementById('trustpilot-link').value;
         const trustpilotRegex = /^https:\/\/(?:[a-z]{2}|www)\.trustpilot\.com\/users\/.+$/;
-        
         if (!trustpilotLink || !trustpilotRegex.test(trustpilotLink)) {
             showError('Please enter a valid Trustpilot profile link');
             return;
         }
-        
         if (reviewCount === null) {
             showError('Please select your review count');
             return;
         }
-        
         selectedCountry = selectRandomCountry();
         document.getElementById('selectedCountry').textContent = selectedCountry;
         document.getElementById('countryNameInText').textContent = selectedCountry;
-        
         document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
         document.getElementById('country-section').classList.add('active');
         updateFixedButton();
     }
-    
     async function saveUserData() {
         try {
             showLoading("Submitting your application...");
             const userId = trustpilotLink.split('/users/')[1];
             const userRef = db.collection('users').doc(userId);
-            
-            // Generate unique referral code only if it doesn't exist
             const doc = await userRef.get();
-            if (!doc.exists || !doc.data().referralCode) {
+            let existingData = doc.exists ? doc.data() : {};
+            // Only generate referral code if it doesn't exist in DB
+            if (!existingData.referralCode) {
                 referralCode = generateUniqueReferralCode();
             } else {
-                referralCode = doc.data().referralCode;
+                referralCode = existingData.referralCode;
             }
-            
-            // Merge existing data with new data
             const userData = {
-                ...doc.data(),
                 trustpilotLink,
                 reviewCount,
                 userLevel,
                 selectedCountry,
                 referralCode,
-                approved: doc.data().approved || false,
-                deleted: doc.data().deleted || false,
-                referrals: doc.data().referrals || 0,
-                referralEarnings: doc.data().referralEarnings || 0,
+                approved: existingData.approved || false,
+                deleted: existingData.deleted || false,
+                referrals: existingData.referrals || 0,
+                referralEarnings: existingData.referralEarnings || 0,
                 telegramUserId: localStorage.getItem('telegramUserId'),
                 telegramUsername: localStorage.getItem('telegramUsername'),
                 telegramFirstName: localStorage.getItem('telegramFirstName'),
                 fullName: telegramUser ? `${telegramUser.first_name} ${telegramUser.last_name || ''}` : '',
                 timestamp: firebase.firestore.FieldValue.serverTimestamp()
             };
-            
             await userRef.set(userData);
-            
-            // Update localStorage with consistent data
+            // Save to localStorage
             localStorage.setItem('userId', userId);
             localStorage.setItem('reviewCount', reviewCount);
             localStorage.setItem('userLevel', userLevel);
             localStorage.setItem('trustpilotLink', trustpilotLink);
             localStorage.setItem('selectedCountry', selectedCountry);
             localStorage.setItem('referralCode', referralCode);
-            
             hideLoading();
+            // Switch to review section
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
             document.getElementById('review-section').classList.add('active');
             document.getElementById('approval-status').textContent = 'Pending Review';
             document.getElementById('approval-status').style.color = '#6c75d6';
             document.getElementById('rejected-message').style.display = 'none';
             setupApprovalListener();
+            updateFixedButton(); // Ensure button reflects new state
         } catch (error) {
             console.error('Error saving user data:', error);
             hideLoading();
             showError('Error saving your data. Please try again.');
-            // Clear inconsistent localStorage data
             localStorage.removeItem('userId');
         }
     }
-    
     async function updateReviewCount() {
         try {
             const userId = localStorage.getItem('userId');
             if (!userId) return;
-            
             const userRef = db.collection('users').doc(userId);
             await userRef.update({
                 reviewCount,
                 userLevel,
                 timestamp: firebase.firestore.FieldValue.serverTimestamp()
             });
-            
             localStorage.setItem('reviewCount', reviewCount);
             localStorage.setItem('userLevel', userLevel);
         } catch (error) {
@@ -1585,7 +1498,6 @@
             showError('Error updating your review count.');
         }
     }
-    
     function markTaskComplete() {
         reviewCount++;
         userLevel = determineUserLevel(reviewCount);
@@ -1593,25 +1505,20 @@
         updateUserInfo();
         generateTaskCards();
     }
-    
     function showLevelSystemForApprovedUser() {
         document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
         document.getElementById('level-system-section').classList.add('active');
         updateFixedButton();
     }
-    
     function showReferralSection() {
         document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
         document.getElementById('referral-section').classList.add('active');
         updateFixedButton();
         loadReferralData();
     }
-    
     function copyReferralCode() {
         const referralCodeElement = document.getElementById('referralCode');
         const referralCode = referralCodeElement.textContent.trim();
-        
-        // Create a temporary textarea
         const textarea = document.createElement('textarea');
         textarea.value = referralCode;
         textarea.style.position = 'fixed';
@@ -1620,20 +1527,15 @@
         document.body.appendChild(textarea);
         textarea.focus();
         textarea.select();
-        
         try {
-            // Try using the modern clipboard API first
             if (navigator.clipboard) {
                 navigator.clipboard.writeText(referralCode).then(() => {
                     showSuccess('Referral code copied to clipboard!');
-                }).catch(err => {
-                    console.error('Clipboard API failed:', err);
-                    // Fallback to execCommand
+                }).catch(() => {
                     document.execCommand('copy');
                     showSuccess('Referral code copied to clipboard!');
                 });
             } else {
-                // Fallback for older browsers
                 document.execCommand('copy');
                 showSuccess('Referral code copied to clipboard!');
             }
@@ -1641,53 +1543,51 @@
             console.error('Copy failed:', err);
             showError('Failed to copy referral code. Please try again.');
         } finally {
-            // Remove the textarea
             document.body.removeChild(textarea);
         }
     }
-    
     function loadReferralData() {
         const userId = localStorage.getItem('userId');
         if (!userId) return;
-        
-        // Load referral data from Firebase
         db.collection('users').doc(userId).get().then(doc => {
             if (doc.exists) {
                 const data = doc.data();
                 const referrals = data.referrals || 0;
                 const earnings = (referrals * 0.05).toFixed(2);
-                
                 document.getElementById('totalReferrals').textContent = referrals;
                 document.getElementById('totalEarnings').textContent = `$${earnings}`;
-                
-                // Use the referral code from the database
-                const referralCodeFromDb = data.referralCode || generateUniqueReferralCode();
-                document.getElementById('referralCode').textContent = referralCodeFromDb;
-                referralCode = referralCodeFromDb; // Update the global variable
-                
-                // Update localStorage if needed
-                if (localStorage.getItem('referralCode') !== referralCodeFromDb) {
-                    localStorage.setItem('referralCode', referralCodeFromDb);
+                // ONLY use code from DB — never generate here
+                if (data.referralCode) {
+                    document.getElementById('referralCode').textContent = data.referralCode;
+                    referralCode = data.referralCode;
+                    localStorage.setItem('referralCode', data.referralCode);
+                } else {
+                    document.getElementById('referralCode').textContent = 'ERROR';
+                    console.error('Referral code missing in DB for user:', userId);
                 }
             }
         }).catch(err => {
             console.error('Error loading referral data:', err);
         });
     }
-    
     async function submitApplication() {
         if (!initTelegram()) {
             showError('Please open this app in Telegram to continue');
             return;
         }
-        
-        await saveUserData();
+        const button = document.getElementById('fixedButton');
+        button.disabled = true;
+        button.textContent = 'Submitting...';
+        try {
+            await saveUserData();
+        } finally {
+            button.disabled = false;
+            button.textContent = 'Submit Application';
+        }
     }
-    
     function displayReviewSection(data) {
         const statusEl = document.getElementById('approval-status');
         const rejectedMessage = document.getElementById('rejected-message');
-        
         if (data.deleted) {
             statusEl.textContent = 'Application Rejected';
             statusEl.style.color = '#dc3545';
@@ -1702,17 +1602,14 @@
             rejectedMessage.style.display = 'none';
         }
     }
-    
     function setupApprovalListener() {
         const userId = localStorage.getItem('userId');
         if (!userId) return;
-        
         const userRef = db.collection('users').doc(userId);
         userRef.onSnapshot(doc => {
             if (doc.exists) {
                 const data = doc.data();
                 displayReviewSection(data);
-                
                 if (data.deleted) {
                     document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
                     document.getElementById('review-section').classList.add('active');
@@ -1734,17 +1631,12 @@
             showError('Error checking approval status.');
         });
     }
-    
     function generateTaskCards() {
         const container = document.getElementById('taskCards');
         container.innerHTML = '';
-        
         const tasksToShow = userLevel >= 4 ? 5 : (userLevel >= 3 ? 4 : 1);
         const levelDetails = getLevelDetails(userLevel);
-        
-        // Use document fragment to reduce reflows
         const fragment = document.createDocumentFragment();
-        
         for (let i = 0; i < tasksToShow && i < tasks.length; i++) {
             const card = document.createElement('div');
             card.className = 'task-card';
@@ -1760,25 +1652,18 @@
             `;
             fragment.appendChild(card);
         }
-        
-        // Replace all content at once
         container.appendChild(fragment);
-        
-        // Show additional buttons section
         const additionalSection = document.querySelector('.additional-buttons-section');
         if (additionalSection) {
             additionalSection.style.display = 'block';
         }
     }
-    
     function submitToAdmin() {
         window.location.href = "https://t.me/sufyanthedev";
     }
-    
     async function resubmitApplication() {
         const userId = localStorage.getItem('userId');
         if (!userId) return;
-        
         showLoading("Resetting your application...");
         try {
             const userRef = db.collection('users').doc(userId);
@@ -1787,14 +1672,12 @@
                 approved: false,
                 timestamp: firebase.firestore.FieldValue.serverTimestamp()
             });
-            
             localStorage.removeItem('userId');
             localStorage.removeItem('reviewCount');
             localStorage.removeItem('userLevel');
             localStorage.setItem('trustpilotLink', trustpilotLink);
             localStorage.removeItem('selectedCountry');
             localStorage.removeItem('referralCode');
-            
             hideLoading();
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
             document.getElementById('country-section').classList.add('active');
@@ -1806,44 +1689,39 @@
             showError('Error resubmitting application. Please try again.');
         }
     }
-    
     async function restoreUserState() {
         const userId = localStorage.getItem('userId');
         if (!userId) return false;
-        
         try {
             showLoading("Restoring your session...");
             const userRef = db.collection('users').doc(userId);
             const doc = await userRef.get();
             hideLoading();
-            
             if (!doc.exists) {
                 localStorage.clear();
                 return false;
             }
-            
             const data = doc.data();
-            reviewCount = parseInt(localStorage.getItem('reviewCount'));
-            userLevel = parseInt(localStorage.getItem('userLevel'));
+            // Load from localStorage but allow referralCode to be missing
+            reviewCount = parseInt(localStorage.getItem('reviewCount')) || 0;
+            userLevel = parseInt(localStorage.getItem('userLevel')) || 1;
             trustpilotLink = localStorage.getItem('trustpilotLink');
-            selectedCountry = localStorage.getItem('selectedCountry');
-            referralCode = localStorage.getItem('referralCode');
-            
-            // Validate all stored data
-            if ([reviewCount, userLevel, trustpilotLink, selectedCountry, referralCode].some(v => v === null || v === undefined)) {
+            selectedCountry = localStorage.getItem('selectedCountry') || '';
+            referralCode = localStorage.getItem('referralCode'); // may be null
+
+            // Require only essential fields
+            if (!trustpilotLink) {
                 localStorage.clear();
                 return false;
             }
-            
+
             displayReviewSection(data);
-            
             if (data.deleted) {
                 document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
                 document.getElementById('review-section').classList.add('active');
                 updateFixedButton();
                 return true;
             }
-            
             if (data.approved) {
                 document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
                 document.getElementById('tasks-section').classList.add('active');
@@ -1852,7 +1730,6 @@
                 generateTaskCards();
                 return true;
             }
-            
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
             document.getElementById('review-section').classList.add('active');
             setupApprovalListener();
@@ -1864,13 +1741,11 @@
             return false;
         }
     }
-    
     document.addEventListener('DOMContentLoaded', async () => {
         const telegramOK = initTelegram();
         if (!telegramOK) {
             document.querySelector('.message-box').innerHTML += '<br><br><strong style="color:#dc3545;">Error:</strong> Open this app in Telegram.';
         }
-        
         const restored = await restoreUserState();
         if (!restored) {
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
@@ -1878,7 +1753,6 @@
             updateFixedButton();
         }
     });
-    
     document.addEventListener('touchstart', () => {}, { passive: true });
     </script>
 </body>
