@@ -552,13 +552,118 @@
             margin-bottom: 0;
             transition: var(--transition);
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            font-weight: 400;
         }
         
         .additional-btn:hover {
-            background-color: #fff;
-            border-color: #fff;
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: 700;
+            border-color: var(--primary-color);
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Referral section styles */
+        .referral-code-container {
+            background-color: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+        
+        .referral-code-label {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 12px;
+        }
+        
+        .referral-code {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-color);
+            background-color: #f5f5f5;
+            border-radius: 8px;
+            padding: 12px 20px;
+            margin-bottom: 16px;
+            letter-spacing: 2px;
+            display: inline-block;
+        }
+        
+        .btn-copy {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 10px;
+        }
+        
+        .btn-copy:hover {
+            background-color: var(--secondary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .referral-stats {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 24px;
+        }
+        
+        .referral-stat {
+            text-align: center;
+            background-color: white;
+            border-radius: 12px;
+            padding: 16px;
+            box-shadow: var(--shadow);
+            min-width: 120px;
+        }
+        
+        .referral-stat .stat-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+        
+        .referral-stat .stat-value {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        
+        .referral-rules, .referral-tips {
+            background-color: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+        }
+        
+        .referral-rules-title, .referral-tips-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+        
+        .referral-rules-list, .referral-tips-list {
+            padding-left: 20px;
+            font-size: 16px;
+            color: var(--text-secondary);
+        }
+        
+        .referral-rules-list li, .referral-tips-list li {
+            margin-bottom: 12px;
+            line-height: 1.5;
         }
         
         .level-up-btn {
@@ -686,6 +791,13 @@
             }
             .additional-btn {
                 padding: 16px 20px;
+            }
+            .referral-stats {
+                flex-direction: column;
+                gap: 16px;
+            }
+            .referral-stat {
+                width: 100%;
             }
         }
         
@@ -923,6 +1035,55 @@
                     <button class="btn additional-btn" onclick="window.open('https://t.me/yourchannel', '_blank')">📢 Telegram Channel</button>
                     <button class="btn additional-btn" onclick="window.open('https://facebook.com/admin', '_blank')">📘 Admin Facebook</button>
                     <button class="btn additional-btn" onclick="window.open('https://youtube.com/admin', '_blank')">📺 Admin YouTube</button>
+                    <button class="btn additional-btn" onclick="showReferralSection()">👥 Referral</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Referral Section -->
+    <div id="referral-section" class="section">
+        <div class="container">
+            <h2 class="header">Referral Program</h2>
+            <div class="level-info">
+                <h3 class="level-title">Earn Extra Money by Referring Friends</h3>
+                <p class="level-subtitle">Share your unique referral code and earn $0.05 for each successful referral</p>
+                
+                <div class="referral-code-container">
+                    <div class="referral-code-label">Your Unique Referral Code</div>
+                    <div class="referral-code" id="referralCode">TRUST123</div>
+                    <button class="btn btn-copy" onclick="copyReferralCode()">📋 Copy Code</button>
+                </div>
+                
+                <div class="referral-stats">
+                    <div class="referral-stat">
+                        <div class="stat-label">Total Referrals</div>
+                        <div class="stat-value" id="totalReferrals">0</div>
+                    </div>
+                    <div class="referral-stat">
+                        <div class="stat-label">Total Earnings</div>
+                        <div class="stat-value" id="totalEarnings">$0.00</div>
+                    </div>
+                </div>
+                
+                <div class="referral-rules">
+                    <h4 class="referral-rules-title">How It Works</h4>
+                    <ul class="referral-rules-list">
+                        <li>Share your referral code with friends</li>
+                        <li>Your friend must sign up using your code</li>
+                        <li>Your friend must complete at least 5 reviews</li>
+                        <li>You earn $0.05 for each successful referral</li>
+                        <li>Payouts are processed weekly</li>
+                    </ul>
+                </div>
+                
+                <div class="referral-tips">
+                    <h4 class="referral-tips-title">Tips for Success</h4>
+                    <ul class="referral-tips-list">
+                        <li>Share your code on social media platforms</li>
+                        <li>Explain the benefits of the program to your friends</li>
+                        <li>Offer to help your friends get started</li>
+                        <li>Track your referrals in the statistics section</li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -1103,6 +1264,13 @@
     let userLevel = null;
     let selectedCountry = "";
     let trustpilotLink = "";
+    let referralCode = "";
+    
+    function generateUniqueReferralCode() {
+        const timestamp = Date.now().toString(36);
+        const random = Math.random().toString(36).substring(2, 8);
+        return `TRUST${timestamp}${random}`.substring(0, 12).toUpperCase();
+    }
     
     function selectRandomCountry() {
         return countries[Math.floor(Math.random() * countries.length)];
@@ -1260,6 +1428,17 @@
                 description.textContent = 'Only LIVE reviews will be accepted';
                 container.classList.add('visible');
                 break;
+            case 'referral-section':
+                button.textContent = 'Back to Tasks';
+                button.onclick = () => {
+                    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+                    document.getElementById('tasks-section').classList.add('active');
+                    updateFixedButton();
+                    updateUserInfo();
+                };
+                button.style.display = 'block';
+                container.classList.add('visible');
+                break;
             case 'level-system-section':
                 button.textContent = 'Back to Tasks';
                 button.onclick = () => {
@@ -1322,6 +1501,9 @@
             const userId = trustpilotLink.split('/users/')[1];
             const userRef = db.collection('users').doc(userId);
             
+            // Generate unique referral code
+            referralCode = generateUniqueReferralCode();
+            
             // Check if user already exists
             const doc = await userRef.get();
             const existingData = doc.exists ? doc.data() : {};
@@ -1333,8 +1515,11 @@
                 reviewCount,
                 userLevel,
                 selectedCountry,
+                referralCode,
                 approved: existingData.approved || false,
                 deleted: existingData.deleted || false,
+                referrals: existingData.referrals || 0,
+                referralEarnings: existingData.referralEarnings || 0,
                 telegramUserId: localStorage.getItem('telegramUserId'),
                 telegramUsername: localStorage.getItem('telegramUsername'),
                 telegramFirstName: localStorage.getItem('telegramFirstName'),
@@ -1350,6 +1535,7 @@
             localStorage.setItem('userLevel', userLevel);
             localStorage.setItem('trustpilotLink', trustpilotLink);
             localStorage.setItem('selectedCountry', selectedCountry);
+            localStorage.setItem('referralCode', referralCode);
             
             hideLoading();
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
@@ -1399,6 +1585,45 @@
         document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
         document.getElementById('level-system-section').classList.add('active');
         updateFixedButton();
+    }
+    
+    function showReferralSection() {
+        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+        document.getElementById('referral-section').classList.add('active');
+        updateFixedButton();
+        loadReferralData();
+    }
+    
+    function copyReferralCode() {
+        const referralCode = document.getElementById('referralCode').textContent;
+        navigator.clipboard.writeText(referralCode).then(() => {
+            showSuccess('Referral code copied to clipboard!');
+        }).catch(err => {
+            console.error('Failed to copy referral code:', err);
+            showError('Failed to copy referral code. Please try again.');
+        });
+    }
+    
+    function loadReferralData() {
+        const userId = localStorage.getItem('userId');
+        if (!userId) return;
+        
+        // Load referral data from Firebase
+        db.collection('users').doc(userId).get().then(doc => {
+            if (doc.exists) {
+                const data = doc.data();
+                const referrals = data.referrals || 0;
+                const earnings = (referrals * 0.05).toFixed(2);
+                
+                document.getElementById('totalReferrals').textContent = referrals;
+                document.getElementById('totalEarnings').textContent = `$${earnings}`;
+                
+                // Set referral code
+                document.getElementById('referralCode').textContent = data.referralCode || generateUniqueReferralCode();
+            }
+        }).catch(err => {
+            console.error('Error loading referral data:', err);
+        });
     }
     
     async function submitApplication() {
@@ -1519,6 +1744,7 @@
             localStorage.removeItem('userLevel');
             localStorage.removeItem('trustpilotLink');
             localStorage.removeItem('selectedCountry');
+            localStorage.removeItem('referralCode');
             
             hideLoading();
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
@@ -1552,9 +1778,10 @@
             userLevel = parseInt(localStorage.getItem('userLevel'));
             trustpilotLink = localStorage.getItem('trustpilotLink');
             selectedCountry = localStorage.getItem('selectedCountry');
+            referralCode = localStorage.getItem('referralCode');
             
             // Validate all stored data
-            if ([reviewCount, userLevel, trustpilotLink, selectedCountry].some(v => v === null || v === undefined)) {
+            if ([reviewCount, userLevel, trustpilotLink, selectedCountry, referralCode].some(v => v === null || v === undefined)) {
                 localStorage.clear();
                 return false;
             }
