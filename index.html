@@ -38,7 +38,7 @@
             background-color: var(--background-color);
             color: var(--text-color);
             line-height: 1.6;
-            padding-bottom: 120px;
+            padding-bottom: 200px;
             transition: var(--transition);
             overflow-x: hidden;
             min-height: 100vh;
@@ -549,6 +549,93 @@
             color: var(--text-secondary);
             margin-bottom: 8px;
         }
+        
+        /* Additional buttons container */
+        .additional-buttons-container {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 500px;
+            background-color: white;
+            padding: 16px;
+            box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 999;
+            display: none;
+        }
+        
+        .additional-buttons-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+        
+        .additional-btn {
+            padding: 10px 12px;
+            font-size: 14px;
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            color: #495057;
+            margin-bottom: 0;
+        }
+        
+        .additional-btn:hover {
+            background-color: #e9ecef;
+            border-color: #adb5bd;
+        }
+        
+        .level-up-btn {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            padding: 8px 16px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            z-index: 10;
+        }
+        .level-up-btn:hover:not(:disabled) {
+            background-color: #218838;
+            transform: translateY(-50%) scale(1.05);
+        }
+        .level-up-btn:disabled {
+            background-color: #6c757d;
+            cursor: not-allowed;
+            transform: translateY(-50%);
+        }
+        .level-up-btn.pending {
+            background-color: #ffc107;
+            color: #212529;
+        }
+        .level-up-btn.approved {
+            background-color: #28a745;
+            color: white;
+        }
+        .level-up-btn.denied {
+            background-color: #dc3545;
+            color: white;
+        }
+        .rejected-message {
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            border-radius: 8px;
+            padding: 16px;
+            margin-top: 20px;
+            text-align: center;
+        }
+        .rejected-message strong {
+            color: #721c24;
+            font-weight: 700;
+        }
+        
         /* Enhanced Media Queries */
         @media (max-width: 480px) {
             .level-grid {
@@ -584,6 +671,15 @@
             }
             .fixed-button-container {
                 padding: 12px;
+            }
+            .additional-buttons-grid {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+            
+            .additional-btn {
+                padding: 12px 14px;
+                font-size: 15px;
             }
         }
         
@@ -650,57 +746,6 @@
                 min-height: 48px;
                 padding: 14px;
             }
-        }
-        
-        .level-up-btn {
-            position: absolute;
-            right: 16px;
-            top: 50%;
-            transform: translateY(-50%);
-            padding: 8px 16px;
-            background-color: #28a745;
-            color: white;
-            border: none;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            z-index: 10;
-        }
-        .level-up-btn:hover:not(:disabled) {
-            background-color: #218838;
-            transform: translateY(-50%) scale(1.05);
-        }
-        .level-up-btn:disabled {
-            background-color: #6c757d;
-            cursor: not-allowed;
-            transform: translateY(-50%);
-        }
-        .level-up-btn.pending {
-            background-color: #ffc107;
-            color: #212529;
-        }
-        .level-up-btn.approved {
-            background-color: #28a745;
-            color: white;
-        }
-        .level-up-btn.denied {
-            background-color: #dc3545;
-            color: white;
-        }
-        .rejected-message {
-            background-color: #f8d7da;
-            border: 1px solid #f5c6cb;
-            border-radius: 8px;
-            padding: 16px;
-            margin-top: 20px;
-            text-align: center;
-        }
-        .rejected-message strong {
-            color: #721c24;
-            font-weight: 700;
         }
     </style>
 </head>
@@ -918,12 +963,24 @@
             </div>
         </div>
     </div>
+    
     <!-- Fixed bottom button container - CENTERED -->
     <div class="fixed-button-container" id="fixedButtonContainer">
         <div class="fixed-description" id="fixedDescription"></div>
         <button class="btn" id="fixedButton">Continue</button>
         <button class="btn btn-support" id="fixedSupportButton" style="display: none;">📤 Send Profile Link to Admin</button>
     </div>
+    
+    <!-- Additional buttons container for tasks section -->
+    <div class="additional-buttons-container" id="additionalButtonsContainer">
+        <div class="additional-buttons-grid">
+            <button class="btn additional-btn" onclick="window.open('https://t.me/sufyanthedev', '_blank')">📤 Contact for Level Up</button>
+            <button class="btn additional-btn" onclick="window.open('https://t.me/yourchannel', '_blank')">📢 Telegram Channel</button>
+            <button class="btn additional-btn" onclick="window.open('https://facebook.com/admin', '_blank')">📘 Admin Facebook</button>
+            <button class="btn additional-btn" onclick="window.open('https://youtube.com/admin', '_blank')">📺 Admin YouTube</button>
+        </div>
+    </div>
+    
     <div id="loadingOverlay" class="loading-overlay" style="display: none;">
         <div class="spinner"></div>
         <p class="loading-text">Loading...</p>
@@ -1112,12 +1169,14 @@
         const button = document.getElementById('fixedButton');
         const description = document.getElementById('fixedDescription');
         const supportButton = document.getElementById('fixedSupportButton');
+        const additionalContainer = document.getElementById('additionalButtonsContainer');
         
         // Reset visibility
         container.classList.remove('visible');
         button.style.display = 'none';
         supportButton.style.display = 'none';
         description.textContent = '';
+        additionalContainer.style.display = 'none';
         
         const currentSection = document.querySelector('.section.active');
         if (!currentSection) return;
@@ -1195,6 +1254,9 @@
                 button.style.display = 'block';
                 description.textContent = 'Only LIVE reviews will be accepted';
                 container.classList.add('visible');
+                
+                // Show additional buttons container for tasks section
+                additionalContainer.style.display = 'block';
                 break;
             case 'level-system-section':
                 button.textContent = 'Back to Tasks';
