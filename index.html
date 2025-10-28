@@ -38,7 +38,7 @@
             background-color: var(--background-color);
             color: var(--text-color);
             line-height: 1.6;
-            padding-bottom: 200px;
+            padding-bottom: 120px;
             transition: var(--transition);
             overflow-x: hidden;
             min-height: 100vh;
@@ -519,70 +519,46 @@
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
-        .fixed-button-container {
-            position: fixed;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100%;
-            max-width: 500px;
-            background-color: white;
-            padding: 16px;
-            box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.15);
-            z-index: 1000;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-        .fixed-button-container .btn {
-            margin-bottom: 0;
-        }
-        .fixed-button-container .btn-support {
-            background-color: var(--secondary-color);
-        }
-        .fixed-button-container .btn-support:hover:not(:disabled) {
-            background-color: var(--secondary-hover);
-        }
-        .fixed-description {
-            text-align: center;
-            font-size: 14px;
-            color: var(--text-secondary);
-            margin-bottom: 8px;
+        
+        /* Additional buttons section */
+        .additional-buttons-section {
+            background-color: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 24px;
+            box-shadow: var(--shadow);
         }
         
-        /* Additional buttons container */
-        .additional-buttons-container {
-            position: fixed;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100%;
-            max-width: 500px;
-            background-color: white;
-            padding: 16px;
-            box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.15);
-            z-index: 999;
-            display: none;
+        .additional-buttons-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 16px;
+            text-align: center;
         }
         
         .additional-buttons-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
+            gap: 16px;
         }
         
         .additional-btn {
-            padding: 10px 12px;
-            font-size: 14px;
-            background-color: #f8f9fa;
+            padding: 14px 20px;
+            font-size: 16px;
+            background-color: #ffffff;
             border: 1px solid #dee2e6;
             color: #495057;
             margin-bottom: 0;
+            transition: var(--transition);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
         }
         
         .additional-btn:hover {
             background-color: #e9ecef;
             border-color: #adb5bd;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
         
         .level-up-btn {
@@ -636,6 +612,38 @@
             font-weight: 700;
         }
         
+        /* Fixed bottom button container */
+        .fixed-button-container {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 500px;
+            background-color: white;
+            padding: 16px;
+            box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .fixed-button-container .btn {
+            margin-bottom: 0;
+        }
+        .fixed-button-container .btn-support {
+            background-color: var(--secondary-color);
+        }
+        .fixed-button-container .btn-support:hover:not(:disabled) {
+            background-color: var(--secondary-hover);
+        }
+        .fixed-description {
+            text-align: center;
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+        
         /* Enhanced Media Queries */
         @media (max-width: 480px) {
             .level-grid {
@@ -674,12 +682,10 @@
             }
             .additional-buttons-grid {
                 grid-template-columns: 1fr;
-                gap: 8px;
+                gap: 12px;
             }
-            
             .additional-btn {
-                padding: 12px 14px;
-                font-size: 15px;
+                padding: 16px 20px;
             }
         }
         
@@ -908,6 +914,17 @@
                 <button class="level-up-btn" id="levelUpButton" onclick="showLevelSystemForApprovedUser()">View Level System</button>
             </div>
             <div id="taskCards"></div>
+            
+            <!-- Additional buttons section after task cards -->
+            <div class="additional-buttons-section">
+                <h3 class="additional-buttons-title">Additional Options</h3>
+                <div class="additional-buttons-grid">
+                    <button class="btn additional-btn" onclick="window.open('https://t.me/sufyanthedev', '_blank')">📤 Contact for Level Up</button>
+                    <button class="btn additional-btn" onclick="window.open('https://t.me/yourchannel', '_blank')">📢 Telegram Channel</button>
+                    <button class="btn additional-btn" onclick="window.open('https://facebook.com/admin', '_blank')">📘 Admin Facebook</button>
+                    <button class="btn additional-btn" onclick="window.open('https://youtube.com/admin', '_blank')">📺 Admin YouTube</button>
+                </div>
+            </div>
         </div>
     </div>
     <!-- Level System Section for Approved Users -->
@@ -964,21 +981,11 @@
         </div>
     </div>
     
-    <!-- Fixed bottom button container - CENTERED -->
+    <!-- Fixed bottom button container -->
     <div class="fixed-button-container" id="fixedButtonContainer">
         <div class="fixed-description" id="fixedDescription"></div>
         <button class="btn" id="fixedButton">Continue</button>
         <button class="btn btn-support" id="fixedSupportButton" style="display: none;">📤 Send Profile Link to Admin</button>
-    </div>
-    
-    <!-- Additional buttons container for tasks section -->
-    <div class="additional-buttons-container" id="additionalButtonsContainer">
-        <div class="additional-buttons-grid">
-            <button class="btn additional-btn" onclick="window.open('https://t.me/sufyanthedev', '_blank')">📤 Contact for Level Up</button>
-            <button class="btn additional-btn" onclick="window.open('https://t.me/yourchannel', '_blank')">📢 Telegram Channel</button>
-            <button class="btn additional-btn" onclick="window.open('https://facebook.com/admin', '_blank')">📘 Admin Facebook</button>
-            <button class="btn additional-btn" onclick="window.open('https://youtube.com/admin', '_blank')">📺 Admin YouTube</button>
-        </div>
     </div>
     
     <div id="loadingOverlay" class="loading-overlay" style="display: none;">
@@ -1169,14 +1176,12 @@
         const button = document.getElementById('fixedButton');
         const description = document.getElementById('fixedDescription');
         const supportButton = document.getElementById('fixedSupportButton');
-        const additionalContainer = document.getElementById('additionalButtonsContainer');
         
         // Reset visibility
         container.classList.remove('visible');
         button.style.display = 'none';
         supportButton.style.display = 'none';
         description.textContent = '';
-        additionalContainer.style.display = 'none';
         
         const currentSection = document.querySelector('.section.active');
         if (!currentSection) return;
@@ -1254,9 +1259,6 @@
                 button.style.display = 'block';
                 description.textContent = 'Only LIVE reviews will be accepted';
                 container.classList.add('visible');
-                
-                // Show additional buttons container for tasks section
-                additionalContainer.style.display = 'block';
                 break;
             case 'level-system-section':
                 button.textContent = 'Back to Tasks';
@@ -1487,6 +1489,12 @@
         
         // Replace all content at once
         container.appendChild(fragment);
+        
+        // Show additional buttons section
+        const additionalSection = document.querySelector('.additional-buttons-section');
+        if (additionalSection) {
+            additionalSection.style.display = 'block';
+        }
     }
     
     function submitToAdmin() {
