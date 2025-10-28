@@ -520,21 +520,34 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
         
-        /* Additional buttons section */
+        /* Redesigned Additional buttons section */
         .additional-buttons-section {
-            background-color: #f8f9fa;
-            border-radius: 12px;
-            padding: 20px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+            border-radius: 16px;
+            padding: 24px;
             margin-top: 24px;
-            box-shadow: var(--shadow);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .additional-buttons-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
         }
         
         .additional-buttons-title {
-            font-size: 18px;
-            font-weight: 600;
+            font-size: 20px;
+            font-weight: 700;
             color: #333;
-            margin-bottom: 16px;
+            margin-bottom: 20px;
             text-align: center;
+            position: relative;
         }
         
         .additional-buttons-grid {
@@ -544,72 +557,124 @@
         }
         
         .additional-btn {
-            padding: 14px 20px;
+            position: relative;
+            padding: 16px 20px;
             font-size: 16px;
-            background-color: #ffffff;
-            border: 1px solid #dee2e6;
-            color: #495057;
-            margin-bottom: 0;
-            transition: var(--transition);
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-            font-weight: 400;
+            font-weight: 600;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            overflow: hidden;
+            text-align: center;
+            color: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            z-index: 1;
+        }
+        
+        .additional-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+            z-index: -1;
+        }
+        
+        .additional-btn:hover::before {
+            transform: translateY(0);
+        }
+        
+        .additional-btn.contact {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .additional-btn.channel {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+        
+        .additional-btn.facebook {
+            background: linear-gradient(135deg, #4267B2 0%, #8b92a9 100%);
+        }
+        
+        .additional-btn.youtube {
+            background: linear-gradient(135deg, #FF0000 0%, #cc0000 100%);
+        }
+        
+        .additional-btn.referral {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
         }
         
         .additional-btn:hover {
-            background-color: var(--primary-color);
-            color: white;
-            font-weight: 700;
-            border-color: var(--primary-color);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
         }
         
-        /* Referral section styles */
+        /* Referral section styles - Simplified */
         .referral-code-container {
             background-color: white;
-            border-radius: 12px;
-            padding: 20px;
+            border-radius: 16px;
+            padding: 24px;
             margin-bottom: 24px;
-            box-shadow: var(--shadow);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .referral-code-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
         }
         
         .referral-code-label {
-            font-size: 16px;
+            font-size: 18px;
             font-weight: 600;
             color: #333;
-            margin-bottom: 12px;
+            margin-bottom: 16px;
         }
         
         .referral-code {
-            font-size: 24px;
+            font-size: 28px;
             font-weight: 700;
             color: var(--primary-color);
             background-color: #f5f5f5;
-            border-radius: 8px;
-            padding: 12px 20px;
-            margin-bottom: 16px;
+            border-radius: 12px;
+            padding: 16px 24px;
+            margin-bottom: 20px;
             letter-spacing: 2px;
             display: inline-block;
+            border: 2px dashed var(--primary-color);
         }
         
         .btn-copy {
-            background-color: var(--secondary-color);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border: none;
-            border-radius: 8px;
-            padding: 10px 20px;
+            border-radius: 30px;
+            padding: 12px 24px;
             font-size: 16px;
             font-weight: 600;
             cursor: pointer;
-            transition: var(--transition);
-            margin-top: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
         }
         
         .btn-copy:hover {
-            background-color: var(--secondary-hover);
             transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 6px 16px rgba(102, 126, 234, 0.5);
         }
         
         .referral-stats {
@@ -621,49 +686,35 @@
         .referral-stat {
             text-align: center;
             background-color: white;
-            border-radius: 12px;
-            padding: 16px;
-            box-shadow: var(--shadow);
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
             min-width: 120px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .referral-stat::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
         }
         
         .referral-stat .stat-label {
             font-size: 14px;
             color: var(--text-secondary);
             margin-bottom: 8px;
+            font-weight: 600;
         }
         
         .referral-stat .stat-value {
-            font-size: 20px;
+            font-size: 24px;
             font-weight: 700;
             color: var(--primary-color);
-        }
-        
-        .referral-rules, .referral-tips {
-            background-color: white;
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: var(--shadow);
-        }
-        
-        .referral-rules-title, .referral-tips-title {
-            font-size: 18px;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 16px;
-            text-align: center;
-        }
-        
-        .referral-rules-list, .referral-tips-list {
-            padding-left: 20px;
-            font-size: 16px;
-            color: var(--text-secondary);
-        }
-        
-        .referral-rules-list li, .referral-tips-list li {
-            margin-bottom: 12px;
-            line-height: 1.5;
         }
         
         .level-up-btn {
@@ -788,9 +839,6 @@
             .additional-buttons-grid {
                 grid-template-columns: 1fr;
                 gap: 12px;
-            }
-            .additional-btn {
-                padding: 16px 20px;
             }
             .referral-stats {
                 flex-direction: column;
@@ -1027,63 +1075,39 @@
             </div>
             <div id="taskCards"></div>
             
-            <!-- Additional buttons section after task cards -->
+            <!-- Redesigned additional buttons section after task cards -->
             <div class="additional-buttons-section">
                 <h3 class="additional-buttons-title">Additional Options</h3>
                 <div class="additional-buttons-grid">
-                    <button class="btn additional-btn" onclick="window.open('https://t.me/sufyanthedev', '_blank')">📤 Contact for Level Up</button>
-                    <button class="btn additional-btn" onclick="window.open('https://t.me/yourchannel', '_blank')">📢 Telegram Channel</button>
-                    <button class="btn additional-btn" onclick="window.open('https://facebook.com/admin', '_blank')">📘 Admin Facebook</button>
-                    <button class="btn additional-btn" onclick="window.open('https://youtube.com/admin', '_blank')">📺 Admin YouTube</button>
-                    <button class="btn additional-btn" onclick="showReferralSection()">👥 Referral</button>
+                    <button class="btn additional-btn contact" onclick="window.open('https://t.me/sufyanthedev', '_blank')">📤 Contact for Level Up</button>
+                    <button class="btn additional-btn channel" onclick="window.open('https://t.me/yourchannel', '_blank')">📢 Telegram Channel</button>
+                    <button class="btn additional-btn facebook" onclick="window.open('https://facebook.com/admin', '_blank')">📘 Admin Facebook</button>
+                    <button class="btn additional-btn youtube" onclick="window.open('https://youtube.com/admin', '_blank')">📺 Admin YouTube</button>
+                    <button class="btn additional-btn referral" onclick="showReferralSection()">👥 Referral Program</button>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Referral Section -->
+    <!-- Referral Section - Simplified -->
     <div id="referral-section" class="section">
         <div class="container">
             <h2 class="header">Referral Program</h2>
-            <div class="level-info">
-                <h3 class="level-title">Earn Extra Money by Referring Friends</h3>
-                <p class="level-subtitle">Share your unique referral code and earn $0.05 for each successful referral</p>
-                
-                <div class="referral-code-container">
-                    <div class="referral-code-label">Your Unique Referral Code</div>
-                    <div class="referral-code" id="referralCode">TRUST123</div>
-                    <button class="btn btn-copy" onclick="copyReferralCode()">📋 Copy Code</button>
+            <div class="referral-code-container">
+                <div class="referral-code-label">Your Unique Referral Code</div>
+                <div class="referral-code" id="referralCode">TRUST123</div>
+                <button class="btn btn-copy" onclick="copyReferralCode()">
+                    <span>📋</span> Copy Code
+                </button>
+            </div>
+            
+            <div class="referral-stats">
+                <div class="referral-stat">
+                    <div class="stat-label">Total Referrals</div>
+                    <div class="stat-value" id="totalReferrals">0</div>
                 </div>
-                
-                <div class="referral-stats">
-                    <div class="referral-stat">
-                        <div class="stat-label">Total Referrals</div>
-                        <div class="stat-value" id="totalReferrals">0</div>
-                    </div>
-                    <div class="referral-stat">
-                        <div class="stat-label">Total Earnings</div>
-                        <div class="stat-value" id="totalEarnings">$0.00</div>
-                    </div>
-                </div>
-                
-                <div class="referral-rules">
-                    <h4 class="referral-rules-title">How It Works</h4>
-                    <ul class="referral-rules-list">
-                        <li>Share your referral code with friends</li>
-                        <li>Your friend must sign up using your code</li>
-                        <li>Your friend must complete at least 5 reviews</li>
-                        <li>You earn $0.05 for each successful referral</li>
-                        <li>Payouts are processed weekly</li>
-                    </ul>
-                </div>
-                
-                <div class="referral-tips">
-                    <h4 class="referral-tips-title">Tips for Success</h4>
-                    <ul class="referral-tips-list">
-                        <li>Share your code on social media platforms</li>
-                        <li>Explain the benefits of the program to your friends</li>
-                        <li>Offer to help your friends get started</li>
-                        <li>Track your referrals in the statistics section</li>
-                    </ul>
+                <div class="referral-stat">
+                    <div class="stat-label">Total Earnings</div>
+                    <div class="stat-value" id="totalEarnings">$0.00</div>
                 </div>
             </div>
         </div>
@@ -1501,8 +1525,10 @@
             const userId = trustpilotLink.split('/users/')[1];
             const userRef = db.collection('users').doc(userId);
             
-            // Generate unique referral code
-            referralCode = generateUniqueReferralCode();
+            // Generate unique referral code if not already set
+            if (!referralCode) {
+                referralCode = generateUniqueReferralCode();
+            }
             
             // Check if user already exists
             const doc = await userRef.get();
@@ -1596,12 +1622,41 @@
     
     function copyReferralCode() {
         const referralCode = document.getElementById('referralCode').textContent;
-        navigator.clipboard.writeText(referralCode).then(() => {
-            showSuccess('Referral code copied to clipboard!');
-        }).catch(err => {
-            console.error('Failed to copy referral code:', err);
+        
+        // Modern clipboard API
+        if (navigator.clipboard) {
+            navigator.clipboard.writeText(referralCode).then(() => {
+                showSuccess('Referral code copied to clipboard!');
+            }).catch(err => {
+                console.error('Failed to copy referral code:', err);
+                fallbackCopyTextToClipboard(referralCode);
+            });
+        } else {
+            // Fallback for older browsers
+            fallbackCopyTextToClipboard(referralCode);
+        }
+    }
+    
+    function fallbackCopyTextToClipboard(text) {
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        textArea.style.position = "fixed"; // Avoid scrolling to bottom
+        textArea.style.left = "-999999px";
+        textArea.style.top = "-999999px";
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        
+        try {
+            const successful = document.execCommand('copy');
+            const msg = successful ? 'Referral code copied to clipboard!' : 'Failed to copy';
+            showSuccess(msg);
+        } catch (err) {
+            console.error('Fallback: Oops, unable to copy', err);
             showError('Failed to copy referral code. Please try again.');
-        });
+        }
+        
+        document.body.removeChild(textArea);
     }
     
     function loadReferralData() {
@@ -1618,7 +1673,7 @@
                 document.getElementById('totalReferrals').textContent = referrals;
                 document.getElementById('totalEarnings').textContent = `$${earnings}`;
                 
-                // Set referral code
+                // Set referral code - use existing code from database
                 document.getElementById('referralCode').textContent = data.referralCode || generateUniqueReferralCode();
             }
         }).catch(err => {
@@ -1742,7 +1797,7 @@
             localStorage.removeItem('userId');
             localStorage.removeItem('reviewCount');
             localStorage.removeItem('userLevel');
-            localStorage.removeItem('trustpilotLink');
+            localStorage.setItem('trustpilotLink', trustpilotLink);
             localStorage.removeItem('selectedCountry');
             localStorage.removeItem('referralCode');
             
