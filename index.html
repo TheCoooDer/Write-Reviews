@@ -695,6 +695,12 @@
             color: #721c24;
             font-weight: 700;
         }
+
+        /* Telegram Channel Button Container */
+        #telegram-channel-btn-container {
+            margin-top: 20px;
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -856,6 +862,12 @@
                 <button class="level-up-btn" id="levelUpButton" onclick="showLevelSystemForApprovedUser()">View Level System</button>
             </div>
             <div id="taskCards"></div>
+            <!-- Telegram Channel Button (only for approved users) -->
+            <div id="telegram-channel-btn-container">
+                <a href="https://t.me/trustpilot_reviewers" target="_blank" class="btn btn-support">
+                    📣 Join Our Telegram Channel
+                </a>
+            </div>
         </div>
     </div>
     <!-- Level System Section for Approved Users -->
@@ -1336,7 +1348,6 @@
         container.innerHTML = '';
         const levelDetails = getLevelDetails(userLevel);
         const tasksToShow = levelDetails.perDay;
-
         const fragment = document.createDocumentFragment();
         for (let i = 0; i < tasksToShow && i < tasks.length; i++) {
             const card = document.createElement('div');
@@ -1354,6 +1365,9 @@
             fragment.appendChild(card);
         }
         container.appendChild(fragment);
+
+        // ✅ Show Telegram channel button only for approved users
+        document.getElementById('telegram-channel-btn-container').style.display = 'block';
     }
     function submitToAdmin() {
         window.location.href = "https://forms.gle/kfF6hEjdK8ZF6VAe6";
