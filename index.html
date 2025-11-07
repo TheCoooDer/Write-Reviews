@@ -27,8 +27,6 @@
             --warning-color: #ffc107;
             --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
             --transition: all 0.3s ease;
-            --disabled-color: #cccccc;
-            --disabled-bg: #f9f9f9;
         }
         * {
             margin: 0;
@@ -478,28 +476,10 @@
             transition: var(--transition);
             border: 1px solid var(--border-color);
             margin-bottom: 16px;
-            position: relative;
-            overflow: hidden;
         }
-        .task-card:hover:not(.disabled) {
+        .task-card:hover {
             transform: translateY(-4px);
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
-        }
-        .task-card.disabled {
-            background-color: var(--disabled-bg);
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
-        .task-card.disabled::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, transparent 48%, rgba(204, 204, 204, 0.3) 50%, transparent 52%);
-            background-size: 20px 20px;
-            pointer-events: none;
         }
         .task-title {
             font-size: 18px;
@@ -507,17 +487,11 @@
             margin-bottom: 12px;
             color: var(--primary-color);
         }
-        .task-card.disabled .task-title {
-            color: var(--disabled-color);
-        }
         .task-description {
             font-size: 16px;
             color: var(--text-secondary);
             margin-bottom: 16px;
             line-height: 1.5;
-        }
-        .task-card.disabled .task-description {
-            color: var(--disabled-color);
         }
         .task-description ul {
             padding-left: 20px;
@@ -540,27 +514,10 @@
             width: 100%;
             text-align: center;
         }
-        .write-review-btn:hover:not(:disabled) {
+        .write-review-btn:hover {
             background-color: var(--primary-hover);
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-        .write-review-btn:disabled {
-            background-color: var(--disabled-color);
-            cursor: not-allowed;
-            transform: none;
-        }
-        .task-disabled-badge {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background-color: var(--danger-color);
-            color: white;
-            padding: 4px 10px;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: 600;
-            z-index: 1;
         }
         .fixed-button-container {
             position: fixed;
@@ -754,15 +711,15 @@
             <div class="message-box">
                 <strong>📋 MANDATORY STEPS BEFORE STARTING</strong><br><br>
                 ✅ Must have verified Trustpilot account<br>
-                🌍 Change account to Australia (video instruction)<br>
+                🌍 Change account to our suggested country (video instruction)<br>
                 ⭐ Write only 5-star positive reviews<br>
                 ⏳ Wait until review shows "LIVE" status<br>
                 🚫 Submit ONLY live reviews (no flagged/pending)<br>
                 📤 Submit live review link to admin<br><br>
                 <strong>💰 EARNING STRUCTURE:</strong><br>
-                • Level 1: $0.15/review (5/day)<br>
-                • Level 2: $0.20/review (5/day)<br>
-                • Level 3: $0.25/review (5/day)<br>
+                • Level 1: $0.15/review (1/day)<br>
+                • Level 2: $0.20/review (3/day)<br>
+                • Level 3: $0.25/review (4/day)<br>
                 • Level 4: $0.30/review (5/day)<br>
             </div>
         </div>
@@ -773,14 +730,14 @@
             <h2 class="header">Level System</h2>
             <div class="level-info">
                 <h3 class="level-title">Reached next level? Contact admin to level up and earn more!</h3>
-                <p class="level-subtitle">Your level determines how much you earn per task</p>
+                <p class="level-subtitle">Your level determines how many tasks you can complete each day and how much you earn per task</p>
                 <div class="level-grid">
                     <div class="level-card">
                         <div class="level-badge level-1">Level 1</div>
                         <p class="level-description">If you have done 0-29 reviews, you will get:</p>
                         <div class="level-stats">
                             <div class="stat-item"><span class="stat-label">Per Task</span> <span class="stat-value">$0.15</span></div>
-                            <div class="stat-item"><span class="stat-label">Daily Limit</span> <span class="stat-value">5 tasks/day</span></div>
+                            <div class="stat-item"><span class="stat-label">Daily Limit</span> <span class="stat-value">1 task/day</span></div>
                             <div class="stat-item"><span class="stat-label">Next Level</span> <span class="stat-value">30 reviews</span></div>
                         </div>
                     </div>
@@ -789,7 +746,7 @@
                         <p class="level-description">If you have done 30-49 reviews, you will get:</p>
                         <div class="level-stats">
                             <div class="stat-item"><span class="stat-label">Per Task</span> <span class="stat-value">$0.20</span></div>
-                            <div class="stat-item"><span class="stat-label">Daily Limit</span> <span class="stat-value">5 tasks/day</span></div>
+                            <div class="stat-item"><span class="stat-label">Daily Limit</span> <span class="stat-value">3 tasks/day</span></div>
                             <div class="stat-item"><span class="stat-label">Next Level</span> <span class="stat-value">50 reviews</span></div>
                         </div>
                     </div>
@@ -798,7 +755,7 @@
                         <p class="level-description">If you have done 50-99 reviews, you will get:</p>
                         <div class="level-stats">
                             <div class="stat-item"><span class="stat-label">Per Task</span> <span class="stat-value">$0.25</span></div>
-                            <div class="stat-item"><span class="stat-label">Daily Limit</span> <span class="stat-value">5 tasks/day</span></div>
+                            <div class="stat-item"><span class="stat-label">Daily Limit</span> <span class="stat-value">4 tasks/day</span></div>
                             <div class="stat-item"><span class="stat-label">Next Level</span> <span class="stat-value">100 reviews</span></div>
                         </div>
                     </div>
@@ -814,7 +771,7 @@
                 </div>
                 <div style="background-color: rgba(255, 255, 255, 0.8); border-radius: 10px; padding: 16px; margin-top: 16px; border: 1px solid rgba(255, 255, 255, 0.5);">
                     <p style="font-size: 14px; color: #333; text-align: center;">
-                        <strong>How to progress:</strong> Complete more reviews to unlock higher levels with better rates.
+                        <strong>How to progress:</strong> Complete more reviews to unlock higher levels with better rates and daily limits.
                     </p>
                 </div>
             </div>
@@ -858,9 +815,9 @@
         <div class="container">
             <div class="country-container">
                 <h3 class="country-header">🌍 Change Your Country</h3>
-                <p class="country-instruction">You must change your country to Australia before proceeding:</p>
+                <p class="country-instruction">You must change your country before proceeding:</p>
                 <div class="country-badge-wrapper">
-                    <div class="country-badge">Australia</div>
+                    <div class="country-badge" id="selectedCountry">Australia</div>
                 </div>
                 <div class="video-title">📹 How to Change Your Country on Trustpilot</div>
                 <div class="video-container">
@@ -870,7 +827,7 @@
                         allowfullscreen>
                     </iframe>
                 </div>
-                <p class="country-follow-instruction">Follow the video to change your account to Australia</p>
+                <p class="country-follow-instruction">Follow the video to change your account to <span id="countryNameInText">Australia</span></p>
             </div>
         </div>
     </div>
@@ -919,14 +876,14 @@
             <h2 class="header">Level System</h2>
             <div class="level-info">
                 <h3 class="level-title">Review Rules & Earnings</h3>
-                <p class="level-subtitle">Your level determines how much you earn per task</p>
+                <p class="level-subtitle">Your level determines how many tasks you can complete each day and how much you earn per task</p>
                 <div class="level-grid">
                     <div class="level-card">
                         <div class="level-badge level-1">Level 1</div>
                         <p class="level-description">If you have done 0-29 reviews, you will get:</p>
                         <div class="level-stats">
                             <div class="stat-item"><span class="stat-label">Per Task</span> <span class="stat-value">$0.15</span></div>
-                            <div class="stat-item"><span class="stat-label">Daily Limit</span> <span class="stat-value">5 tasks/day</span></div>
+                            <div class="stat-item"><span class="stat-label">Daily Limit</span> <span class="stat-value">1 task/day</span></div>
                             <div class="stat-item"><span class="stat-label">Next Level</span> <span class="stat-value">30 reviews</span></div>
                         </div>
                     </div>
@@ -935,7 +892,7 @@
                         <p class="level-description">If you have done 30-49 reviews, you will get:</p>
                         <div class="level-stats">
                             <div class="stat-item"><span class="stat-label">Per Task</span> <span class="stat-value">$0.20</span></div>
-                            <div class="stat-item"><span class="stat-label">Daily Limit</span> <span class="stat-value">5 tasks/day</span></div>
+                            <div class="stat-item"><span class="stat-label">Daily Limit</span> <span class="stat-value">3 tasks/day</span></div>
                             <div class="stat-item"><span class="stat-label">Next Level</span> <span class="stat-value">50 reviews</span></div>
                         </div>
                     </div>
@@ -944,7 +901,7 @@
                         <p class="level-description">If you have done 50-99 reviews, you will get:</p>
                         <div class="level-stats">
                             <div class="stat-item"><span class="stat-label">Per Task</span> <span class="stat-value">$0.25</span></div>
-                            <div class="stat-item"><span class="stat-label">Daily Limit</span> <span class="stat-value">5 tasks/day</span></div>
+                            <div class="stat-item"><span class="stat-label">Daily Limit</span> <span class="stat-value">4 tasks/day</span></div>
                             <div class="stat-item"><span class="stat-label">Next Level</span> <span class="stat-value">100 reviews</span></div>
                         </div>
                     </div>
@@ -960,7 +917,7 @@
                 </div>
                 <div style="background-color: rgba(255, 255, 255, 0.8); border-radius: 10px; padding: 16px; margin-top: 16px; border: 1px solid rgba(255, 255, 255, 0.5);">
                     <p style="font-size: 14px; color: #333; text-align: center;">
-                        <strong>How to progress:</strong> Complete more reviews to unlock higher levels with better rates.
+                        <strong>How to progress:</strong> Complete more reviews to unlock higher levels with better rates and daily limits.
                     </p>
                 </div>
             </div>
@@ -1062,19 +1019,21 @@
             levelUpButton.onclick = showLevelSystemForApprovedUser;
         }
     }
-    // Default tasks with enable/disable status
-    const defaultTasks = [
-        { id: 1, title: "Trustpilot Review 1", description: "✅ Give a 5-star Trustpilot review\n💰 Instant payment via Binance\n💵 $0.20 per review", trustpilotUrl: "https://www.trustpilot.com/review/tosto.online", enabled: true },
-        { id: 2, title: "Trustpilot Review 2", description: "✅ Give a 5-star Trustpilot review\n💰 Instant payment via Binance\n💵 $0.20 per review", trustpilotUrl: "https://www.trustpilot.com/review/grindery.online", enabled: true },
-        { id: 3, title: "Trustpilot Review 3", description: "✅ Give a 5-star Trustpilot review\n💰 Instant payment via Binance\n💵 $0.20 per review", trustpilotUrl: "https://www.trustpilot.com/review/snackle.online", enabled: true },
-        { id: 4, title: "Trustpilot Review 4", description: "✅ Give a 5-star Trustpilot review\n💰 Instant payment via Binance\n💵 $0.20 per review", trustpilotUrl: "https://www.trustpilot.com/review/brewtide.online", enabled: true },
-        { id: 5, title: "Trustpilot Review 5", description: "✅ Give a 5-star Trustpilot review\n💰 Instant payment via Binance\n💵 $0.20 per review", trustpilotUrl: "https://www.trustpilot.com/review/crumbline.online", enabled: true }
+    const tasks = [
+        { id: 1, title: "Trustpilot Review 1", description: "✅ Give a 5-star Trustpilot review\n💰 Instant payment via Binance\n💵 $0.20 per review", trustpilotUrl: "" },
+        { id: 2, title: "Trustpilot Review 2", description: "✅ Give a 5-star Trustpilot review\n💰 Instant payment via Binance\n💵 $0.20 per review", trustpilotUrl: "" },
+        { id: 3, title: "Trustpilot Review 3", description: "✅ Give a 5-star Trustpilot review\n💰 Instant payment via Binance\n💵 $0.20 per review", trustpilotUrl: "" },
+        { id: 4, title: "Trustpilot Review 4", description: "✅ Give a 5-star Trustpilot review\n💰 Instant payment via Binance\n💵 $0.20 per review", trustpilotUrl: "" },
+        { id: 5, title: "Trustpilot Review 5", description: "✅ Give a 5-star Trustpilot review\n💰 Instant payment via Binance\n💵 $0.20 per review", trustpilotUrl: "" }
     ];
-    let tasks = [...defaultTasks];
+    const countries = ["Australia", "Canada", "Ireland", "Netherlands", "Germany"];
     let reviewCount = null;
     let userLevel = null;
-    let selectedCountry = "Australia"; // Fixed country
+    let selectedCountry = "";
     let trustpilotLink = "";
+    function selectRandomCountry() {
+        return countries[Math.floor(Math.random() * countries.length)];
+    }
     function determineUserLevel(count) {
         if (count >= 100) return 4;
         if (count >= 50) return 3;
@@ -1083,9 +1042,9 @@
     }
     function getLevelDetails(level) {
         return {
-            1: { min: 0, max: 29,   pay: 0.15, perDay: 5 },
-            2: { min: 30, max: 49,  pay: 0.20, perDay: 5 },
-            3: { min: 50, max: 99,  pay: 0.25, perDay: 5 },
+            1: { min: 0, max: 29,   pay: 0.15, perDay: 1 },
+            2: { min: 30, max: 49,  pay: 0.20, perDay: 3 },
+            3: { min: 50, max: 99,  pay: 0.25, perDay: 4 },
             4: { min: 100, max: Infinity, pay: 0.30, perDay: 5 }
         }[level];
     }
@@ -1250,7 +1209,9 @@
             showError('Please select your review count');
             return;
         }
-        // Country is now fixed to Australia
+        selectedCountry = selectRandomCountry();
+        document.getElementById('selectedCountry').textContent = selectedCountry;
+        document.getElementById('countryNameInText').textContent = selectedCountry;
         document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
         document.getElementById('country-section').classList.add('active');
         updateFixedButton();
@@ -1382,72 +1343,24 @@
             showError('Error checking approval status.');
         });
     }
-    // Fetch tasks from database or use default
-    async function fetchTasks() {
-        try {
-            const tasksRef = db.collection('tasks');
-            const snapshot = await tasksRef.get();
-            if (!snapshot.empty) {
-                tasks = [];
-                snapshot.forEach(doc => {
-                    tasks.push(doc.data());
-                });
-            } else {
-                // Initialize tasks in database if not exists
-                for (const task of defaultTasks) {
-                    await tasksRef.doc(task.id.toString()).set(task);
-                }
-                tasks = [...defaultTasks];
-            }
-        } catch (error) {
-            console.error('Error fetching tasks:', error);
-            tasks = [...defaultTasks];
-        }
-    }
-    async function generateTaskCards() {
+    function generateTaskCards() {
         const container = document.getElementById('taskCards');
         container.innerHTML = '';
-        
-        // Fetch latest tasks from database
-        await fetchTasks();
-        
         const levelDetails = getLevelDetails(userLevel);
+        const tasksToShow = levelDetails.perDay;
         const fragment = document.createDocumentFragment();
-        
-        // Always show 5 task cards
-        for (let i = 0; i < 5; i++) {
-            const task = tasks[i] || {
-                id: i + 1,
-                title: `Task ${i + 1}`,
-                description: "Task not available",
-                trustpilotUrl: "#",
-                enabled: false
-            };
-            
+        for (let i = 0; i < tasksToShow && i < tasks.length; i++) {
             const card = document.createElement('div');
             card.className = 'task-card';
-            
-            if (!task.enabled) {
-                card.classList.add('disabled');
-            }
-            
             card.innerHTML = `
-                ${!task.enabled ? '<div class="task-disabled-badge">DISABLED</div>' : ''}
-                <h3 class="task-title">${task.title}</h3>
+                <h3 class="task-title">${tasks[i].title}</h3>
                 <p class="task-description">
-                    ${task.enabled ? 
-                        `✅ Give a 5-star Trustpilot review<br>
-                        💰 Instant payment via Binance<br>
-                        💵 $${levelDetails.pay.toFixed(2)} per review<br>
-                        📅 ${levelDetails.perDay} reviews per day` :
-                        'This task is currently disabled. Please check back later.'}
+                    ✅ Give a 5-star Trustpilot review<br>
+                    💰 Instant payment via Binance<br>
+                    💵 $${levelDetails.pay.toFixed(2)} per review<br>
+                    📅 ${levelDetails.perDay} reviews per day
                 </p>
-                <a href="${task.trustpilotUrl}" 
-                   target="_blank" 
-                   class="write-review-btn" 
-                   ${!task.enabled ? 'disabled' : `onclick="markTaskComplete()"`}>
-                    ${task.enabled ? '✍️ Write Review' : '❌ Task Disabled'}
-                </a>
+                <a href="${tasks[i].trustpilotUrl}" target="_blank" class="write-review-btn" onclick="markTaskComplete()">✍️ Write Review</a>
             `;
             fragment.appendChild(card);
         }
@@ -1502,7 +1415,7 @@
             reviewCount = parseInt(localStorage.getItem('reviewCount'));
             userLevel = parseInt(localStorage.getItem('userLevel'));
             trustpilotLink = localStorage.getItem('trustpilotLink');
-            selectedCountry = localStorage.getItem('selectedCountry') || "Australia";
+            selectedCountry = localStorage.getItem('selectedCountry');
             // Validate all stored data
             if ([reviewCount, userLevel, trustpilotLink, selectedCountry].some(v => v === null || v === undefined)) {
                 localStorage.clear();
