@@ -1020,8 +1020,10 @@
         }
     }
     const tasks = [
-        { id: 1, title: "fliptradegroup.com", description: "✅ Give a 5-star Positive review\n💰 Instant payment via Binance\n💵 $0.30 per review", trustpilotUrl: "https://www.trustpilot.com/review/fliptradegroup.com" },
-        { id: 2, title: "theclubhousecasino", description: "✅ Give a 5-star Trustpilot review\n💰 Instant payment via Binance\n💵 $0.30 per review", trustpilotUrl: "https://www.trustpilot.com/review/theclubhousecasino.com" }
+
+         { id: 1, title: "fliptradegroup.com", description: "✅ Give a 5-star Positive review\n Need Total 10 Reviews \n💵 $0.30 per review", trustpilotUrl: "https://www.trustpilot.com/review/fliptradegroup.com" },
+        { id: 2, title: "theclubhousecasino.com", description: "✅ Give a 5-star Trustpilot review\n  Test Project For Upcoming\n💵 $0.30 per review", trustpilotUrl: "https://www.trustpilot.com/review/theclubhousecasino.com" }
+        
     ];
     const countries = ["Australia", "Canada", "Ireland", "Netherlands", "Germany"];
     let reviewCount = null;
@@ -1039,10 +1041,10 @@
     }
     function getLevelDetails(level) {
         return {
-            1: { min: 0, max: 29,   pay: 0.30,},
-            2: { min: 30, max: 49,  pay: 0.30,},
-            3: { min: 50, max: 99,  pay: 0.30,},
-            4: { min: 100, max: Infinity, pay: 0.30,}
+            1: { min: 0, max: 29,   pay: 0.15, perDay: 1 },
+            2: { min: 30, max: 49,  pay: 0.20, perDay: 3 },
+            3: { min: 50, max: 99,  pay: 0.25, perDay: 4 },
+            4: { min: 100, max: Infinity, pay: 0.30, perDay: 5 }
         }[level];
     }
     function validateTrustpilotLink() {
