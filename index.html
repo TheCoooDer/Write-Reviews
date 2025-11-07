@@ -229,7 +229,7 @@
         }
         .answer-options {
             display: grid;
-            grid-template-columns: 1fr;
+            grid-template-columns: 1fr 1fr;
             gap: 12px;
             margin-bottom: 20px;
         }
@@ -585,6 +585,9 @@
             .fixed-button-container {
                 padding: 12px;
             }
+            .answer-options {
+                grid-template-columns: 1fr;
+            }
         }
         @media (max-width: 360px) {
             .container {
@@ -717,61 +720,42 @@
                 🚫 Submit ONLY live reviews (no flagged/pending)<br>
                 📤 Submit live review link to admin<br><br>
                 <strong>💰 EARNING STRUCTURE:</strong><br>
-                • Level 1: $0.15/review (1/day)<br>
-                • Level 2: $0.20/review (3/day)<br>
-                • Level 3: $0.25/review (4/day)<br>
-                • Level 4: $0.30/review (5/day)<br>
+                • Everyone gets 5 tasks per day<br>
+                • $0.20 per review<br>
+                • Instant payment via Binance<br>
             </div>
         </div>
     </div>
     <!-- Level System Section -->
     <div id="level-section" class="section">
         <div class="container">
-            <h2 class="header">Level System</h2>
+            <h2 class="header">Review Requirements</h2>
             <div class="level-info">
-                <h3 class="level-title">Reached next level? Contact admin to level up and earn more!</h3>
-                <p class="level-subtitle">Your level determines how many tasks you can complete each day and how much you earn per task</p>
+                <h3 class="level-title">Basic Requirements</h3>
+                <p class="level-subtitle">All users get the same benefits</p>
                 <div class="level-grid">
                     <div class="level-card">
-                        <div class="level-badge level-1">Level 1</div>
-                        <p class="level-description">If you have done 0-29 reviews, you will get:</p>
-                        <div class="level-stats">
-                            <div class="stat-item"><span class="stat-label">Per Task</span> <span class="stat-value">$0.15</span></div>
-                            <div class="stat-item"><span class="stat-label">Daily Limit</span> <span class="stat-value">1 task/day</span></div>
-                            <div class="stat-item"><span class="stat-label">Next Level</span> <span class="stat-value">30 reviews</span></div>
-                        </div>
-                    </div>
-                    <div class="level-card">
-                        <div class="level-badge level-2">Level 2</div>
-                        <p class="level-description">If you have done 30-49 reviews, you will get:</p>
+                        <div class="level-badge level-1">Standard User</div>
+                        <p class="level-description">All approved users get:</p>
                         <div class="level-stats">
                             <div class="stat-item"><span class="stat-label">Per Task</span> <span class="stat-value">$0.20</span></div>
-                            <div class="stat-item"><span class="stat-label">Daily Limit</span> <span class="stat-value">3 tasks/day</span></div>
-                            <div class="stat-item"><span class="stat-label">Next Level</span> <span class="stat-value">50 reviews</span></div>
-                        </div>
-                    </div>
-                    <div class="level-card">
-                        <div class="level-badge level-3">Level 3</div>
-                        <p class="level-description">If you have done 50-99 reviews, you will get:</p>
-                        <div class="level-stats">
-                            <div class="stat-item"><span class="stat-label">Per Task</span> <span class="stat-value">$0.25</span></div>
-                            <div class="stat-item"><span class="stat-label">Daily Limit</span> <span class="stat-value">4 tasks/day</span></div>
-                            <div class="stat-item"><span class="stat-label">Next Level</span> <span class="stat-value">100 reviews</span></div>
-                        </div>
-                    </div>
-                    <div class="level-card">
-                        <div class="level-badge level-4">Level 4</div>
-                        <p class="level-description">If you have done 100+ reviews, you will get:</p>
-                        <div class="level-stats">
-                            <div class="stat-item"><span class="stat-label">Per Task</span> <span class="stat-value">$0.30</span></div>
                             <div class="stat-item"><span class="stat-label">Daily Limit</span> <span class="stat-value">5 tasks/day</span></div>
-                            <div class="stat-item"><span class="stat-label">Max Level</span> <span class="stat-value">Highest tier</span></div>
+                            <div class="stat-item"><span class="stat-label">Payment</span> <span class="stat-value">Instant</span></div>
+                        </div>
+                    </div>
+                    <div class="level-card">
+                        <div class="level-badge level-2">Experienced User</div>
+                        <p class="level-description">Users with 10+ reviews get:</p>
+                        <div class="level-stats">
+                            <div class="stat-item"><span class="stat-label">Per Task</span> <span class="stat-value">$0.20</span></div>
+                            <div class="stat-item"><span class="stat-label">Daily Limit</span> <span class="stat-value">5 tasks/day</span></div>
+                            <div class="stat-item"><span class="stat-label">Payment</span> <span class="stat-value">Instant</span></div>
                         </div>
                     </div>
                 </div>
                 <div style="background-color: rgba(255, 255, 255, 0.8); border-radius: 10px; padding: 16px; margin-top: 16px; border: 1px solid rgba(255, 255, 255, 0.5);">
                     <p style="font-size: 14px; color: #333; text-align: center;">
-                        <strong>How to progress:</strong> Complete more reviews to unlock higher levels with better rates and daily limits.
+                        <strong>Requirements:</strong> Must have at least 10+ live reviews to be approved.
                     </p>
                 </div>
             </div>
@@ -794,12 +778,10 @@
                 <p class="input-hint" id="link-hint">Enter your Trustpilot profile link</p>
             </div>
             <div class="input-group">
-                <label class="input-label">How many successful reviews do you have?</label>
+                <label class="input-label">Do you have 10+ live reviews in your account?</label>
                 <div class="answer-options">
-                    <button class="answer-button" onclick="selectReviewCount(0)">0-29 reviews</button>
-                    <button class="answer-button" onclick="selectReviewCount(30)">30-49 reviews</button>
-                    <button class="answer-button" onclick="selectReviewCount(50)">50-99 reviews</button>
-                    <button class="answer-button" onclick="selectReviewCount(100)">100+ reviews</button>
+                    <button class="answer-button" onclick="selectHasReviews(true)">✅ Yes</button>
+                    <button class="answer-button" onclick="selectHasReviews(false)">❌ No</button>
                 </div>
             </div>
             <div class="error-box" id="error-box">
@@ -856,10 +838,10 @@
                 <img class="user-avatar" id="userAvatar" src="" alt="Profile Picture">
                 <div class="user-details">
                     <div class="user-name" id="userName">User Name</div>
-                    <div class="user-level-text" id="userLevelText">Level 1</div>
+                    <div class="user-level-text" id="userLevelText">Approved User</div>
                 </div>
-                <div class="level-badge-corner" id="levelBadgeCorner">1</div>
-                <button class="level-up-btn" id="levelUpButton" onclick="showLevelSystemForApprovedUser()">View Level System</button>
+                <div class="level-badge-corner" id="levelBadgeCorner">✓</div>
+                <button class="level-up-btn" id="levelUpButton" onclick="showLevelSystemForApprovedUser()">View Requirements</button>
             </div>
             <div id="taskCards"></div>
             <!-- Telegram Channel Button (only for approved users) -->
@@ -873,51 +855,33 @@
     <!-- Level System Section for Approved Users -->
     <div id="level-system-section" class="section">
         <div class="container">
-            <h2 class="header">Level System</h2>
+            <h2 class="header">Review Requirements</h2>
             <div class="level-info">
                 <h3 class="level-title">Review Rules & Earnings</h3>
-                <p class="level-subtitle">Your level determines how many tasks you can complete each day and how much you earn per task</p>
+                <p class="level-subtitle">All approved users get the same benefits</p>
                 <div class="level-grid">
                     <div class="level-card">
-                        <div class="level-badge level-1">Level 1</div>
-                        <p class="level-description">If you have done 0-29 reviews, you will get:</p>
-                        <div class="level-stats">
-                            <div class="stat-item"><span class="stat-label">Per Task</span> <span class="stat-value">$0.15</span></div>
-                            <div class="stat-item"><span class="stat-label">Daily Limit</span> <span class="stat-value">1 task/day</span></div>
-                            <div class="stat-item"><span class="stat-label">Next Level</span> <span class="stat-value">30 reviews</span></div>
-                        </div>
-                    </div>
-                    <div class="level-card">
-                        <div class="level-badge level-2">Level 2</div>
-                        <p class="level-description">If you have done 30-49 reviews, you will get:</p>
+                        <div class="level-badge level-1">Standard User</div>
+                        <p class="level-description">All approved users get:</p>
                         <div class="level-stats">
                             <div class="stat-item"><span class="stat-label">Per Task</span> <span class="stat-value">$0.20</span></div>
-                            <div class="stat-item"><span class="stat-label">Daily Limit</span> <span class="stat-value">3 tasks/day</span></div>
-                            <div class="stat-item"><span class="stat-label">Next Level</span> <span class="stat-value">50 reviews</span></div>
-                        </div>
-                    </div>
-                    <div class="level-card">
-                        <div class="level-badge level-3">Level 3</div>
-                        <p class="level-description">If you have done 50-99 reviews, you will get:</p>
-                        <div class="level-stats">
-                            <div class="stat-item"><span class="stat-label">Per Task</span> <span class="stat-value">$0.25</span></div>
-                            <div class="stat-item"><span class="stat-label">Daily Limit</span> <span class="stat-value">4 tasks/day</span></div>
-                            <div class="stat-item"><span class="stat-label">Next Level</span> <span class="stat-value">100 reviews</span></div>
-                        </div>
-                    </div>
-                    <div class="level-card">
-                        <div class="level-badge level-4">Level 4</div>
-                        <p class="level-description">If you have done 100+ reviews, you will get:</p>
-                        <div class="level-stats">
-                            <div class="stat-item"><span class="stat-label">Per Task</span> <span class="stat-value">$0.30</span></div>
                             <div class="stat-item"><span class="stat-label">Daily Limit</span> <span class="stat-value">5 tasks/day</span></div>
-                            <div class="stat-item"><span class="stat-label">Max Level</span> <span class="stat-value">Highest tier</span></div>
+                            <div class="stat-item"><span class="stat-label">Payment</span> <span class="stat-value">Instant</span></div>
+                        </div>
+                    </div>
+                    <div class="level-card">
+                        <div class="level-badge level-2">Experienced User</div>
+                        <p class="level-description">Users with 10+ reviews get:</p>
+                        <div class="level-stats">
+                            <div class="stat-item"><span class="stat-label">Per Task</span> <span class="stat-value">$0.20</span></div>
+                            <div class="stat-item"><span class="stat-label">Daily Limit</span> <span class="stat-value">5 tasks/day</span></div>
+                            <div class="stat-item"><span class="stat-label">Payment</span> <span class="stat-value">Instant</span></div>
                         </div>
                     </div>
                 </div>
                 <div style="background-color: rgba(255, 255, 255, 0.8); border-radius: 10px; padding: 16px; margin-top: 16px; border: 1px solid rgba(255, 255, 255, 0.5);">
                     <p style="font-size: 14px; color: #333; text-align: center;">
-                        <strong>How to progress:</strong> Complete more reviews to unlock higher levels with better rates and daily limits.
+                        <strong>Requirements:</strong> Must have at least 10+ live reviews to be approved.
                     </p>
                 </div>
             </div>
@@ -1008,14 +972,10 @@
             }
             const fullName = telegramUser.first_name + (telegramUser.last_name ? ' ' + telegramUser.last_name : '');
             userName.textContent = fullName;
-            userLevelText.textContent = `Level ${userLevel || 1}`;
-            levelBadge.textContent = userLevel || 1;
-            levelBadge.style.backgroundColor = 
-                (userLevel === 1) ? '#0d47a1' :
-                (userLevel === 2) ? '#2e7d32' :
-                (userLevel === 3) ? '#ff8f00' :
-                '#c62828';
-            levelUpButton.textContent = 'View Level System';
+            userLevelText.textContent = 'Approved User';
+            levelBadge.textContent = '✓';
+            levelBadge.style.backgroundColor = '#28a745';
+            levelUpButton.textContent = 'View Requirements';
             levelUpButton.onclick = showLevelSystemForApprovedUser;
         }
     }
@@ -1027,26 +987,11 @@
         { id: 5, title: "Trustpilot Review 5", description: "✅ Give a 5-star Trustpilot review\n💰 Instant payment via Binance\n💵 $0.20 per review", trustpilotUrl: "" }
     ];
     const countries = ["Australia", "Canada", "Ireland", "Netherlands", "Germany"];
-    let reviewCount = null;
-    let userLevel = null;
+    let hasReviews = null;
     let selectedCountry = "";
     let trustpilotLink = "";
     function selectRandomCountry() {
         return countries[Math.floor(Math.random() * countries.length)];
-    }
-    function determineUserLevel(count) {
-        if (count >= 100) return 4;
-        if (count >= 50) return 3;
-        if (count >= 30) return 2;
-        return 1;
-    }
-    function getLevelDetails(level) {
-        return {
-            1: { min: 0, max: 29,   pay: 0.15, perDay: 1 },
-            2: { min: 30, max: 49,  pay: 0.20, perDay: 3 },
-            3: { min: 50, max: 99,  pay: 0.25, perDay: 4 },
-            4: { min: 100, max: Infinity, pay: 0.30, perDay: 5 }
-        }[level];
     }
     function validateTrustpilotLink() {
         const linkInput = document.getElementById('trustpilot-link');
@@ -1075,12 +1020,11 @@
         const continueButton = document.getElementById('fixedButton');
         if (!continueButton) return;
         const isValidLink = linkInput.value && trustpilotRegex.test(linkInput.value);
-        const isReviewCountSelected = reviewCount !== null;
-        continueButton.disabled = !(isValidLink && isReviewCountSelected);
+        const isHasReviewsSelected = hasReviews !== null;
+        continueButton.disabled = !(isValidLink && isHasReviewsSelected);
     }
-    function selectReviewCount(count) {
-        reviewCount = count;
-        userLevel = determineUserLevel(reviewCount);
+    function selectHasReviews(value) {
+        hasReviews = value;
         document.querySelectorAll('.answer-button').forEach(btn => btn.classList.remove('selected'));
         event.target.classList.add('selected');
         validateForm();
@@ -1205,8 +1149,12 @@
             showError('Please enter a valid Trustpilot profile link');
             return;
         }
-        if (reviewCount === null) {
-            showError('Please select your review count');
+        if (hasReviews === null) {
+            showError('Please answer if you have 10+ live reviews');
+            return;
+        }
+        if (!hasReviews) {
+            showError('You must have at least 10+ live reviews to be approved');
             return;
         }
         selectedCountry = selectRandomCountry();
@@ -1228,8 +1176,7 @@
             const userData = {
                 ...existingData,
                 trustpilotLink,
-                reviewCount,
-                userLevel,
+                hasReviews,
                 selectedCountry,
                 approved: existingData.approved || false,
                 deleted: existingData.deleted || false,
@@ -1242,8 +1189,7 @@
             await userRef.set(userData);
             // Update localStorage with consistent data
             localStorage.setItem('userId', userId);
-            localStorage.setItem('reviewCount', reviewCount);
-            localStorage.setItem('userLevel', userLevel);
+            localStorage.setItem('hasReviews', hasReviews);
             localStorage.setItem('trustpilotLink', trustpilotLink);
             localStorage.setItem('selectedCountry', selectedCountry);
             hideLoading();
@@ -1260,30 +1206,6 @@
             // Clear inconsistent localStorage data
             localStorage.removeItem('userId');
         }
-    }
-    async function updateReviewCount() {
-        try {
-            const userId = localStorage.getItem('userId');
-            if (!userId) return;
-            const userRef = db.collection('users').doc(userId);
-            await userRef.update({
-                reviewCount,
-                userLevel,
-                timestamp: firebase.firestore.FieldValue.serverTimestamp()
-            });
-            localStorage.setItem('reviewCount', reviewCount);
-            localStorage.setItem('userLevel', userLevel);
-        } catch (error) {
-            console.error('Error updating review count:', error);
-            showError('Error updating your review count.');
-        }
-    }
-    function markTaskComplete() {
-        reviewCount++;
-        userLevel = determineUserLevel(reviewCount);
-        updateReviewCount();
-        updateUserInfo();
-        generateTaskCards();
     }
     function showLevelSystemForApprovedUser() {
         document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
@@ -1346,10 +1268,8 @@
     function generateTaskCards() {
         const container = document.getElementById('taskCards');
         container.innerHTML = '';
-        const levelDetails = getLevelDetails(userLevel);
-        const tasksToShow = levelDetails.perDay;
         const fragment = document.createDocumentFragment();
-        for (let i = 0; i < tasksToShow && i < tasks.length; i++) {
+        for (let i = 0; i < 5; i++) {
             const card = document.createElement('div');
             card.className = 'task-card';
             card.innerHTML = `
@@ -1357,10 +1277,10 @@
                 <p class="task-description">
                     ✅ Give a 5-star Trustpilot review<br>
                     💰 Instant payment via Binance<br>
-                    💵 $${levelDetails.pay.toFixed(2)} per review<br>
-                    📅 ${levelDetails.perDay} reviews per day
+                    💵 $0.20 per review<br>
+                    📅 5 reviews per day
                 </p>
-                <a href="${tasks[i].trustpilotUrl}" target="_blank" class="write-review-btn" onclick="markTaskComplete()">✍️ Write Review</a>
+                <a href="${tasks[i].trustpilotUrl}" target="_blank" class="write-review-btn">✍️ Write Review</a>
             `;
             fragment.appendChild(card);
         }
@@ -1384,8 +1304,7 @@
                 timestamp: firebase.firestore.FieldValue.serverTimestamp()
             });
             localStorage.removeItem('userId');
-            localStorage.removeItem('reviewCount');
-            localStorage.removeItem('userLevel');
+            localStorage.removeItem('hasReviews');
             localStorage.removeItem('trustpilotLink');
             localStorage.removeItem('selectedCountry');
             hideLoading();
@@ -1412,12 +1331,11 @@
                 return false;
             }
             const data = doc.data();
-            reviewCount = parseInt(localStorage.getItem('reviewCount'));
-            userLevel = parseInt(localStorage.getItem('userLevel'));
+            hasReviews = localStorage.getItem('hasReviews') === 'true';
             trustpilotLink = localStorage.getItem('trustpilotLink');
             selectedCountry = localStorage.getItem('selectedCountry');
             // Validate all stored data
-            if ([reviewCount, userLevel, trustpilotLink, selectedCountry].some(v => v === null || v === undefined)) {
+            if ([hasReviews, trustpilotLink, selectedCountry].some(v => v === null || v === undefined)) {
                 localStorage.clear();
                 return false;
             }
