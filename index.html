@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Trustpilot Review Bot</title>
-    <!-- Firebase SDK -->
+    <!-- Firebase SDK for Realtime Database -->
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
     <!-- Telegram Web App SDK -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
@@ -586,7 +586,6 @@
                 padding: 12px;
             }
         }
-        
         @media (max-width: 360px) {
             .container {
                 padding: 0 12px;
@@ -603,7 +602,6 @@
                 font-size: 14px;
             }
         }
-        
         @media (max-width: 320px) {
             .container {
                 padding: 0 8px;
@@ -620,7 +618,6 @@
                 font-size: 13px;
             }
         }
-        
         @media (orientation: landscape) and (max-height: 600px) {
             body {
                 padding-bottom: 80px;
@@ -632,26 +629,22 @@
                 padding: 10px 0;
             }
         }
-        
         /* Accessibility improvements */
         .btn:focus, .input-field:focus, .answer-button:focus {
             outline: 3px solid #0088cc;
             outline-offset: 2px;
         }
-        
         /* Touch-friendly styles */
         @media (hover: none) and (pointer: coarse) {
             .btn, .answer-button {
                 min-height: 48px;
                 padding: 16px;
             }
-            
             .input-field {
                 min-height: 48px;
                 padding: 14px;
             }
         }
-        
         .level-up-btn {
             position: absolute;
             right: 16px;
@@ -702,6 +695,11 @@
             color: #721c24;
             font-weight: 700;
         }
+        /* Telegram Channel Button Container */
+        #telegram-channel-btn-container {
+            margin-top: 20px;
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -718,9 +716,9 @@
                 🚫 Submit ONLY live reviews (no flagged/pending)<br>
                 📤 Submit live review link to admin<br><br>
                 <strong>💰 EARNING STRUCTURE:</strong><br>
-                • Level 1: $0.10/review (1/day)<br>
-                • Level 2: $0.15/review (1/day)<br>
-                • Level 3: $0.20/review (4/day)<br>
+                • Level 1: $0.15/review (1/day)<br>
+                • Level 2: $0.20/review (3/day)<br>
+                • Level 3: $0.25/review (4/day)<br>
                 • Level 4: $0.30/review (5/day)<br>
             </div>
         </div>
@@ -735,34 +733,34 @@
                 <div class="level-grid">
                     <div class="level-card">
                         <div class="level-badge level-1">Level 1</div>
-                        <p class="level-description">If you have done 0-9 reviews, you will get:</p>
-                        <div class="level-stats">
-                            <div class="stat-item"><span class="stat-label">Per Task</span> <span class="stat-value">$0.10</span></div>
-                            <div class="stat-item"><span class="stat-label">Daily Limit</span> <span class="stat-value">1 task/day</span></div>
-                            <div class="stat-item"><span class="stat-label">Next Level</span> <span class="stat-value">10 reviews</span></div>
-                        </div>
-                    </div>
-                    <div class="level-card">
-                        <div class="level-badge level-2">Level 2</div>
-                        <p class="level-description">If you have done 10-19 reviews, you will get:</p>
+                        <p class="level-description">If you have done 0-29 reviews, you will get:</p>
                         <div class="level-stats">
                             <div class="stat-item"><span class="stat-label">Per Task</span> <span class="stat-value">$0.15</span></div>
                             <div class="stat-item"><span class="stat-label">Daily Limit</span> <span class="stat-value">1 task/day</span></div>
-                            <div class="stat-item"><span class="stat-label">Next Level</span> <span class="stat-value">20 reviews</span></div>
-                        </div>
-                    </div>
-                    <div class="level-card">
-                        <div class="level-badge level-3">Level 3</div>
-                        <p class="level-description">If you have done 20-29 reviews, you will get:</p>
-                        <div class="level-stats">
-                            <div class="stat-item"><span class="stat-label">Per Task</span> <span class="stat-value">$0.20</span></div>
-                            <div class="stat-item"><span class="stat-label">Daily Limit</span> <span class="stat-value">4 tasks/day</span></div>
                             <div class="stat-item"><span class="stat-label">Next Level</span> <span class="stat-value">30 reviews</span></div>
                         </div>
                     </div>
                     <div class="level-card">
+                        <div class="level-badge level-2">Level 2</div>
+                        <p class="level-description">If you have done 30-49 reviews, you will get:</p>
+                        <div class="level-stats">
+                            <div class="stat-item"><span class="stat-label">Per Task</span> <span class="stat-value">$0.20</span></div>
+                            <div class="stat-item"><span class="stat-label">Daily Limit</span> <span class="stat-value">3 tasks/day</span></div>
+                            <div class="stat-item"><span class="stat-label">Next Level</span> <span class="stat-value">50 reviews</span></div>
+                        </div>
+                    </div>
+                    <div class="level-card">
+                        <div class="level-badge level-3">Level 3</div>
+                        <p class="level-description">If you have done 50-99 reviews, you will get:</p>
+                        <div class="level-stats">
+                            <div class="stat-item"><span class="stat-label">Per Task</span> <span class="stat-value">$0.25</span></div>
+                            <div class="stat-item"><span class="stat-label">Daily Limit</span> <span class="stat-value">4 tasks/day</span></div>
+                            <div class="stat-item"><span class="stat-label">Next Level</span> <span class="stat-value">100 reviews</span></div>
+                        </div>
+                    </div>
+                    <div class="level-card">
                         <div class="level-badge level-4">Level 4</div>
-                        <p class="level-description">If you have done 30+ reviews, you will get:</p>
+                        <p class="level-description">If you have done 100+ reviews, you will get:</p>
                         <div class="level-stats">
                             <div class="stat-item"><span class="stat-label">Per Task</span> <span class="stat-value">$0.30</span></div>
                             <div class="stat-item"><span class="stat-label">Daily Limit</span> <span class="stat-value">5 tasks/day</span></div>
@@ -797,10 +795,10 @@
             <div class="input-group">
                 <label class="input-label">How many successful reviews do you have?</label>
                 <div class="answer-options">
-                    <button class="answer-button" onclick="selectReviewCount(0)">0-9 reviews</button>
-                    <button class="answer-button" onclick="selectReviewCount(10)">10-19 reviews</button>
-                    <button class="answer-button" onclick="selectReviewCount(20)">20-29 reviews</button>
-                    <button class="answer-button" onclick="selectReviewCount(30)">30+ reviews</button>
+                    <button class="answer-button" onclick="selectReviewCount(0)">0-29 reviews</button>
+                    <button class="answer-button" onclick="selectReviewCount(30)">30-49 reviews</button>
+                    <button class="answer-button" onclick="selectReviewCount(50)">50-99 reviews</button>
+                    <button class="answer-button" onclick="selectReviewCount(100)">100+ reviews</button>
                 </div>
             </div>
             <div class="error-box" id="error-box">
@@ -863,6 +861,12 @@
                 <button class="level-up-btn" id="levelUpButton" onclick="showLevelSystemForApprovedUser()">View Level System</button>
             </div>
             <div id="taskCards"></div>
+            <!-- Telegram Channel Button (only for approved users) -->
+            <div id="telegram-channel-btn-container">
+                <a href="https://t.me/trustpilot_reviewers" target="_blank" class="btn btn-support">
+                    📣 Join Our Telegram Channel
+                </a>
+            </div>
         </div>
     </div>
     <!-- Level System Section for Approved Users -->
@@ -875,34 +879,34 @@
                 <div class="level-grid">
                     <div class="level-card">
                         <div class="level-badge level-1">Level 1</div>
-                        <p class="level-description">If you have done 0-9 reviews, you will get:</p>
-                        <div class="level-stats">
-                            <div class="stat-item"><span class="stat-label">Per Task</span> <span class="stat-value">$0.10</span></div>
-                            <div class="stat-item"><span class="stat-label">Daily Limit</span> <span class="stat-value">1 task/day</span></div>
-                            <div class="stat-item"><span class="stat-label">Next Level</span> <span class="stat-value">10 reviews</span></div>
-                        </div>
-                    </div>
-                    <div class="level-card">
-                        <div class="level-badge level-2">Level 2</div>
-                        <p class="level-description">If you have done 10-19 reviews, you will get:</p>
+                        <p class="level-description">If you have done 0-29 reviews, you will get:</p>
                         <div class="level-stats">
                             <div class="stat-item"><span class="stat-label">Per Task</span> <span class="stat-value">$0.15</span></div>
                             <div class="stat-item"><span class="stat-label">Daily Limit</span> <span class="stat-value">1 task/day</span></div>
-                            <div class="stat-item"><span class="stat-label">Next Level</span> <span class="stat-value">20 reviews</span></div>
-                        </div>
-                    </div>
-                    <div class="level-card">
-                        <div class="level-badge level-3">Level 3</div>
-                        <p class="level-description">If you have done 20-29 reviews, you will get:</p>
-                        <div class="level-stats">
-                            <div class="stat-item"><span class="stat-label">Per Task</span> <span class="stat-value">$0.20</span></div>
-                            <div class="stat-item"><span class="stat-label">Daily Limit</span> <span class="stat-value">4 tasks/day</span></div>
                             <div class="stat-item"><span class="stat-label">Next Level</span> <span class="stat-value">30 reviews</span></div>
                         </div>
                     </div>
                     <div class="level-card">
+                        <div class="level-badge level-2">Level 2</div>
+                        <p class="level-description">If you have done 30-49 reviews, you will get:</p>
+                        <div class="level-stats">
+                            <div class="stat-item"><span class="stat-label">Per Task</span> <span class="stat-value">$0.20</span></div>
+                            <div class="stat-item"><span class="stat-label">Daily Limit</span> <span class="stat-value">3 tasks/day</span></div>
+                            <div class="stat-item"><span class="stat-label">Next Level</span> <span class="stat-value">50 reviews</span></div>
+                        </div>
+                    </div>
+                    <div class="level-card">
+                        <div class="level-badge level-3">Level 3</div>
+                        <p class="level-description">If you have done 50-99 reviews, you will get:</p>
+                        <div class="level-stats">
+                            <div class="stat-item"><span class="stat-label">Per Task</span> <span class="stat-value">$0.25</span></div>
+                            <div class="stat-item"><span class="stat-label">Daily Limit</span> <span class="stat-value">4 tasks/day</span></div>
+                            <div class="stat-item"><span class="stat-label">Next Level</span> <span class="stat-value">100 reviews</span></div>
+                        </div>
+                    </div>
+                    <div class="level-card">
                         <div class="level-badge level-4">Level 4</div>
-                        <p class="level-description">If you have done 30+ reviews, you will get:</p>
+                        <p class="level-description">If you have done 100+ reviews, you will get:</p>
                         <div class="level-stats">
                             <div class="stat-item"><span class="stat-label">Per Task</span> <span class="stat-value">$0.30</span></div>
                             <div class="stat-item"><span class="stat-label">Daily Limit</span> <span class="stat-value">5 tasks/day</span></div>
@@ -929,31 +933,33 @@
         <p class="loading-text">Loading...</p>
     </div>
     <script>
+    // --- Firebase Configuration ---
     const firebaseConfig = {
       apiKey: "AIzaSyAxtDaiDZdNA8Zl9OgNVbkYEDdKywo3F4Q",
       authDomain: "pointgram-e1dbd.firebaseapp.com",
-      databaseURL: "https://pointgram-e1dbd-default-rtdb.firebaseio.com",
+      databaseURL: "https://pointgram-e1dbd-default-rtdb.firebaseio.com", // Realtime DB URL
       projectId: "pointgram-e1dbd",
       storageBucket: "pointgram-e1dbd.firebasestorage.app",
       messagingSenderId: "1029432630709",
       appId: "1:1029432630709:web:4eba3be318dd3059674dfc"
     };
     firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
+    const db = firebase.database(); // Use Realtime Database instance
     let tg;
     let telegramUser = null;
-    
+
+    // --- Utility Functions ---
     function showLoading(message = "Loading...") {
         const overlay = document.getElementById('loadingOverlay');
         const text = overlay.querySelector('.loading-text');
         text.textContent = message;
         overlay.style.display = 'flex';
     }
-    
+
     function hideLoading() {
         document.getElementById('loadingOverlay').style.display = 'none';
     }
-    
+
     function showError(message) {
         const errorBox = document.getElementById('error-box');
         const errorMessage = document.getElementById('error-message');
@@ -961,7 +967,7 @@
         errorBox.classList.add('visible');
         setTimeout(() => errorBox.classList.remove('visible'), 5000);
     }
-    
+
     function showSuccess(message) {
         const successBox = document.getElementById('success-box');
         const successMessage = document.getElementById('success-message');
@@ -969,7 +975,7 @@
         successBox.classList.add('visible');
         setTimeout(() => successBox.classList.remove('visible'), 5000);
     }
-    
+
     function initTelegram() {
         try {
             if (window.Telegram && window.Telegram.WebApp) {
@@ -991,7 +997,7 @@
             return false;
         }
     }
-    
+
     function updateUserInfo() {
         if (telegramUser) {
             const userInfo = document.getElementById('userInfo');
@@ -1000,71 +1006,67 @@
             const userLevelText = document.getElementById('userLevelText');
             const levelBadge = document.getElementById('levelBadgeCorner');
             const levelUpButton = document.getElementById('levelUpButton');
-            
             userInfo.style.display = 'flex';
-            
             if (telegramUser.photo_url) {
                 userAvatar.src = telegramUser.photo_url;
             } else {
                 const name = telegramUser.first_name;
                 userAvatar.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=0088cc&color=fff&size=60`;
             }
-            
             const fullName = telegramUser.first_name + (telegramUser.last_name ? ' ' + telegramUser.last_name : '');
             userName.textContent = fullName;
             userLevelText.textContent = `Level ${userLevel || 1}`;
             levelBadge.textContent = userLevel || 1;
-            
             levelBadge.style.backgroundColor = 
                 (userLevel === 1) ? '#0d47a1' :
                 (userLevel === 2) ? '#2e7d32' :
                 (userLevel === 3) ? '#ff8f00' :
                 '#c62828';
-                
             levelUpButton.textContent = 'View Level System';
             levelUpButton.onclick = showLevelSystemForApprovedUser;
         }
     }
-    
+
+    // --- Data and State ---
     const tasks = [
-        { id: 1, title: "Trustpilot Review 1", description: "✅ Give a 5-star Trustpilot review\n💰 Instant payment via Binance\n💵 $0.20 per review", trustpilotUrl: "https://www.trustpilot.com/review/mugsy.shop" },
-        { id: 2, title: "Trustpilot Review 2", description: "✅ Give a 5-star Trustpilot review\n💰 Instant payment via Binance\n💵 $0.20 per review", trustpilotUrl: "https://www.trustpilot.com/review/riffs.online" },
-        { id: 3, title: "Trustpilot Review 3", description: "✅ Give a 5-star Trustpilot review\n💰 Instant payment via Binance\n💵 $0.20 per review", trustpilotUrl: "https://www.trustpilot.com/review/bump-box.online" },
-        { id: 4, title: "Trustpilot Review 4", description: "✅ Give a 5-star Trustpilot review\n💰 Instant payment via Binance\n💵 $0.20 per review", trustpilotUrl: "https://www.trustpilot.com/review/noodl.online" },
-        { id: 5, title: "Trustpilot Review 5", description: "✅ Give a 5-star Trustpilot review\n💰 Instant payment via Binance\n💵 $0.20 per review", trustpilotUrl: "https://www.trustpilot.com/review/holloway.world" }
+        { id: 1, title: "Trustpilot Review 1", description: "✅ Give a 5-star Trustpilot review\n💰 Instant payment via Binance\n💵 $0.20 per review", trustpilotUrl: "https://www.trustpilot.com/review/tosto.online" },
+        { id: 2, title: "Trustpilot Review 2", description: "✅ Give a 5-star Trustpilot review\n💰 Instant payment via Binance\n💵 $0.20 per review", trustpilotUrl: "https://www.trustpilot.com/review/grindery.online" },
+        { id: 3, title: "Trustpilot Review 3", description: "✅ Give a 5-star Trustpilot review\n💰 Instant payment via Binance\n💵 $0.20 per review", trustpilotUrl: "https://www.trustpilot.com/review/snackle.online" },
+        { id: 4, title: "Trustpilot Review 4", description: "✅ Give a 5-star Trustpilot review\n💰 Instant payment via Binance\n💵 $0.20 per review", trustpilotUrl: "https://www.trustpilot.com/review/brewtide.online" },
+        { id: 5, title: "Trustpilot Review 5", description: "✅ Give a 5-star Trustpilot review\n💰 Instant payment via Binance\n💵 $0.20 per review", trustpilotUrl: "https://www.trustpilot.com/review/crumbline.online" }
     ];
-    
+
     const countries = ["Australia", "Canada", "Ireland", "Netherlands", "Germany"];
     let reviewCount = null;
     let userLevel = null;
     let selectedCountry = "";
     let trustpilotLink = "";
-    
+
+    // --- Helper Functions ---
     function selectRandomCountry() {
         return countries[Math.floor(Math.random() * countries.length)];
     }
-    
+
     function determineUserLevel(count) {
-        if (count >= 30) return 4;
-        if (count >= 20) return 3;
-        if (count >= 10) return 2;
+        if (count >= 100) return 4;
+        if (count >= 50) return 3;
+        if (count >= 30) return 2;
         return 1;
     }
-    
+
     function getLevelDetails(level) {
         return {
-            1: { min: 0, max: 9,   pay: 0.10, perDay: 1 },
-            2: { min: 10, max: 19, pay: 0.15, perDay: 1 },
-            3: { min: 20, max: 29, pay: 0.20, perDay: 4 },
-            4: { min: 30, max: Infinity, pay: 0.30, perDay: 5 }
+            1: { min: 0, max: 29,   pay: 0.15, perDay: 1 },
+            2: { min: 30, max: 49,  pay: 0.20, perDay: 3 },
+            3: { min: 50, max: 99,  pay: 0.25, perDay: 4 },
+            4: { min: 100, max: Infinity, pay: 0.30, perDay: 5 }
         }[level];
     }
-    
+
     function validateTrustpilotLink() {
         const linkInput = document.getElementById('trustpilot-link');
         const linkHint = document.getElementById('link-hint');
         const trustpilotRegex = /^https:\/\/(?:[a-z]{2}|www)\.trustpilot\.com\/users\/.+$/;
-        
         if (!linkInput.value) {
             linkInput.classList.remove('valid', 'invalid');
             linkHint.classList.remove('error');
@@ -1080,57 +1082,47 @@
             linkHint.classList.add('error');
             linkHint.textContent = 'Invalid format. Example: https://www.trustpilot.com/users/username';
         }
-        
         validateForm();
     }
-    
+
     function validateForm() {
         const linkInput = document.getElementById('trustpilot-link');
         const trustpilotRegex = /^https:\/\/(?:[a-z]{2}|www)\.trustpilot\.com\/users\/.+$/;
         const continueButton = document.getElementById('fixedButton');
-        
         if (!continueButton) return;
-        
         const isValidLink = linkInput.value && trustpilotRegex.test(linkInput.value);
         const isReviewCountSelected = reviewCount !== null;
-        
         continueButton.disabled = !(isValidLink && isReviewCountSelected);
     }
-    
+
     function selectReviewCount(count) {
         reviewCount = count;
         userLevel = determineUserLevel(reviewCount);
-        
         document.querySelectorAll('.answer-button').forEach(btn => btn.classList.remove('selected'));
         event.target.classList.add('selected');
-        
         validateForm();
     }
-    
+
+    // --- Navigation and UI Update ---
     function updateFixedButton() {
         const container = document.getElementById('fixedButtonContainer');
         const button = document.getElementById('fixedButton');
         const description = document.getElementById('fixedDescription');
         const supportButton = document.getElementById('fixedSupportButton');
-        
         // Reset visibility
         container.classList.remove('visible');
         button.style.display = 'none';
         supportButton.style.display = 'none';
         description.textContent = '';
-        
         const currentSection = document.querySelector('.section.active');
         if (!currentSection) return;
-        
         const sectionId = currentSection.id;
-        
         // Adjust for different screen sizes
         if (window.innerWidth <= 480) {
             container.style.padding = '12px';
         } else {
             container.style.padding = '16px';
         }
-        
         switch(sectionId) {
             case 'welcome-section':
                 button.textContent = '✅ I Understand - Continue';
@@ -1159,28 +1151,33 @@
             case 'review-section':
                 const userId = localStorage.getItem('userId');
                 if (userId) {
-                    db.collection('users').doc(userId).get().then(doc => {
-                        if (doc.exists && doc.data().deleted) {
-                            button.textContent = '🔄 Resubmit Application';
-                            button.onclick = resubmitApplication;
-                            button.style.display = 'block';
-                            description.textContent = 'Click to resubmit your application';
-                            container.classList.add('visible');
-                        } else {
+                    // Check user status from RTDB
+                    const userRef = db.ref('users/' + userId);
+                    userRef.once('value')
+                        .then(snapshot => {
+                            const userData = snapshot.val();
+                            if (userData && userData.deleted) {
+                                button.textContent = '🔄 Resubmit Application';
+                                button.onclick = resubmitApplication;
+                                button.style.display = 'block';
+                                description.textContent = 'Click to resubmit your application';
+                                container.classList.add('visible');
+                            } else {
+                                button.textContent = '📤 Send Profile Link to Admin';
+                                button.onclick = () => window.open('https://t.me/sufyanthedev', '_blank');
+                                button.style.display = 'block';
+                                description.textContent = 'Send your profile link to admin to speed up approval';
+                                container.classList.add('visible');
+                            }
+                        })
+                        .catch(err => {
+                            console.error('Error checking user status from RTDB:', err);
                             button.textContent = '📤 Send Profile Link to Admin';
                             button.onclick = () => window.open('https://t.me/sufyanthedev', '_blank');
                             button.style.display = 'block';
                             description.textContent = 'Send your profile link to admin to speed up approval';
                             container.classList.add('visible');
-                        }
-                    }).catch(err => {
-                        console.error('Error checking user status:', err);
-                        button.textContent = '📤 Send Profile Link to Admin';
-                        button.onclick = () => window.open('https://t.me/sufyanthedev', '_blank');
-                        button.style.display = 'block';
-                        description.textContent = 'Send your profile link to admin to speed up approval';
-                        container.classList.add('visible');
-                    });
+                        });
                 } else {
                     button.textContent = '📤 Send Profile Link to Admin';
                     button.onclick = () => window.open('https://t.me/sufyanthedev', '_blank');
@@ -1190,7 +1187,7 @@
                 }
                 break;
             case 'tasks-section':
-                button.textContent = '📤 Submit to Admin';
+                button.textContent = '📤 Submit Reviews';
                 button.onclick = submitToAdmin;
                 button.style.display = 'block';
                 description.textContent = 'Only LIVE reviews will be accepted';
@@ -1208,7 +1205,6 @@
                 container.classList.add('visible');
                 break;
         }
-        
         // Adjust button position on smaller screens
         if (window.innerWidth <= 360) {
             container.style.bottom = '10px';
@@ -1216,53 +1212,54 @@
             container.style.bottom = '0';
         }
     }
-    
+
     function showLevelSystem() {
         document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
         document.getElementById('level-section').classList.add('active');
         updateFixedButton();
     }
-    
+
     function showQuestion() {
         document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
         document.getElementById('question-section').classList.add('active');
         updateFixedButton();
     }
-    
+
     function continueToCountry() {
         trustpilotLink = document.getElementById('trustpilot-link').value;
         const trustpilotRegex = /^https:\/\/(?:[a-z]{2}|www)\.trustpilot\.com\/users\/.+$/;
-        
         if (!trustpilotLink || !trustpilotRegex.test(trustpilotLink)) {
             showError('Please enter a valid Trustpilot profile link');
             return;
         }
-        
         if (reviewCount === null) {
             showError('Please select your review count');
             return;
         }
-        
         selectedCountry = selectRandomCountry();
         document.getElementById('selectedCountry').textContent = selectedCountry;
         document.getElementById('countryNameInText').textContent = selectedCountry;
-        
         document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
         document.getElementById('country-section').classList.add('active');
         updateFixedButton();
     }
-    
+
+    // --- Database Interaction Functions ---
     async function saveUserData() {
+        let loadingShown = false;
         try {
+            // Show loading immediately
             showLoading("Submitting your application...");
+            loadingShown = true;
+
             const userId = trustpilotLink.split('/users/')[1];
-            const userRef = db.collection('users').doc(userId);
-            
-            // Check if user already exists
-            const doc = await userRef.get();
-            const existingData = doc.exists ? doc.data() : {};
-            
-            // Merge existing data with new data
+            const userRef = db.ref('users/' + userId); // Correct RTDB path
+
+            // Get existing data from RTDB
+            const snapshot = await userRef.once('value');
+            const existingData = snapshot.val() || {};
+
+            // Prepare merged user data
             const userData = {
                 ...existingData,
                 trustpilotLink,
@@ -1274,55 +1271,60 @@
                 telegramUserId: localStorage.getItem('telegramUserId'),
                 telegramUsername: localStorage.getItem('telegramUsername'),
                 telegramFirstName: localStorage.getItem('telegramFirstName'),
-                fullName: telegramUser ? `${telegramUser.first_name} ${telegramUser.last_name || ''}` : '',
-                timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                fullName: telegramUser ? `${telegramUser.first_name} ${telegramUser.last_name || ''}`.trim() : '',
+                timestamp: Date.now() // Use client-side timestamp for RTDB
             };
-            
+
+            // Save data to RTDB
             await userRef.set(userData);
-            
-            // Update localStorage with consistent data
+
+            // Update localStorage
             localStorage.setItem('userId', userId);
             localStorage.setItem('reviewCount', reviewCount);
             localStorage.setItem('userLevel', userLevel);
             localStorage.setItem('trustpilotLink', trustpilotLink);
             localStorage.setItem('selectedCountry', selectedCountry);
-            
-            hideLoading();
+
+            // Hide loading
+            if (loadingShown) hideLoading();
+
+            // Navigate to review section
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
             document.getElementById('review-section').classList.add('active');
             document.getElementById('approval-status').textContent = 'Pending Review';
             document.getElementById('approval-status').style.color = '#6c757d';
             document.getElementById('rejected-message').style.display = 'none';
-            setupApprovalListener();
+            setupApprovalListener(); // Start listening for changes
+
         } catch (error) {
-            console.error('Error saving user data:', error);
-            hideLoading();
+            console.error('Error saving user data to RTDB:', error);
+            // Hide loading even if an error occurred
+            if (loadingShown) hideLoading();
             showError('Error saving your data. Please try again.');
             // Clear inconsistent localStorage data
             localStorage.removeItem('userId');
         }
     }
-    
+
     async function updateReviewCount() {
         try {
             const userId = localStorage.getItem('userId');
             if (!userId) return;
-            
-            const userRef = db.collection('users').doc(userId);
+            const userRef = db.ref('users/' + userId);
             await userRef.update({
                 reviewCount,
                 userLevel,
-                timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                timestamp: Date.now()
             });
-            
             localStorage.setItem('reviewCount', reviewCount);
             localStorage.setItem('userLevel', userLevel);
         } catch (error) {
-            console.error('Error updating review count:', error);
+            console.error('Error updating review count in RTDB:', error);
             showError('Error updating your review count.');
         }
     }
-    
+
+    // --- Task and Level Functions ---
     function markTaskComplete() {
         reviewCount++;
         userLevel = determineUserLevel(reviewCount);
@@ -1330,31 +1332,31 @@
         updateUserInfo();
         generateTaskCards();
     }
-    
+
     function showLevelSystemForApprovedUser() {
         document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
         document.getElementById('level-system-section').classList.add('active');
         updateFixedButton();
     }
-    
+
+    // --- Application Submission ---
     async function submitApplication() {
         if (!initTelegram()) {
             showError('Please open this app in Telegram to continue');
             return;
         }
-        
-        await saveUserData();
+        await saveUserData(); // Now uses RTDB correctly
     }
-    
+
+    // --- Approval Status Handling ---
     function displayReviewSection(data) {
         const statusEl = document.getElementById('approval-status');
         const rejectedMessage = document.getElementById('rejected-message');
-        
-        if (data.deleted) {
+        if (data && data.deleted) {
             statusEl.textContent = 'Application Rejected';
             statusEl.style.color = '#dc3545';
             rejectedMessage.style.display = 'block';
-        } else if (data.approved) {
+        } else if (data && data.approved) {
             statusEl.textContent = 'Approved';
             statusEl.style.color = '#28a745';
             rejectedMessage.style.display = 'none';
@@ -1364,49 +1366,43 @@
             rejectedMessage.style.display = 'none';
         }
     }
-    
+
     function setupApprovalListener() {
         const userId = localStorage.getItem('userId');
         if (!userId) return;
-        
-        const userRef = db.collection('users').doc(userId);
-        userRef.onSnapshot(doc => {
-            if (doc.exists) {
-                const data = doc.data();
-                displayReviewSection(data);
-                
-                if (data.deleted) {
-                    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-                    document.getElementById('review-section').classList.add('active');
-                    updateFixedButton();
-                } else if (data.approved) {
-                    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-                    document.getElementById('tasks-section').classList.add('active');
-                    updateFixedButton();
-                    updateUserInfo();
-                    generateTaskCards();
-                } else {
-                    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-                    document.getElementById('review-section').classList.add('active');
-                    updateFixedButton();
-                }
+
+        const userRef = db.ref('users/' + userId);
+        // Listen for changes to the user's node in RTDB
+        userRef.on('value', (snapshot) => {
+            const data = snapshot.val();
+            displayReviewSection(data);
+            if (data && data.deleted) {
+                document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+                document.getElementById('review-section').classList.add('active');
+                updateFixedButton();
+            } else if (data && data.approved) {
+                document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+                document.getElementById('tasks-section').classList.add('active');
+                updateFixedButton();
+                updateUserInfo();
+                generateTaskCards();
+            } else {
+                document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+                document.getElementById('review-section').classList.add('active');
+                updateFixedButton();
             }
-        }, err => {
-            console.error('Listener error:', err);
+        }, (error) => {
+            console.error('RTDB listener error:', error);
             showError('Error checking approval status.');
         });
     }
-    
+
     function generateTaskCards() {
         const container = document.getElementById('taskCards');
         container.innerHTML = '';
-        
-        const tasksToShow = userLevel >= 4 ? 5 : (userLevel >= 3 ? 4 : 1);
         const levelDetails = getLevelDetails(userLevel);
-        
-        // Use document fragment to reduce reflows
+        const tasksToShow = levelDetails.perDay;
         const fragment = document.createDocumentFragment();
-        
         for (let i = 0; i < tasksToShow && i < tasks.length; i++) {
             const card = document.createElement('div');
             card.className = 'task-card';
@@ -1422,83 +1418,77 @@
             `;
             fragment.appendChild(card);
         }
-        
-        // Replace all content at once
         container.appendChild(fragment);
+        // ✅ Show Telegram channel button only for approved users
+        document.getElementById('telegram-channel-btn-container').style.display = 'block';
     }
-    
+
     function submitToAdmin() {
-        window.location.href = "https://t.me/sufyanthedev";
+        window.location.href = "https://forms.gle/kfF6hEjdK8ZF6VAe6";
     }
-    
+
     async function resubmitApplication() {
         const userId = localStorage.getItem('userId');
         if (!userId) return;
-        
         showLoading("Resetting your application...");
         try {
-            const userRef = db.collection('users').doc(userId);
+            const userRef = db.ref('users/' + userId);
             await userRef.update({
                 deleted: false,
                 approved: false,
-                timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                timestamp: Date.now()
             });
-            
             localStorage.removeItem('userId');
             localStorage.removeItem('reviewCount');
             localStorage.removeItem('userLevel');
             localStorage.removeItem('trustpilotLink');
             localStorage.removeItem('selectedCountry');
-            
             hideLoading();
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
             document.getElementById('country-section').classList.add('active');
             updateFixedButton();
             showSuccess('Application reset successfully. Please resubmit.');
         } catch (error) {
-            console.error('Error resubmitting application:', error);
+            console.error('Error resubmitting application to RTDB:', error);
             hideLoading();
             showError('Error resubmitting application. Please try again.');
         }
     }
-    
+
+    // --- State Restoration ---
     async function restoreUserState() {
         const userId = localStorage.getItem('userId');
         if (!userId) return false;
-        
+
         try {
             showLoading("Restoring your session...");
-            const userRef = db.collection('users').doc(userId);
-            const doc = await userRef.get();
+            const userRef = db.ref('users/' + userId);
+            const snapshot = await userRef.once('value');
             hideLoading();
-            
-            if (!doc.exists) {
+            if (!snapshot.exists()) {
                 localStorage.clear();
                 return false;
             }
-            
-            const data = doc.data();
+            const data = snapshot.val();
             reviewCount = parseInt(localStorage.getItem('reviewCount'));
             userLevel = parseInt(localStorage.getItem('userLevel'));
             trustpilotLink = localStorage.getItem('trustpilotLink');
             selectedCountry = localStorage.getItem('selectedCountry');
-            
+
             // Validate all stored data
             if ([reviewCount, userLevel, trustpilotLink, selectedCountry].some(v => v === null || v === undefined)) {
                 localStorage.clear();
                 return false;
             }
-            
+
             displayReviewSection(data);
-            
-            if (data.deleted) {
+            if (data && data.deleted) {
                 document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
                 document.getElementById('review-section').classList.add('active');
                 updateFixedButton();
                 return true;
             }
-            
-            if (data.approved) {
+            if (data && data.approved) {
                 document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
                 document.getElementById('tasks-section').classList.add('active');
                 updateFixedButton();
@@ -1506,19 +1496,19 @@
                 generateTaskCards();
                 return true;
             }
-            
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
             document.getElementById('review-section').classList.add('active');
-            setupApprovalListener();
+            setupApprovalListener(); // Start listening again
             return true;
         } catch (error) {
-            console.error('Restore error:', error);
+            console.error('Restore error from RTDB:', error);
             hideLoading();
             localStorage.clear();
             return false;
         }
     }
-    
+
+    // --- Initialization ---
     // Debounce function for window resize
     function debounce(func, wait) {
         let timeout;
@@ -1529,16 +1519,15 @@
             timeout = setTimeout(() => func.apply(context, args), wait);
         };
     }
-    
+
     // Update fixed button on resize
     window.addEventListener('resize', debounce(updateFixedButton, 250));
-    
+
     document.addEventListener('DOMContentLoaded', async () => {
         const telegramOK = initTelegram();
         if (!telegramOK) {
             document.querySelector('.message-box').innerHTML += '<br><br><strong style="color:#dc3545;">Error:</strong> Open this app in Telegram.';
         }
-        
         const restored = await restoreUserState();
         if (!restored) {
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
@@ -1546,7 +1535,7 @@
             updateFixedButton();
         }
     });
-    
+
     document.addEventListener('touchstart', () => {}, { passive: true });
     </script>
 </body>
