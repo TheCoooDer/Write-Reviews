@@ -1020,9 +1020,11 @@
         }
     }
     const tasks = [
-        <!--{ id: 1, title: " Calvoro Funding Cut paste prewritten text from sheet Not copy paste its cut paste sheet link in inbox", description: "✅ Give a 5-star Trustpilot review\n💰 Instant payment via Binance\n💵 $0.30 per review", trustpilotUrl: "https://www.trustpilot.com/review/calvorofunding.com" },
-        { id: 2, title: "Online Traffic Education , Country Us, weekly payment, contact admin for pre written text this review rate $0.70  ", description: "✅ Give a 5-star Trustpilot review\n💰 weekly payment via Binance\n💵 $0.70 per review", trustpilotUrl: "https://www.trustpilot.com/review/onlinetrafficeducation.com" }
-        -->
+        { id: 1, title: "Trustpilot Review 1", description: "✅ Give a 5-star Trustpilot review\n💰 Instant payment via Binance\n💵 $0.20 per review", trustpilotUrl: "https://www.trustpilot.com/review/tosto.online" },
+        { id: 2, title: "Trustpilot Review 2", description: "✅ Give a 5-star Trustpilot review\n💰 Instant payment via Binance\n💵 $0.20 per review", trustpilotUrl: "https://www.trustpilot.com/review/grindery.online" },
+        { id: 3, title: "Trustpilot Review 3", description: "✅ Give a 5-star Trustpilot review\n💰 Instant payment via Binance\n💵 $0.20 per review", trustpilotUrl: "https://www.trustpilot.com/review/snackle.online" },
+        { id: 4, title: "Trustpilot Review 4", description: "✅ Give a 5-star Trustpilot review\n💰 Instant payment via Binance\n💵 $0.20 per review", trustpilotUrl: "https://www.trustpilot.com/review/brewtide.online" },
+        { id: 5, title: "Trustpilot Review 5", description: "✅ Give a 5-star Trustpilot review\n💰 Instant payment via Binance\n💵 $0.20 per review", trustpilotUrl: "https://www.trustpilot.com/review/crumbline.online" }
     ];
     const countries = ["Australia", "Canada", "Ireland", "Netherlands", "Germany"];
     let reviewCount = null;
@@ -1040,9 +1042,9 @@
     }
     function getLevelDetails(level) {
         return {
-            1: { min: 0, max: 29,   pay: 0.30, perDay: 5 },
-            2: { min: 30, max: 49,  pay: 0.30, perDay: 5 },
-            3: { min: 50, max: 99,  pay: 0.30, perDay: 5 },
+            1: { min: 0, max: 29,   pay: 0.15, perDay: 1 },
+            2: { min: 30, max: 49,  pay: 0.20, perDay: 3 },
+            3: { min: 50, max: 99,  pay: 0.25, perDay: 4 },
             4: { min: 100, max: Infinity, pay: 0.30, perDay: 5 }
         }[level];
     }
@@ -1353,9 +1355,10 @@
             card.innerHTML = `
                 <h3 class="task-title">${tasks[i].title}</h3>
                 <p class="task-description">
-                    ✅ Give a 5-star Positive review<br>
-                    
+                    ✅ Give a 5-star Trustpilot review<br>
+                    💰 Instant payment via Binance<br>
                     💵 $${levelDetails.pay.toFixed(2)} per review<br>
+                    📅 ${levelDetails.perDay} reviews per day
                 </p>
                 <a href="${tasks[i].trustpilotUrl}" target="_blank" class="write-review-btn" onclick="markTaskComplete()">✍️ Write Review</a>
             `;
