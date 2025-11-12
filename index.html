@@ -1219,11 +1219,31 @@
     async function saveUserData() {
         try {
             showLoading("Submitting your application...");
-            const userId = trustpilotLink.split('/users/')[1];
+            
+            // Extract userId from trustpilotLink with more robust parsing
+            let userId;
+            try {
+                const urlParts = trustpilotLink.split('/users/');
+                if (urlParts.length < 2) {
+                    throw new Error('Invalid Trustpilot link format');
+                }
+                userId = urlParts[1].split('?')[0]; // Remove query parameters if any
+                if (!userId) {
+                    throw new Error('Could not extract user ID from link');
+                }
+            } catch (error) {
+                console.error('Error parsing Trustpilot link:', error);
+                hideLoading();
+                showError('Invalid Trustpilot link format. Please check your link and try again.');
+                return;
+            }
+            
             const userRef = db.collection('users').doc(userId);
+            
             // Check if user already exists
             const doc = await userRef.get();
             const existingData = doc.exists ? doc.data() : {};
+            
             // Merge existing data with new data
             const userData = {
                 ...existingData,
@@ -1239,24 +1259,33 @@
                 fullName: telegramUser ? `${telegramUser.first_name} ${telegramUser.last_name || ''}` : '',
                 timestamp: firebase.firestore.FieldValue.serverTimestamp()
             };
+            
             await userRef.set(userData);
+            
             // Update localStorage with consistent data
             localStorage.setItem('userId', userId);
             localStorage.setItem('reviewCount', reviewCount);
             localStorage.setItem('userLevel', userLevel);
             localStorage.setItem('trustpilotLink', trustpilotLink);
             localStorage.setItem('selectedCountry', selectedCountry);
+            
             hideLoading();
+            
+            // Navigate to review section
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
             document.getElementById('review-section').classList.add('active');
             document.getElementById('approval-status').textContent = 'Pending Review';
             document.getElementById('approval-status').style.color = '#6c757d';
             document.getElementById('rejected-message').style.display = 'none';
+            
             setupApprovalListener();
+            
+            showSuccess('Application submitted successfully!');
         } catch (error) {
             console.error('Error saving user data:', error);
             hideLoading();
-            showError('Error saving your data. Please try again.');
+            showError('Error saving your data: ' + error.message + '. Please try again.');
+            
             // Clear inconsistent localStorage data
             localStorage.removeItem('userId');
         }
@@ -1291,11 +1320,42 @@
         updateFixedButton();
     }
     async function submitApplication() {
+        // Ensure Telegram is initialized
         if (!initTelegram()) {
             showError('Please open this app in Telegram to continue');
             return;
         }
-        await saveUserData();
+        
+        // Validate all required fields before proceeding
+        if (!trustpilotLink) {
+            showError('Please enter a valid Trustpilot profile link');
+            return;
+        }
+        
+        if (reviewCount === null) {
+            showError('Please select your review count');
+            return;
+        }
+        
+        if (!selectedCountry) {
+            showError('Country selection is required');
+            return;
+        }
+        
+        // Disable button to prevent multiple submissions
+        const submitBtn = document.getElementById('fixedButton');
+        const originalText = submitBtn.textContent;
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Submitting...';
+        
+        try {
+            await saveUserData();
+        } catch (error) {
+            console.error('Submit application error:', error);
+            // Re-enable button on error
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalText;
+        }
     }
     function displayReviewSection(data) {
         const statusEl = document.getElementById('approval-status');
